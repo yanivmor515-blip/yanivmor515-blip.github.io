@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇮🇹 טיול משפחתי לאיטליה - יולי 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0d1117;
+    color: #e6edf3;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1a1f2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  .header-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .flag { font-size: 28px; }
+
+  .title-text h1 {
+    font-size: 18px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #f7c59f, #e88e5a, #c0392b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
+  }
+
+  .title-text p {
+    font-size: 11px;
+    color: #8b949e;
+    margin-top: 1px;
+  }
+
+  .header-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: #c9d1d9;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+  }
+
+  .badge.green { border-color: rgba(63,185,80,0.4); color: #3fb950; }
+  .badge.blue { border-color: rgba(88,166,255,0.4); color: #58a6ff; }
+  .badge.orange { border-color: rgba(249,117,131,0.4); color: #f97583; }
+
+  /* MAIN LAYOUT */
+  .main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 380px;
+    min-width: 380px;
+    background: #161b22;
+    border-left: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .sidebar-tabs {
+    display: flex;
+    background: #0d1117;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 10px 6px;
+    text-align: center;
+    font-size: 11px;
+    cursor: pointer;
+    color: #8b949e;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+
+  .tab:hover { color: #c9d1d9; background: rgba(255,255,255,0.03); }
+  .tab.active { color: #58a6ff; border-bottom-color: #58a6ff; background: rgba(88,166,255,0.05); }
+
+  .sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  .sidebar-content::-webkit-scrollbar { width: 4px; }
+  .sidebar-content::-webkit-scrollbar-track { background: transparent; }
+  .sidebar-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+
+  /* TAB PANELS */
+  .panel { display: none; padding: 12px; }
+  .panel.active { display: block; }
+
+  /* DAY CARDS */
+  .day-card {
+    background: #1c2128;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .day-card:hover { border-color: rgba(88,166,255,0.3); box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+  .day-card.active { border-color: #58a6ff; box-shadow: 0 0 0 1px rgba(88,166,255,0.2); }
+
+  .day-header {
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .day-num {
+    background: linear-gradient(135deg, #1f6feb, #388bfd);
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .day-info { flex: 1; }
+  .day-title { font-size: 13px; font-weight: 600; color: #e6edf3; }
+  .day-sub { font-size: 11px; color: #8b949e; margin-top: 2px; }
+
+  .day-icon { font-size: 20px; }
+
+  .day-body {
+    padding: 0 14px 12px;
+    display: none;
+  }
+
+  .day-body.open { display: block; }
+
+  .activity-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .activity-item:last-child { border-bottom: none; }
+
+  .activity-time {
+    font-size: 10px;
+    color: #6e7681;
+    min-width: 45px;
+    padding-top: 2px;
+    font-weight: 500;
+  }
+
+  .activity-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .activity-text { flex: 1; }
+  .activity-name { font-size: 12px; color: #c9d1d9; font-weight: 500; }
+  .activity-detail { font-size: 11px; color: #6e7681; margin-top: 2px; line-height: 1.4; }
+
+  .tip-box {
+    background: rgba(255,193,7,0.08);
+    border: 1px solid rgba(255,193,7,0.2);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-top: 8px;
+    font-size: 11px;
+    color: #d4a017;
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+    line-height: 1.4;
+  }
+
+  /* LOCATION CARDS */
+  .location-card {
+    background: #1c2128;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .location-card:hover { border-color: rgba(88,166,255,0.3); transform: translateX(-2px); }
+  .location-card.active { border-color: #58a6ff; background: rgba(88,166,255,0.05); }
+
+  .loc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .loc-icon { font-size: 22px; }
+  .loc-name { font-size: 13px; font-weight: 600; color: #e6edf3; }
+  .loc-region { font-size: 11px; color: #58a6ff; margin-top: 1px; }
+  .loc-desc { font-size: 11px; color: #8b949e; line-height: 1.5; }
+  .loc-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+  .loc-tag {
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 10px;
+    color: #8b949e;
+  }
+  .loc-tag.kids { background: rgba(63,185,80,0.1); color: #3fb950; }
+  .loc-tag.must { background: rgba(249,117,131,0.1); color: #f97583; }
+
+  /* HOTELS */
+  .hotel-card {
+    background: #1c2128;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+
+  .hotel-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .hotel-name { font-size: 13px; font-weight: 600; color: #e6edf3; }
+  .hotel-city { font-size: 11px; color: #58a6ff; margin-top: 1px; }
+  .hotel-price {
+    background: rgba(63,185,80,0.1);
+    border: 1px solid rgba(63,185,80,0.3);
+    color: #3fb950;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .hotel-detail { font-size: 11px; color: #8b949e; line-height: 1.5; }
+  .hotel-features { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+  .hotel-feat {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 2px 7px;
+    font-size: 10px;
+    color: #8b949e;
+  }
+
+  /* TIPS */
+  .tips-section { padding: 4px 0; }
+  .tips-category {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #58a6ff;
+    margin: 12px 0 6px;
+  }
+  .tip-item {
+    display: flex;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 11px;
+    color: #c9d1d9;
+    line-height: 1.5;
+    align-items: flex-start;
+  }
+  .tip-item:last-child { border-bottom: none; }
+  .tip-emoji { flex-shrink: 0; font-size: 14px; }
+
+  /* COST TABLE */
+  .cost-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .cost-table tr { border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .cost-table tr:last-child { border-bottom: none; border-top: 1px solid rgba(255,255,255,0.1); }
+  .cost-table td { padding: 7px 4px; font-size: 11px; color: #c9d1d9; }
+  .cost-table td:last-child { text-align: left; font-weight: 600; color: #3fb950; }
+  .cost-table tr:last-child td { color: #f7c59f; font-weight: 700; font-size: 13px; }
+
+  /* MAP */
+  #map {
+    flex: 1;
+    height: 100%;
+    z-index: 1;
+    background: #aad3df;
+  }
+
+  .leaflet-popup-content-wrapper {
+    background: #1c2128 !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    border-radius: 10px !important;
+    color: #e6edf3 !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
+    min-width: 220px;
+  }
+
+  .leaflet-popup-tip { background: #1c2128 !important; }
+  .leaflet-popup-close-button { color: #8b949e !important; font-size: 16px !important; }
+
+  .popup-content { padding: 4px; }
+  .popup-icon { font-size: 28px; text-align: center; margin-bottom: 6px; }
+  .popup-name { font-size: 14px; font-weight: 700; color: #e6edf3; margin-bottom: 2px; }
+  .popup-region { font-size: 11px; color: #58a6ff; margin-bottom: 6px; }
+  .popup-desc { font-size: 11px; color: #8b949e; line-height: 1.5; margin-bottom: 8px; }
+  .popup-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .popup-tag { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 2px 7px; font-size: 10px; color: #8b949e; }
+  .popup-tag.highlight { background: rgba(249,117,131,0.15); color: #f97583; }
+
+  .route-legend {
+    position: absolute;
+    bottom: 30px;
+    right: 10px;
+    background: rgba(22,27,34,0.95);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    z-index: 999;
+    font-size: 11px;
+  }
+  .legend-title { font-weight: 700; color: #e6edf3; margin-bottom: 6px; font-size: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; color: #8b949e; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .main { flex-direction: column; }
+    .sidebar { width: 100%; min-width: 100%; height: 50vh; }
+    #map { height: 50vh; }
+    .header-badges { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title">
+    <span class="flag">🇮🇹</span>
+    <div class="title-text">
+      <h1>טיול משפחתי לאיטליה — יולי 2026</h1>
+      <p>2 מבוגרים + 3 ילדים (גילאי 8 ו-11) · 10 ימים · רומא הלוך ושוב</p>
+    </div>
+  </div>
+  <div class="header-badges">
+    <span class="badge blue">✈️ נחיתה והמראה: רומא FCO</span>
+    <span class="badge green">🚗 השכרת רכב כלולה</span>
+    <span class="badge orange">🎢 Gardaland</span>
+    <span class="badge">🌡️ יולי · שמש מובטחת</span>
+  </div>
+</div>
+
+<div class="main">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-tabs">
+      <div class="tab active" onclick="switchTab('itinerary', this)">📅 מסלול</div>
+      <div class="tab" onclick="switchTab('locations', this)">📍 אטרקציות</div>
+      <div class="tab" onclick="switchTab('hotels', this)">🏨 לינה</div>
+      <div class="tab" onclick="switchTab('tips', this)">💡 טיפים</div>
+      <div class="tab" onclick="switchTab('budget', this)">💶 תקציב</div>
+    </div>
+
+    <div class="sidebar-content">
+
+      <!-- ITINERARY TAB -->
+      <div id="panel-itinerary" class="panel active">
+
+        <div class="day-card active" onclick="toggleDay(this, 1)">
+          <div class="day-header">
+            <div class="day-num">1</div>
+            <div class="day-info">
+              <div class="day-title">הגעה לרומא</div>
+              <div class="day-sub">יום שישי, 3 יולי</div>
+            </div>
+            <div class="day-icon">✈️</div>
+          </div>
+          <div class="day-body open">
+            <div class="activity-item">
+              <div class="activity-time">11:00</div>
+              <div class="activity-dot" style="background:#58a6ff"></div>
+              <div class="activity-text">
+                <div class="activity-name">נחיתה בנמל תעופה פיומיצ'ינו (FCO)</div>
+                <div class="activity-detail">איסוף מכונית שכורה מיד עם הנחיתה — מומלץ להזמין מראש (Hertz/Enterprise)</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">13:00</div>
+              <div class="activity-dot" style="background:#3fb950"></div>
+              <div class="activity-text">
+                <div class="activity-name">הגעה לרומא + צ'ק-אין</div>
+                <div class="activity-detail">הגעה למלון, הנחת מזוודות, ארוחת צהריים קלה</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">16:00</div>
+              <div class="activity-dot" style="background:#f97583"></div>
+              <div class="activity-text">
+                <div class="activity-name">מסע הגילוי הראשון</div>
+                <div class="activity-detail">טיול רגלי קל לכיוון פיאצה נבונה — הגלידה הכי טובה לפגוש את רומא!</div>
+              </div>
+            </div>
+            <div class="tip-box">💡 אל תנסו לנהוג למרכז רומא — חנו בסביבה והמשיכו ברגל או מטרו.</div>
+          </div>
+        </div>
+
+        <div class="day-card" onclick="toggleDay(this, 2)">
+          <div class="day-header">
+            <div class="day-num">2</div>
+            <div class="day-info">
+              <div class="day-title">רומא העתיקה</div>
+              <div class="day-sub">שבת, 4 יולי</div>
+            </div>
+            <div class="day-icon">🏟️</div>
+          </div>
+          <div class="day-body">
+            <div class="activity-item">
+              <div class="activity-time">08:30</div>
+              <div class="activity-dot" style="background:#f97583"></div>
+              <div class="activity-text">
+                <div class="activity-name">הקולוסיאום + הפורום הרומי</div>
+                <div class="activity-detail">כרטיס משולב ~18€ למבוגר | חובה להזמין מראש! הילדים יאהבו את הגלדיאטורים</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">12:30</div>
+              <div class="activity-dot" style="background:#3fb950"></div>
+              <div class="activity-text">
+                <div class="activity-name">גלידה ואוכל בסביבה</div>
+                <div class="activity-detail">מסעדות פשוטות סביב הפורום — פיצה אל טאגליו מומלצת לילדים</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">15:00</div>
+              <div class="activity-dot" style="background:#58a6ff"></div>
+              <div class="activity-text">
+                <div class="activity-name">מזרקת טרווי + שלהוב מטבעות!</div>
+                <div class="activity-detail">הזריקה המסורתית — כל ילד צריך לזרוק מטבע! ביקור בשעות אחה"צ פחות עמוס</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">17:30</div>
+              <div class="activity-dot" style="background:#e3b341"></div>
+              <div class="activity-text">
+                <div class="activity-name">פיאצה נבונה + גלידה מספר 2</div>
+                <div class="activity-detail">הכי ציורי! פסל הנהרות האיתן — ילדים מתרגשים</div>
+              </div>
+            </div>
+            <div class="tip-box">🌡️ יולי = חם מאוד! צאו לפעילות בבוקר, מנוחה בצהריים, חזרה ב-16:00+</div>
+          </div>
+        </div>
+
+        <div class="day-card" onclick="toggleDay(this, 3)">
+          <div class="day-header">
+            <div class="day-num">3</div>
+            <div class="day-info">
+              <div class="day-title">הוותיקן</div>
+              <div class="day-sub">ראשון, 5 יולי</div>
+            </div>
+            <div class="day-icon">⛪</div>
+          </div>
+          <div class="day-body">
+            <div class="activity-item">
+              <div class="activity-time">08:00</div>
+              <div class="activity-dot" style="background:#f97583"></div>
+              <div class="activity-text">
+                <div class="activity-name">מוזיאוני הוותיקן + הקפלה הסיסטינית</div>
+                <div class="activity-detail">הזמינו כרטיסים מראש! ~17€ לאדם | 3-4 שעות | אחת החוויות הגדולות בעולם</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">12:30</div>
+              <div class="activity-dot" style="background:#3fb950"></div>
+              <div class="activity-text">
+                <div class="activity-name">בזיליקת פטרוס הקדוש</div>
+                <div class="activity-detail">כניסה חינם! הנוף מהכיפה שווה את העלייה (ילדים מעל 8 יכולים)</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">15:30</div>
+              <div class="activity-dot" style="background:#58a6ff"></div>
+              <div class="activity-text">
+                <div class="activity-name">טיול בשכונת טראסטוורה</div>
+                <div class="activity-detail">השכונה הכי אותנטית ברומא — רחובות צבעוניים, אווירה ייחודית, אוכל מעולה</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-card" onclick="toggleDay(this, 4)">
+          <div class="day-header">
+            <div class="day-num">4</div>
+            <div class="day-info">
+              <div class="day-title">נסיעה לפירנצה + פיזה</div>
+              <div class="day-sub">שני, 6 יולי</div>
+            </div>
+            <div class="day-icon">🗼</div>
+          </div>
+          <div class="day-body">
+            <div class="activity-item">
+              <div class="activity-time">09:00</div>
+              <div class="activity-dot" style="background:#58a6ff"></div>
+              <div class="activity-text">
+                <div class="activity-name">יציאה מרומא ברכב לפיזה</div>
+                <div class="activity-detail">~3 שעות נסיעה | עצירה קלה באוטוסטראדה עם ילדים</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">12:30</div>
+              <div class="activity-dot" style="background:#f97583"></div>
+              <div class="activity-text">
+                <div class="activity-name">מגדל פיזה הנטוי!</div>
+                <div class="activity-detail">צילומים המצחיקים עם המגדל — חוויה לכל המשפחה! עלייה ~20€</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">15:30</div>
+              <div class="activity-dot" style="background:#3fb950"></div>
+              <div class="activity-text">
+                <div class="activity-name">הגעה לפירנצה + צ'ק-אין</div>
+                <div class="activity-detail">טיול ערב על גשר ורקיו וצפייה בשקיעה מגבעת מיקלאנג'לו</div>
+              </div>
+            </div>
+            <div class="tip-box">🗺️ השאירו הרכב בחנייה מחוץ לאזור ה-ZTL של פירנצה — קנסות גבוהים!</div>
+          </div>
+        </div>
+
+        <div class="day-card" onclick="toggleDay(this, 5)">
+          <div class="day-header">
+            <div class="day-num">5</div>
+            <div class="day-info">
+              <div class="day-title">פירנצה</div>
+              <div class="day-sub">שלישי, 7 יולי</div>
+            </div>
+            <div class="day-icon">🎨</div>
+          </div>
+          <div class="day-body">
+            <div class="activity-item">
+              <div class="activity-time">09:00</div>
+              <div class="activity-dot" style="background:#f97583"></div>
+              <div class="activity-text">
+                <div class="activity-name">גלריית אופיצי (אופציונלי)</div>
+                <div class="activity-detail">לילדים מעל 10 — ונוס של בוטיצ'לי ועוד. הזמינו כרטיסים מראש ~12€</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">11:00</div>
+              <div class="activity-dot" style="background:#58a6ff"></div>
+              <div class="activity-text">
+                <div class="activity-name">כתדרלת סנטה מריה דל פיורה + כיפת ברונלסקי</div>
+                <div class="activity-detail">אחת מהכיפות היפות בעולם — עלייה לכיפה ~18€ | נוף מהמם</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">14:00</div>
+              <div class="activity-dot" style="background:#3fb950"></div>
+              <div class="activity-text">
+                <div class="activity-name">גלידריה ארטיג'אנלה</div>
+                <div class="activity-detail">גלידה אמיתית איטלקית — הילדים יזכרו זאת כל חייהם!</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">16:00</div>
+              <div class="activity-dot" style="background:#e3b341"></div>
+              <div class="activity-text">
+                <div class="activity-name">קניות ושוק סן לורנצו</div>
+                <div class="activity-detail">עור אמיתי, מזכרות, אוכל שוק — אטרקציה לכל המשפחה</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-card" onclick="toggleDay(this, 6)">
+          <div class="day-header">
+            <div class="day-num">6</div>
+            <div class="day-info">
+              <div class="day-title">נסיעה לוונציה</div>
+              <div class="day-sub">רביעי, 8 יולי</div>
+            </div>
+            <div class="day-icon">🚤</div>
+          </div>
+          <div class="day-body">
+            <div class="activity-item">
+              <div class="activity-time">09:00</div>
+              <div class="activity-dot" style="background:#58a6ff"></div>
+              <div class="activity-text">
+                <div class="activity-name">נסיעה מפירנצה לוונציה</div>
+                <div class="activity-detail">~2.5 שעות | חנו מחוץ לוונציה (מסטרה) — חנייה זולה</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">12:00</div>
+              <div class="activity-dot" style="background:#f97583"></div>
+              <div class="activity-text">
+                <div class="activity-name">פיאצה סן מרקו + הקתדרלה</div>
+                <div class="activity-detail">לב וונציה! הכניסה לכיכר חינם, הקתדרלה חינם</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">14:30</div>
+              <div class="activity-dot" style="background:#3fb950"></div>
+              <div class="activity-text">
+                <div class="activity-name">נסיעה בגונדולה!</div>
+                <div class="activity-detail">~80€ לגונדולה (5 נוסעים) — לחלק ביניכם עם משפחה נוספת לחסוך! ✨</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">17:00</div>
+              <div class="activity-dot" style="background:#e3b341"></div>
+              <div class="activity-text">
+                <div class="activity-name">גשר ריאלטו + שוק</div>
+                <div class="activity-detail">הגשר המפורסם + קניית מסכות ונציאניות לילדים</div>
+              </div>
+            </div>
+            <div class="tip-box">🌊 ילדים עם ירידות מים — ב-יולי הגאות נדירה אבל שמרו נעלי גומי!</div>
+          </div>
+        </div>
+
+        <div class="day-card" onclick="toggleDay(this, 7)">
+          <div class="day-header">
+            <div class="day-num">7</div>
+            <div class="day-info">
+              <div class="day-title">🎢 GARDALAND!</div>
+              <div class="day-sub">חמישי, 9 יולי</div>
+            </div>
+            <div class="day-icon">🎡</div>
+          </div>
+          <div class="day-body">
+            <div class="activity-item">
+              <div class="activity-time">09:00</div>
+              <div class="activity-dot" style="background:#f97583"></div>
+              <div class="activity-text">
+                <div class="activity-name">הגעה מוקדמת לגרדלנד!</div>
+                <div class="activity-detail">~1 שעה מוונציה | הגיעו בפתיחה (9:00) להימנע מתורים. קנו כרטיסים אונליין!</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">09:00-18:00</div>
+              <div class="activity-dot" style="background:#3fb950"></div>
+              <div class="activity-text">
+                <div class="activity-name">יום שלם בפארק!</div>
+                <div class="activity-detail">כ-40 אטרקציות | מתאים לגיל 8+. Fast Pass מומלץ בעונת שיא יולי!</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">ערב</div>
+              <div class="activity-dot" style="background:#58a6ff"></div>
+              <div class="activity-text">
+                <div class="activity-name">לינה ליד האגם</div>
+                <div class="activity-detail">לשהות בסירמיונה או בסביבת אגם גארדה — שקיעה מרהיבה</div>
+              </div>
+            </div>
+            <div class="tip-box">🎢 הכרטיסים יקרים ב-gate — קנו מראש באתר! חסכון עד 30%</div>
+          </div>
+        </div>
+
+        <div class="day-card" onclick="toggleDay(this, 8)">
+          <div class="day-header">
+            <div class="day-num">8</div>
+            <div class="day-info">
+              <div class="day-title">אגם גארדה + סירמיונה</div>
+              <div class="day-sub">שישי, 10 יולי</div>
+            </div>
+            <div class="day-icon">🏰</div>
+          </div>
+          <div class="day-body">
+            <div class="activity-item">
+              <div class="activity-time">09:30</div>
+              <div class="activity-dot" style="background:#58a6ff"></div>
+              <div class="activity-text">
+                <div class="activity-name">סירמיונה — כפר הלשונית הקסומה</div>
+                <div class="activity-detail">מבצר ימי ביניים, אבנים טובות בנהרות, ילדים מתעופפים מזה!</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">12:00</div>
+              <div class="activity-dot" style="background:#3fb950"></div>
+              <div class="activity-text">
+                <div class="activity-name">שחייה באגם גארדה</div>
+                <div class="activity-detail">המים נקיים וצלולים — חוף ציבורי ליד לה-מולה מצוין</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">15:00</div>
+              <div class="activity-dot" style="background:#f97583"></div>
+              <div class="activity-text">
+                <div class="activity-name">נסיעה לאגם קומו (אופציונלי)</div>
+                <div class="activity-detail">~1:20 שעות — נוף עוצר נשימה, עיירת ורנה בדרך</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-card" onclick="toggleDay(this, 9)">
+          <div class="day-header">
+            <div class="day-num">9</div>
+            <div class="day-info">
+              <div class="day-title">חזרה לרומא</div>
+              <div class="day-sub">שבת, 11 יולי</div>
+            </div>
+            <div class="day-icon">🚗</div>
+          </div>
+          <div class="day-body">
+            <div class="activity-item">
+              <div class="activity-time">09:00</div>
+              <div class="activity-dot" style="background:#58a6ff"></div>
+              <div class="activity-text">
+                <div class="activity-name">נסיעה חזרה לרומא</div>
+                <div class="activity-detail">~5.5 שעות עם עצירות | עצרו בבולוניה לארוחת צהריים — בירת הפסטה!</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">16:00</div>
+              <div class="activity-dot" style="background:#3fb950"></div>
+              <div class="activity-text">
+                <div class="activity-name">הגעה לרומא — צ'ק-אין אחרון</div>
+                <div class="activity-detail">ארוחת ערב אחרונה ברומא — מסעדה קלאסית, פסטה אמיתית!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="day-card" onclick="toggleDay(this, 10)">
+          <div class="day-header">
+            <div class="day-num">10</div>
+            <div class="day-info">
+              <div class="day-title">יום אחרון + טיסה</div>
+              <div class="day-sub">ראשון, 12 יולי</div>
+            </div>
+            <div class="day-icon">👋</div>
+          </div>
+          <div class="day-body">
+            <div class="activity-item">
+              <div class="activity-time">בוקר</div>
+              <div class="activity-dot" style="background:#3fb950"></div>
+              <div class="activity-text">
+                <div class="activity-name">קניות אחרונות + קפה איטלקי</div>
+                <div class="activity-detail">Bar Cafe אמיתי — espresso ו-cornetto לפני הנסיעה</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-time">3 שעות לפני</div>
+              <div class="activity-dot" style="background:#f97583"></div>
+              <div class="activity-text">
+                <div class="activity-name">החזרת רכב + נמל תעופה FCO</div>
+                <div class="activity-detail">החזרו את הרכב כ-3 שעות לפני הטיסה | חנייה באחד מהלוטות</div>
+              </div>
+            </div>
+            <div class="tip-box">✈️ בדקו אם כלולה ביטוח סרסוא ברכב — חוסך כסף רב!</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- LOCATIONS TAB -->
+      <div id="panel-locations" class="panel">
+
+        <div class="location-card" onclick="focusMap(41.8902, 12.4922, 'colosseum')">
+          <div class="loc-header">
+            <span class="loc-icon">🏟️</span>
+            <div>
+              <div class="loc-name">הקולוסיאום</div>
+              <div class="loc-region">רומא</div>
+            </div>
+          </div>
+          <div class="loc-desc">אמפיתאטרון עתיק מימי הרומאים — מקום הגלדיאטורים. אחת מ-7 פלאי העולם החדש. הילדים מתלהבים מהקרבות המדומים!</div>
+          <div class="loc-tags">
+            <span class="loc-tag must">⭐ חובה</span>
+            <span class="loc-tag kids">👧 לילדים</span>
+            <span class="loc-tag">⏱ 3-4 שעות</span>
+            <span class="loc-tag">💶 18€</span>
+          </div>
+        </div>
+
+        <div class="location-card" onclick="focusMap(41.9065, 12.4536, 'vatican')">
+          <div class="loc-header">
+            <span class="loc-icon">🎨</span>
+            <div>
+              <div class="loc-name">מוזיאוני הוותיקן</div>
+              <div class="loc-region">הוותיקן, רומא</div>
+            </div>
+          </div>
+          <div class="loc-desc">אוסף האמנות הגדול בעולם — הקפלה הסיסטינית של מיקלאנג'לו. מרהיב! הזמינו כרטיסים חודש מראש ביולי!</div>
+          <div class="loc-tags">
+            <span class="loc-tag must">⭐ חובה</span>
+            <span class="loc-tag">⏱ 3-4 שעות</span>
+            <span class="loc-tag">💶 17€</span>
+          </div>
+        </div>
+
+        <div class="location-card" onclick="focusMap(41.9009, 12.4833, 'trevi')">
+          <div class="loc-header">
+            <span class="loc-icon">⛲</span>
+            <div>
+              <div class="loc-name">מזרקת טרווי</div>
+              <div class="loc-region">רומא</div>
+            </div>
+          </div>
+          <div class="loc-desc">המזרקה היפה בעולם — זריקת המטבע עם הגב מובטחת לחזרה לרומא! ילדים אוהבים את המסורת הזו.</div>
+          <div class="loc-tags">
+            <span class="loc-tag must">⭐ חובה</span>
+            <span class="loc-tag kids">👧 לילדים</span>
+            <span class="loc-tag">🆓 חינם</span>
+          </div>
+        </div>
+
+        <div class="location-card" onclick="focusMap(43.7229, 10.3966, 'pisa')">
+          <div class="loc-header">
+            <span class="loc-icon">🗼</span>
+            <div>
+              <div class="loc-name">מגדל פיזה</div>
+              <div class="loc-region">פיזה</div>
+            </div>
+          </div>
+          <div class="loc-desc">המגדל הנטוי המפורסם! צילומים מצחיקים המחזיקים את המגדל — אי אפשר לוותר. עצירה מצוינת בדרך לפירנצה.</div>
+          <div class="loc-tags">
+            <span class="loc-tag must">⭐ חובה</span>
+            <span class="loc-tag kids">👧 לילדים</span>
+            <span class="loc-tag">⏱ 2 שעות</span>
+            <span class="loc-tag">💶 20€</span>
+          </div>
+        </div>
+
+        <div class="location-card" onclick="focusMap(43.7678, 11.2553, 'uffizi')">
+          <div class="loc-header">
+            <span class="loc-icon">🖼️</span>
+            <div>
+              <div class="loc-name">גלריית אופיצי</div>
+              <div class="loc-region">פירנצה</div>
+            </div>
+          </div>
+          <div class="loc-desc">אחד המוזיאונים הגדולים בעולם — ונוס של בוטיצ'לי, לאונרדו, רפאל. מומלץ לגיל 10+ בלבד.</div>
+          <div class="loc-tags">
+            <span class="loc-tag">⏱ 2-3 שעות</span>
+            <span class="loc-tag">💶 12€</span>
+          </div>
+        </div>
+
+        <div class="location-card" onclick="focusMap(45.4342, 12.3385, 'venice')">
+          <div class="loc-header">
+            <span class="loc-icon">🚤</span>
+            <div>
+              <div class="loc-name">פיאצה סן מרקו, וונציה</div>
+              <div class="loc-region">וונציה</div>
+            </div>
+          </div>
+          <div class="loc-desc">לב וונציה הצפה! עיר על המים — גונדולות, תעלות, מסכות. ילדים חוצים גשרים קטנים ומתרגשים מהאופי הייחודי.</div>
+          <div class="loc-tags">
+            <span class="loc-tag must">⭐ חובה</span>
+            <span class="loc-tag kids">👧 לילדים</span>
+            <span class="loc-tag">🆓 כיכר חינם</span>
+          </div>
+        </div>
+
+        <div class="location-card" onclick="focusMap(45.4563, 10.7133, 'gardaland')">
+          <div class="loc-header">
+            <span class="loc-icon">🎢</span>
+            <div>
+              <div class="loc-name">גרדלנד</div>
+              <div class="loc-region">אגם גארדה</div>
+            </div>
+          </div>
+          <div class="loc-desc">הפארק הגדול באיטליה! 40+ אטרקציות לכל הגילאים. מדורגת 4.4 ⭐ ב-125,000 ביקורות! יום שלם מובטח.</div>
+          <div class="loc-tags">
+            <span class="loc-tag must">⭐ חובה</span>
+            <span class="loc-tag kids">👧 לילדים</span>
+            <span class="loc-tag">⏱ יום שלם</span>
+            <span class="loc-tag">💶 ~40€/נפש</span>
+          </div>
+        </div>
+
+        <div class="location-card" onclick="focusMap(45.465, 10.607, 'sirmione')">
+          <div class="loc-header">
+            <span class="loc-icon">🏰</span>
+            <div>
+              <div class="loc-name">סירמיונה</div>
+              <div class="loc-region">אגם גארדה</div>
+            </div>
+          </div>
+          <div class="loc-desc">כפר הלשונית הקסום — מבצר ימי ביניים, מים צלולים וצבעוניים, אווירה מרהיבה. שחייה חינמית!</div>
+          <div class="loc-tags">
+            <span class="loc-tag kids">👧 לילדים</span>
+            <span class="loc-tag">🏊 שחייה</span>
+          </div>
+        </div>
+
+        <div class="location-card" onclick="focusMap(46.016, 9.257, 'como')">
+          <div class="loc-header">
+            <span class="loc-icon">⛰️</span>
+            <div>
+              <div class="loc-name">אגם קומו</div>
+              <div class="loc-region">לומברדיה</div>
+            </div>
+          </div>
+          <div class="loc-desc">האגם היפה באיטליה — הרי אלפים ורפלקציה בנהרות. כפרים צבעוניים לאורך החוף. עצירה אופציונלית מרהיבה.</div>
+          <div class="loc-tags">
+            <span class="loc-tag">🌄 נוף</span>
+            <span class="loc-tag">⏱ חצי יום</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- HOTELS TAB -->
+      <div id="panel-hotels" class="panel">
+
+        <div style="font-size:11px; color:#58a6ff; margin-bottom:10px; padding:6px 8px; background:rgba(88,166,255,0.07); border-radius:6px; line-height:1.5;">
+          💡 כל ההמלצות הן לחדרים משפחתיים (family room) ל-5 אנשים — בדקו זמינות ב-Booking.com
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-header">
+            <div>
+              <div class="hotel-name">🏛️ Hotel Quirinale / בתי מלון בצנטרו</div>
+              <div class="hotel-city">רומא — 3 לילות</div>
+            </div>
+            <div class="hotel-price">€90-140</div>
+          </div>
+          <div class="hotel-detail">חפשו: "Hotel Sonya Roma" או "Hotel Trastevere" — מלונות נקיים ומרכזיים עם חדרים משפחתיים. שימו לב לדירוג 8+ באתר</div>
+          <div class="hotel-features">
+            <span class="hotel-feat">🚇 קרוב למטרו</span>
+            <span class="hotel-feat">🛏️ חדר משפחתי</span>
+            <span class="hotel-feat">⭐ 8+ דירוג</span>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-header">
+            <div>
+              <div class="hotel-name">🌺 Agriturismo / B&B פירנצה</div>
+              <div class="hotel-city">פירנצה — 2 לילות</div>
+            </div>
+            <div class="hotel-price">€80-130</div>
+          </div>
+          <div class="hotel-detail">חפשו ב-Booking: "B&B Firenze famiglia" — הרבה B&Bs יפים בתוך הגבעות מחוץ לעיר עם נוף ופרקינג. חסכון + חוויה!</div>
+          <div class="hotel-features">
+            <span class="hotel-feat">🚗 פרקינג חינם</span>
+            <span class="hotel-feat">🍳 ארוחת בוקר</span>
+            <span class="hotel-feat">🌄 נוף</span>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-header">
+            <div>
+              <div class="hotel-name">🚂 Hotel Mestre / אפארטמנט</div>
+              <div class="hotel-city">מסטרה (ליד וונציה) — 1 לילה</div>
+            </div>
+            <div class="hotel-price">€70-110</div>
+          </div>
+          <div class="hotel-detail">חנייה במסטרה חוסכת עד 50€/יום! אפארטמנט מומלץ ל-5 נפשות — מטבח, חדרים נפרדים</div>
+          <div class="hotel-features">
+            <span class="hotel-feat">🚂 רכבת לוונציה 10 דק'</span>
+            <span class="hotel-feat">🚗 פרקינג חינם</span>
+            <span class="hotel-feat">🏠 אפארטמנט</span>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-header">
+            <div>
+              <div class="hotel-name">🌊 Hotel/Garni אגם גארדה</div>
+              <div class="hotel-city">לזיזה / פסקיארה — 2 לילות</div>
+            </div>
+            <div class="hotel-price">€90-150</div>
+          </div>
+          <div class="hotel-detail">הרבה מלונות ישירות על האגם! חפשו: "Hotel Lago di Garda famiglia" — בריכה, נוף לאגם, נגישות לגרדלנד</div>
+          <div class="hotel-features">
+            <span class="hotel-feat">🏊 בריכה</span>
+            <span class="hotel-feat">🌊 נוף לאגם</span>
+            <span class="hotel-feat">🎢 קרוב לגרדלנד</span>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-header">
+            <div>
+              <div class="hotel-name">🏛️ B&B / Hotel רומא אחרון</div>
+              <div class="hotel-city">רומא — לילה אחרון</div>
+            </div>
+            <div class="hotel-price">€80-120</div>
+          </div>
+          <div class="hotel-detail">קרוב לנמל תעופה FCO או בפרינמפריה של רומא — לא צריך מרכזי ביום האחרון. הזמינו עם פרקינג!</div>
+          <div class="hotel-features">
+            <span class="hotel-feat">✈️ קרוב לנמל תעופה</span>
+            <span class="hotel-feat">🚗 פרקינג</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TIPS TAB -->
+      <div id="panel-tips" class="panel">
+        <div class="tips-section">
+
+          <div class="tips-category">🌡️ יולי — מה לצפות</div>
+          <div class="tip-item"><span class="tip-emoji">☀️</span>חום של 30-38°C ביום — תכננו פעילות בבוקר ובערב, מנוחה 13:00-16:00</div>
+          <div class="tip-item"><span class="tip-emoji">🧴</span>קרם הגנה SPF 50 לילדים — חיוני! שמש איטלקית חזקה מאוד</div>
+          <div class="tip-item"><span class="tip-emoji">💧</span>בקבוק מים — יש ברזיות "nasoni" ברומא עם מים קרים וקינים</div>
+
+          <div class="tips-category">🚗 השכרת רכב</div>
+          <div class="tip-item"><span class="tip-emoji">📋</span>הזמינו מראש — Hertz, Europcar, Sixt. השוו ב-Rentalcars.com</div>
+          <div class="tip-item"><span class="tip-emoji">🛡️</span>קחו ביטוח מלא (CDW) — שלום נפש עם 3 ילדים!</div>
+          <div class="tip-item"><span class="tip-emoji">🚫</span>ZTL! — אזורי כניסה מוגבלת בכל עיר. הימנעו מנהיגה במרכז ההיסטורי</div>
+          <div class="tip-item"><span class="tip-emoji">🅿️</span>חפשו פרקינג כחול (P כחול) — בתשלום סביר. לבן = חינם</div>
+
+          <div class="tips-category">🎫 כרטיסים ותורים</div>
+          <div class="tip-item"><span class="tip-emoji">⏰</span>הזמינו מראש: קולוסיאום, וותיקן, גרדלנד — תורים של שעות ביולי!</div>
+          <div class="tip-item"><span class="tip-emoji">📱</span>הורידו את האפליקציה של גרדלנד — מציגה תורים חיים לכל אטרקציה</div>
+          <div class="tip-item"><span class="tip-emoji">👶</span>ילדים עד גיל 4 נכנסים בחינם לרוב האתרים</div>
+
+          <div class="tips-category">🍕 אוכל עם ילדים</div>
+          <div class="tip-item"><span class="tip-emoji">🍕</span>פיצה אל טאגליו — פיצה חתיכות ברחוב, זולה ומהירה. ילדים אוהבים!</div>
+          <div class="tip-item"><span class="tip-emoji">🍦</span>גלידה מ"גלטריה ארטיג'אנלה" — לא ג'לאטו תעשייתי! חפשו שלט "artigianale"</div>
+          <div class="tip-item"><span class="tip-emoji">💶</span>תפריט del giorno — תפריט היום ~12€ לאדם, אוכל מצוין</div>
+          <div class="tip-item"><span class="tip-emoji">🚫</span>הימנעו ממסעדות ממש ליד אטרקציות — יקרות יותר וטיב נמוך</div>
+
+          <div class="tips-category">💰 חיסכון כספי</div>
+          <div class="tip-item"><span class="tip-emoji">🏦</span>שלמו בכרטיס אשראי ללא עמלות המרה — Revolut / מסטרקארד</div>
+          <div class="tip-item"><span class="tip-emoji">🛒</span>קנו מים ואוכל בסופרמרקט (CONAD, COOP) — חוסכים הרבה</div>
+          <div class="tip-item"><span class="tip-emoji">🎟️</span>Rome City Pass — שווה אם עושים הרבה מוזיאונים</div>
+        </div>
+      </div>
+
+      <!-- BUDGET TAB -->
+      <div id="panel-budget" class="panel">
+
+        <div style="font-size:12px; color:#8b949e; margin-bottom:12px;">הערכת תקציב ל-5 נפשות (2 מבוגרים + 3 ילדים) — 10 ימים</div>
+
+        <table class="cost-table">
+          <tr>
+            <td>🏨 לינה (9 לילות × ~€120)</td>
+            <td>€1,080</td>
+          </tr>
+          <tr>
+            <td>🚗 השכרת רכב (10 ימים)</td>
+            <td>€500-700</td>
+          </tr>
+          <tr>
+            <td>⛽ דלק + טולים (אוטוסטראדה)</td>
+            <td>€200-280</td>
+          </tr>
+          <tr>
+            <td>🎫 כרטיסי כניסה (5 נפשות)</td>
+            <td>€350-450</td>
+          </tr>
+          <tr>
+            <td>🎢 גרדלנד (5 נפשות)</td>
+            <td>€150-180</td>
+          </tr>
+          <tr>
+            <td>🍕 אוכל (€50/יום × 10)</td>
+            <td>€500</td>
+          </tr>
+          <tr>
+            <td>🚤 גונדולה + כרטיסי אוטובוס</td>
+            <td>€100</td>
+          </tr>
+          <tr>
+            <td>🛍️ מזכרות + שונות</td>
+            <td>€150-200</td>
+          </tr>
+          <tr style="background:rgba(255,255,255,0.04)">
+            <td><strong>💶 סה"כ משוער</strong></td>
+            <td><strong>€3,030–3,490</strong></td>
+          </tr>
+        </table>
+
+        <div class="tip-box" style="margin-top:12px;">
+          ✈️ טיסות לא כלולות! חפשו ב-Skyscanner/Booking טיסות לרומא FCO בתחילת יולי — מומלץ להזמין 4-6 חודשים מראש.
+        </div>
+
+        <div style="margin-top:12px; padding:10px; background:rgba(63,185,80,0.06); border:1px solid rgba(63,185,80,0.2); border-radius:8px;">
+          <div style="font-size:12px; font-weight:700; color:#3fb950; margin-bottom:6px;">💡 טיפי חיסכון</div>
+          <div style="font-size:11px; color:#8b949e; line-height:1.7;">
+            • הזמינו מוקדם — חיסכון של €150-300 על לינה<br>
+            • אכלו ארוחות בוקר במלון + אוכל מהסופר<br>
+            • גרדלנד: קנו כרטיסים אונליין — חיסכון €8/נפש<br>
+            • חנו מחוץ לוונציה — חיסכון €40+/יום
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MAP -->
+  <div id="map"></div>
+
+  <div class="route-legend">
+    <div class="legend-title">🗺️ מסלול הטיול</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c0392b"></div>רומא (ימים 1-3, 9-10)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e67e22"></div>פיזה + פירנצה (ימים 4-5)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2980b9"></div>וונציה (יום 6)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#27ae60"></div>אגם גארדה (ימים 7-8)</div>
+  </div>
+</div>
+
+<script>
+// MAP SETUP
+const map = L.map('map', {
+  zoomControl: true,
+  attributionControl: false
+}).setView([43.5, 12.5], 6);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+// LOCATIONS DATA
+const locations = [
+  {
+    id: 'colosseum',
+    lat: 41.8902, lng: 12.4922,
+    name: 'הקולוסיאום', region: 'רומא',
+    icon: '🏟️', color: '#c0392b',
+    desc: 'אמפיתאטרון עתיק מימי הרומאים — אחת מ-7 פלאי העולם החדש. חוויה בלתי נשכחת לילדים!',
+    tags: ['חובה', 'לילדים', '18€', '3-4 שעות']
+  },
+  {
+    id: 'vatican',
+    lat: 41.9065, lng: 12.4536,
+    name: 'מוזיאוני הוותיקן', region: 'הוותיקן, רומא',
+    icon: '🎨', color: '#c0392b',
+    desc: 'הקפלה הסיסטינית ואוסף האמנות הגדול בעולם. הזמינו כרטיסים מראש!',
+    tags: ['חובה', '17€', '3-4 שעות']
+  },
+  {
+    id: 'trevi',
+    lat: 41.9009, lng: 12.4833,
+    name: 'מזרקת טרווי', region: 'רומא',
+    icon: '⛲', color: '#c0392b',
+    desc: 'המזרקה הגדולה בעולם — זריקת מטבע לחזרה לרומא!',
+    tags: ['חובה', 'לילדים', 'חינם']
+  },
+  {
+    id: 'pisa',
+    lat: 43.7229, lng: 10.3966,
+    name: 'מגדל פיזה', region: 'פיזה',
+    icon: '🗼', color: '#e67e22',
+    desc: 'המגדל הנטוי המפורסם — עצירה חובה בדרך לפירנצה!',
+    tags: ['חובה', 'לילדים', '20€', '2 שעות']
+  },
+  {
+    id: 'uffizi',
+    lat: 43.7678, lng: 11.2553,
+    name: 'גלריית אופיצי', region: 'פירנצה',
+    icon: '🖼️', color: '#e67e22',
+    desc: 'ונוס של בוטיצ\'לי ועוד פסגות האמנות האנושית.',
+    tags: ['12€', '2-3 שעות']
+  },
+  {
+    id: 'venice',
+    lat: 45.4342, lng: 12.3385,
+    name: 'פיאצה סן מרקו', region: 'וונציה',
+    icon: '🚤', color: '#2980b9',
+    desc: 'לב וונציה הצפה — גונדולות, תעלות ואדריכלות עוצרת נשימה.',
+    tags: ['חובה', 'לילדים', 'גונדולה 80€']
+  },
+  {
+    id: 'gardaland',
+    lat: 45.4563, lng: 10.7133,
+    name: 'גרדלנד', region: 'אגם גארדה',
+    icon: '🎢', color: '#27ae60',
+    desc: 'הפארק הגדול באיטליה! 40+ אטרקציות. דירוג 4.4 ⭐ עם 125K ביקורות!',
+    tags: ['חובה', 'לילדים', '~40€/נפש', 'יום שלם']
+  },
+  {
+    id: 'sirmione',
+    lat: 45.465, lng: 10.607,
+    name: 'סירמיונה', region: 'אגם גארדה',
+    icon: '🏰', color: '#27ae60',
+    desc: 'כפר הלשונית הקסום — מבצר ימי ביניים ומים צלולים.',
+    tags: ['לילדים', 'שחייה']
+  },
+  {
+    id: 'como',
+    lat: 46.016, lng: 9.257,
+    name: 'אגם קומו', region: 'לומברדיה',
+    icon: '⛰️', color: '#8e44ad',
+    desc: 'האגם היפה באיטליה — הרי אלפים ורפלקציה מרהיבה.',
+    tags: ['נוף', 'חצי יום']
+  }
+];
+
+// Create custom icon
+function createIcon(emoji, color) {
+  return L.divIcon({
+    className: '',
+    html: `<div style="
+      background: ${color};
+      width: 38px;
+      height: 38px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      border: 3px solid white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "><div style="transform:rotate(45deg);font-size:16px;line-height:1">${emoji}</div></div>`,
+    iconSize: [38, 38],
+    iconAnchor: [19, 38],
+    popupAnchor: [0, -40]
+  });
+}
+
+// Add markers
+locations.forEach(loc => {
+  const marker = L.marker([loc.lat, loc.lng], { icon: createIcon(loc.icon, loc.color) })
+    .addTo(map)
+    .bindPopup(`
+      <div class="popup-content">
+        <div class="popup-icon">${loc.icon}</div>
+        <div class="popup-name">${loc.name}</div>
+        <div class="popup-region">${loc.region}</div>
+        <div class="popup-desc">${loc.desc}</div>
+        <div class="popup-tags">
+          ${loc.tags.map((t, i) => `<span class="popup-tag ${i===0?'highlight':''}">${t}</span>`).join('')}
+        </div>
+      </div>
+    `, { maxWidth: 260 });
+
+  loc.marker = marker;
+});
+
+// Draw route with arrows
+const routeCoords = [
+  [41.8902, 12.4922], // Rome
+  [43.7229, 10.3966], // Pisa
+  [43.7678, 11.2553], // Florence
+  [45.4342, 12.3385], // Venice
+  [45.4563, 10.7133], // Gardaland
+  [45.465, 10.607],   // Sirmione
+  [41.8902, 12.4922]  // Back to Rome
+];
+
+// Thick base line (glow effect via two layers)
+L.polyline(routeCoords, {
+  color: '#1a3a6b',
+  weight: 10,
+  opacity: 0.6,
+}).addTo(map);
+
+L.polyline(routeCoords, {
+  color: '#3b82f6',
+  weight: 5,
+  opacity: 1,
+}).addTo(map);
+
+L.polyline(routeCoords, {
+  color: '#ffffff',
+  weight: 1.5,
+  opacity: 0.6,
+  dashArray: '12, 8'
+}).addTo(map);
+
+// Draw direction arrow at midpoint of each segment
+function drawArrow(from, to) {
+  const midLat = (from[0] + to[0]) / 2;
+  const midLng = (from[1] + to[1]) / 2;
+  const dx = to[1] - from[1];
+  const dy = to[0] - from[0];
+  const angleDeg = Math.atan2(dx, dy) * (180 / Math.PI);
+  const arrowIcon = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:0; height:0;
+      border-left:10px solid transparent;
+      border-right:10px solid transparent;
+      border-bottom:20px solid #f97316;
+      transform:rotate(${angleDeg}deg);
+      filter:drop-shadow(0 0 5px rgba(249,115,22,0.9));
+    "></div>`,
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  });
+  L.marker([midLat, midLng], { icon: arrowIcon, interactive: false, zIndexOffset: 500 }).addTo(map);
+}
+
+for (let i = 0; i < routeCoords.length - 1; i++) {
+  drawArrow(routeCoords[i], routeCoords[i + 1]);
+}
+
+// Fly to location
+function focusMap(lat, lng, id) {
+  map.flyTo([lat, lng], 13, { duration: 1.5 });
+  const loc = locations.find(l => l.id === id);
+  if (loc && loc.marker) {
+    setTimeout(() => loc.marker.openPopup(), 1500);
+  }
+  // Highlight card
+  document.querySelectorAll('.location-card').forEach(c => c.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+
+// Tab switching
+function switchTab(tabId, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + tabId).classList.add('active');
+  el.classList.add('active');
+}
+
+// Toggle day
+function toggleDay(card, dayNum) {
+  const body = card.querySelector('.day-body');
+  const isOpen = body.classList.contains('open');
+  
+  // Close all
+  document.querySelectorAll('.day-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.day-card').forEach(c => c.classList.remove('active'));
+  
+  if (!isOpen) {
+    body.classList.add('open');
+    card.classList.add('active');
+    
+    // Fly to relevant location
+    const dayLocations = {
+      1: [41.8902, 12.4922, 6], 2: [41.8902, 12.4922, 13],
+      3: [41.9065, 12.4536, 13], 4: [43.72, 10.65, 9],
+      5: [43.7678, 11.2553, 13], 6: [45.4342, 12.3385, 13],
+      7: [45.4563, 10.7133, 13], 8: [45.465, 10.607, 12],
+      9: [43.5, 12.2, 7], 10: [41.8, 12.25, 11]
+    };
+    
+    if (dayLocations[dayNum]) {
+      const [lat, lng, zoom] = dayLocations[dayNum];
+      map.flyTo([lat, lng], zoom, { duration: 1.5 });
+    }
+  }
+}
+</script>
+</body>
+</html>
