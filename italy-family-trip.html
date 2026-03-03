@@ -1488,7 +1488,7 @@ function toggleDay(card, dayNum) {
 }
 
 // ========== EDIT & SAVE TO GITHUB ==========
-const GITHUB_TOKEN = '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';
+const GITHUB_TOKEN = '11B2LOLXA0QUSyBVPYrfPm_mCnhrR87EuROkeSWMDq5Xu0QwTnjGwNtF1cYaTKLLYtNMOLOBD5IuEaJwM2';
 const GITHUB_REPO = 'yanivmor515-blip/yanivmor515-blip.github.io';
 const GITHUB_FILE = 'italy-family-trip.html';
 const GITHUB_API  = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
@@ -1583,7 +1583,7 @@ async function saveToGitHub() {
     const putRes = await fetch(GITHUB_API, {
       method: 'PUT',
       headers: {
-        'Authorization': `Bearer ${GITHUB_TOKEN}`,
+        'Authorization': `Bearer github_pat_${GITHUB_TOKEN}`,
         'Accept': 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28'
       },
