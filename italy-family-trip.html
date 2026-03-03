@@ -1571,7 +1571,7 @@ async function saveToGitHub() {
     // Get updated HTML
     const html = '<!DOCTYPE html>' + document.documentElement.outerHTML;
     const encoded = btoa(unescape(encodeURIComponent(html)));
-	const newContent = encoded;
+	let newContent = encoded;
 	newContent = originalContent;
 
     const body = {
