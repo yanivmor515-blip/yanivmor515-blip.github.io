@@ -1495,6 +1495,7 @@ const GITHUB_API  = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITH
 
 let editMode = false;
 let sha = null;
+let originalContent = null;
 
 function showToast(msg, isError = false) {
   let t = document.getElementById('toast');
@@ -1540,6 +1541,7 @@ async function toggleEditMode() {
     if (shaRes.ok) {
       const shaData = await shaRes.json();
       sha = shaData.sha;
+	  originalContent = shaData.content;
     }  
   }
   catch (e) 
@@ -1554,13 +1556,27 @@ async function saveToGitHub() {
   btn.innerHTML = '<span class="spinner"></span> שומר...';
 
   try {
+     // Get current SHA
+    const shaRes = await fetch(GITHUB_API, {
+      headers: {
+
+      }
+    });
+
+    if (shaRes.ok) {
+      const shaData = await shaRes.json();
+      sha = shaData.sha;
+    }  
+	
     // Get updated HTML
     const html = '<!DOCTYPE html>' + document.documentElement.outerHTML;
     const encoded = btoa(unescape(encodeURIComponent(html)));
+	const newContent = encoded;
+	newContent = originalContent;
 
     const body = {
       message: '✏️ עדכון תוכן טיול איטליה ' + new Date().toLocaleString('he-IL'),
-      content: encoded,
+      content: newContent,
       ...(sha && { sha })
     };
 
