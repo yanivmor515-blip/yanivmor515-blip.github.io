@@ -1503,7 +1503,7 @@ function showToast(msg, isError = false) {
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-function toggleEditMode() {
+async function toggleEditMode() {
   editMode = !editMode;
   const editables = document.querySelectorAll(
     '.day-title, .day-sub, .activity-name, .activity-detail, .activity-time, ' +
