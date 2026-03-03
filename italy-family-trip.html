@@ -1494,6 +1494,7 @@ const GITHUB_FILE = 'italy-family-trip.html';
 const GITHUB_API  = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
 
 let editMode = false;
+let sha = null;
 
 function showToast(msg, isError = false) {
   let t = document.getElementById('toast');
@@ -1517,13 +1518,34 @@ function toggleEditMode() {
     document.getElementById('btn-save').style.display = 'flex';
     document.getElementById('btn-cancel').style.display = 'flex';
     showToast('✏️ מצב עריכה פעיל — לחצו על כל טקסט לעריכה');
-  } else {
+  }
+  else 
+  {
     document.body.classList.remove('edit-mode');
     editables.forEach(el => el.removeAttribute('contenteditable'));
     document.getElementById('btn-edit').style.display = 'flex';
     document.getElementById('btn-save').style.display = 'none';
     document.getElementById('btn-cancel').style.display = 'none';
   }
+  
+  try 
+  {
+    // Get current SHA
+    const shaRes = await fetch(GITHUB_API, {
+      headers: {
+
+      }
+    });
+
+    if (shaRes.ok) {
+      const shaData = await shaRes.json();
+      sha = shaData.sha;
+    }  
+  }
+  catch (e) 
+  {
+    showToast('❌ שגיאת רשת: ' + e.message, true);
+  }	
 }
 
 async function saveToGitHub() {
@@ -1532,19 +1554,6 @@ async function saveToGitHub() {
   btn.innerHTML = '<span class="spinner"></span> שומר...';
 
   try {
-    // Get current SHA
-    const shaRes = await fetch(GITHUB_API, {
-      headers: {
-
-      }
-    });
-
-    let sha = null;
-    if (shaRes.ok) {
-      const shaData = await shaRes.json();
-      sha = shaData.sha;
-    }
-
     // Get updated HTML
     const html = '<!DOCTYPE html>' + document.documentElement.outerHTML;
     const encoded = btoa(unescape(encodeURIComponent(html)));
