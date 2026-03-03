@@ -661,16 +661,16 @@ async function saveToGitHub(){
   const btn=document.getElementById('btn-save');
   btn.disabled=true;btn.innerHTML='<span class="spinner"></span> שומר...';
   try{
-    toggleEditMode();
     const shaRes=await fetch(GITHUB_API,{headers:{'Authorization':`Bearer github_pat_${GITHUB_TOKEN}`,'Accept':'application/vnd.github+json'}});
     if(shaRes.ok){const d=await shaRes.json();fileSha=d.sha;}
     const html='<!DOCTYPE html>'+document.documentElement.outerHTML;
+	toggleEditMode();
+	btn.disabled=false;btn.innerHTML='💾 שמור';
     const encoded=btoa(unescape(encodeURIComponent(html)));
     const putRes=await fetch(GITHUB_API,{method:'PUT',headers:{'Authorization':`Bearer github_pat_${GITHUB_TOKEN}`,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','Content-Type':'application/json'},body:JSON.stringify({message:'✏️ עדכון טיול '+new Date().toLocaleString('he-IL'),content:encoded,...(fileSha&&{sha:fileSha})})});
     if(putRes.ok){showToast('✅ נשמר! יופיע באתר תוך דקה');}
     else{const err=await putRes.json();showToast('❌ שגיאה: '+(err.message||'נסו שוב'),true);}
   }catch(e){showToast('❌ שגיאת רשת: '+e.message,true);}
-  btn.disabled=false;btn.innerHTML='💾 שמור';
 }
 </script>
 </body>
