@@ -367,6 +367,123 @@
     #map { height: 50vh; }
     .header-badges { display: none; }
   }
+
+  /* EDIT MODE */
+  .edit-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 9999;
+    background: rgba(13,17,23,0.95);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 30px;
+    padding: 8px 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    align-items: center;
+  }
+
+  .edit-bar-label {
+    font-size: 12px;
+    color: #8b949e;
+    margin-left: 4px;
+  }
+
+  .btn-edit {
+    background: linear-gradient(135deg, #1f6feb, #388bfd);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 7px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-edit:hover { opacity: 0.85; transform: scale(1.03); }
+
+  .btn-save {
+    background: linear-gradient(135deg, #238636, #2ea043);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 7px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-save:hover { opacity: 0.85; transform: scale(1.03); }
+  .btn-save:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .btn-cancel {
+    background: rgba(255,255,255,0.07);
+    color: #c9d1d9;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 7px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-cancel:hover { background: rgba(255,255,255,0.12); }
+
+  /* Editable elements highlight */
+  .edit-mode [contenteditable="true"] {
+    outline: 1px dashed rgba(88,166,255,0.5);
+    border-radius: 3px;
+    cursor: text;
+    background: rgba(88,166,255,0.04);
+  }
+
+  .edit-mode [contenteditable="true"]:focus {
+    outline: 2px solid #58a6ff;
+    background: rgba(88,166,255,0.08);
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #238636;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 99999;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .toast.error { background: #da3633; }
+  .toast.show { opacity: 1; }
+
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: inline-block;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
 </style>
 </head>
 <body>
@@ -1369,6 +1486,110 @@ function toggleDay(card, dayNum) {
     }
   }
 }
+
+// ========== EDIT & SAVE TO GITHUB ==========
+const GITHUB_TOKEN = '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';
+const GITHUB_REPO = 'yanivmor515-blip/yanivmor515-blip.github.io';
+const GITHUB_FILE = 'italy-family-trip.html';
+const GITHUB_API  = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+
+let editMode = false;
+
+function showToast(msg, isError = false) {
+  let t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isError ? ' error' : '') + ' show';
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+function toggleEditMode() {
+  editMode = !editMode;
+  const editables = document.querySelectorAll(
+    '.day-title, .day-sub, .activity-name, .activity-detail, .activity-time, ' +
+    '.tip-box, .loc-name, .loc-desc, .hotel-name, .hotel-detail, ' +
+    '.hotel-city, .tip-item, .title-text h1, .title-text p'
+  );
+
+  if (editMode) {
+    document.body.classList.add('edit-mode');
+    editables.forEach(el => el.setAttribute('contenteditable', 'true'));
+    document.getElementById('btn-edit').style.display = 'none';
+    document.getElementById('btn-save').style.display = 'flex';
+    document.getElementById('btn-cancel').style.display = 'flex';
+    showToast('✏️ מצב עריכה פעיל — לחצו על כל טקסט לעריכה');
+  } else {
+    document.body.classList.remove('edit-mode');
+    editables.forEach(el => el.removeAttribute('contenteditable'));
+    document.getElementById('btn-edit').style.display = 'flex';
+    document.getElementById('btn-save').style.display = 'none';
+    document.getElementById('btn-cancel').style.display = 'none';
+  }
+}
+
+async function saveToGitHub() {
+  const btn = document.getElementById('btn-save');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> שומר...';
+
+  try {
+    // Get current SHA
+    const shaRes = await fetch(GITHUB_API, {
+      headers: {
+        'Authorization': `token ${GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+
+    let sha = null;
+    if (shaRes.ok) {
+      const shaData = await shaRes.json();
+      sha = shaData.sha;
+    }
+
+    // Get updated HTML
+    const html = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+    const encoded = btoa(unescape(encodeURIComponent(html)));
+
+    const body = {
+      message: '✏️ עדכון תוכן טיול איטליה ' + new Date().toLocaleString('he-IL'),
+      content: encoded,
+      ...(sha && { sha })
+    };
+
+    const putRes = await fetch(GITHUB_API, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (putRes.ok) {
+      showToast('✅ נשמר בהצלחה! השינויים יופיעו באתר תוך דקה');
+      toggleEditMode();
+    } else {
+      const err = await putRes.json();
+      showToast('❌ שגיאה: ' + (err.message || 'נסו שוב'), true);
+    }
+  } catch (e) {
+    showToast('❌ שגיאת רשת: ' + e.message, true);
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '💾 שמור ופרסם';
+}
+
 </script>
+
+<div class="toast" id="toast"></div>
+<div class="edit-bar">
+  <span class="edit-bar-label">✏️ עריכת תוכן:</span>
+  <button class="btn-edit" id="btn-edit" onclick="toggleEditMode()">✏️ ערוך</button>
+  <button class="btn-save" id="btn-save" onclick="saveToGitHub()" style="display:none">💾 שמור ופרסם</button>
+  <button class="btn-cancel" id="btn-cancel" onclick="toggleEditMode()" style="display:none">ביטול</button>
+</div>
+
 </body>
 </html>
