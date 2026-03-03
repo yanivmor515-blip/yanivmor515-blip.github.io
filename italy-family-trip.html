@@ -1535,8 +1535,7 @@ async function saveToGitHub() {
     // Get current SHA
     const shaRes = await fetch(GITHUB_API, {
       headers: {
-        'Authorization': `Bearer ${GITHUB_TOKEN}`,
-        'Accept': 'application/vnd.github.v3+json'
+
       }
     });
 
