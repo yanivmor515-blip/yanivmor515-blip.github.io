@@ -1027,85 +1027,14 @@
                     <div id="panel-budget" class="panel">
                         <div style="font-size:12px;color:#8b949e;margin-bottom:12px;">הערכת תקציב ל-5 נפשות — 10 ימים</div>
                         <table class="cost-table" id="budget-table">
-                            <tbody>
-                                <tr class="deletable">
-                                    <td>🏨 לינה (3 לילות × ~€200)</td>
-                                    <td>€600</td>
-                                    <td style="width:20px">
-                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
-                                    </td>
-                                </tr>
-                                <tr class="deletable">
-                                    <td>🚗 השכרת רכב (4 ימים)</td>
-                                    <td>€400</td>
-                                    <td>
-                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
-                                    </td>
-                                </tr>
-                                <tr class="deletable">
-                                    <td>⛽ דלק + טולים</td>
-                                    <td>€50</td>
-                                    <td>
-                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
-                                    </td>
-                                </tr>
-                                <tr class="deletable">
-                                    <td>🎫 אטרקציות (5 נפשות)</td>
-                                    <td>€500</td>
-                                    <td>
-                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
-                                    </td>
-                                </tr>
-                                
-                                <tr class="deletable">
-                                    <td>🍕 אוכל (€100/יום × 4)</td>
-                                    <td>€400</td>
-                                    <td>
-                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
-                                    </td>
-                                </tr>
-                                
-                                <tr class="deletable">
-                                    <td>🛍️ קניות</td>
-                                    <td>€600</td>
-                                    <td>
-                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
-                                    </td>
-                                </tr>
-                                <tr class="deletable">
-                                    <td>✈️ טיסות</td>
-                                    <td>€1000</td>
-                                    <td>
-                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
-                                    </td>
-                                </tr>
-                                <tr style="background:rgba(255,255,255,0.04)">
-                                    <td>
-                                        <strong>💶 סה"כ משוער</strong>
-                                    </td>
-                                    <td>
-                                        <strong>€3,550</strong>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                         <div class="tip-box" style="margin-top:12px;">
-                            ✈️ טיסות מתל אביב לרומא Wizz Air (4 נוסעים)<br>
-                            1 מזוודה לבטן המטוס - עד 20 ק"ג<br>
-                            1 טרולי עד 10 ק"ג<br>4 תיק אישי קטן לכל נוסע
                         </div>
                     </div>
                 </div>
             </div>
             <div id="map" class="leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;">	
-            <div class="route-legend" style="display:none">
-                <div class="legend-title">🗺️ מסלול הטיול</div>
-                <div class="legend-item">
-                    <div class="legend-dot" style="background:#c0392b"></div>
-                    רומא (ימים 1-4)
-                </div>
-            </div>
         </div>
         <div class="toast" id="toast"></div>
         <div class="edit-bar" id="edit-bar">
@@ -1142,38 +1071,8 @@
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19
             }).addTo(map);
-            const locs = [{
-                id: 'colosseum',
-                lat: 41.8902,
-                lng: 12.4922,
-                name: 'הקולוסיאום',
-                region: 'רומא',
-                icon: '🏟️',
-                color: '#c0392b',
-                desc: 'אמפיתאטרון עתיק.',
-                tags: ['חובה', '18€']
-            }, {
-                id: 'vatican',
-                lat: 41.9065,
-                lng: 12.4536,
-                name: 'מוזיאוני הוותיקן',
-                region: 'הוותיקן',
-                icon: '🎨',
-                color: '#c0392b',
-                desc: 'הקפלה הסיסטינית.',
-                tags: ['חובה', '17€']
-            }, {
-                id: 'trevi',
-                lat: 41.9009,
-                lng: 12.4833,
-                name: 'מזרקת טרווי',
-                region: 'רומא',
-                icon: '⛲',
-                color: '#c0392b',
-                desc: 'המזרקה היפה בעולם.',
-                tags: ['חובה', 'חינם']
-            }];
-            function mkIcon(emoji, color) {
+			const locs = [];
+			function mkIcon(emoji, color) {
                 return L.divIcon({
                     className: '',
                     html: `<div style="background:${color};width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">${emoji}</div></div>`,
