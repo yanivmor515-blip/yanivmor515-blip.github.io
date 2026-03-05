@@ -286,6 +286,14 @@
       "endTime": "00:00",
       "amount": "140",
       "feedType": "בקבוק"
+    },
+    {
+      "id": "mme2ivsdm7bygbekodg",
+      "type": "spit",
+      "date": "2026-03-05",
+      "startTime": "23:40",
+      "notes": "פלטה בזמן האוכל ",
+      "amount": "בינוני"
     }
   ]
 }
