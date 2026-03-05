@@ -1092,14 +1092,14 @@
             userLocations.forEach(l => {
                 const m = L.marker([l.lat, l.lng], {
                     icon: mkIcon(l.icon, l.color)
-                }).addTo(map).bindPopup(`<div class="popup-content"><div class="popup-icon">${l.icon}</div><div class="popup-name">${l.name}</div><div class="popup-region">${l.region}</div><div class="popup-desc">${l.desc}</div><div class="popup-tags">${l.tags.map( (t, i) => `<span class="popup-tag ${i === 0 ? 'highlight' : ''}">${t}</span>`).join('')}</div></div>`, {
-                    maxWidth: 260
-                });
+                })
+				.addTo(map)
+				.bindPopup(`<div class="popup-content"><div class="popup-icon">${l.icon}</div><div class="popup-name">${l.name}</div><div class="popup-region">${l.region}</div><div class="popup-desc">${l.desc}</div><div class="popup-tags">${l.tags.map( (t, i) => `<span class="popup-tag ${i === 0 ? 'highlight' : ''}">${t}</span>`).join('')}</div></div>`, { maxWidth: 260 });
                 userPins.push({
-                    l.id,
+                    id: l.id,
                     marker: m,
-                    l.lat,
-                    l.lng
+                    lat: l.lat,
+                    lng: l.lng
                 });				
 				
             }
