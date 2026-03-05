@@ -27,6 +27,14 @@
       "date": "2026-03-04",
       "startTime": "22:00",
       "notes": ""
+    },
+    {
+      "id": "mmdcrqurycmtonnf1i",
+      "type": "sleep",
+      "date": "2026-03-04",
+      "startTime": "17:00",
+      "notes": "",
+      "endTime": "19:45"
     }
   ]
 }
