@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מעקב תינוק</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #0d1117;
+  --bg2:   #161b27;
+  --bg3:   #1d2336;
+  --bg4:   #252d42;
+  --border:  rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.12);
+  --text:  #e8eaf0;
+  --text2: #8a95ae;
+  --text3: #4a5568;
+  --feed:  #f5a55a; --feed-bg: rgba(245,165,90,0.09);  --feed-b: rgba(245,165,90,0.22);
+  --sleep: #6fb8f0; --sleep-bg:rgba(111,184,240,0.09); --sleep-b:rgba(111,184,240,0.22);
+  --poop:  #b8926a; --poop-bg: rgba(184,146,106,0.09); --poop-b: rgba(184,146,106,0.22);
+  --pee:   #c5d668; --pee-bg:  rgba(197,214,104,0.09); --pee-b:  rgba(197,214,104,0.22);
+  --spit:  #e87aaa; --spit-bg: rgba(232,122,170,0.09); --spit-b: rgba(232,122,170,0.22);
+  --warn:  #f07045; --warn-bg: rgba(240,112,69,0.10);
+  --ok:    #5bc98a; --ok-bg:   rgba(91,201,138,0.09);
+  --tip:   #6f9de8; --tip-bg:  rgba(111,157,232,0.09);
+  --r: 12px; --rsm: 8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#13192b,#1a2240);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 2px 20px rgba(0,0,0,.35);}
+.hdr-left{display:flex;align-items:center;gap:10px;}
+.hdr-icon{font-size:26px;}
+.hdr h1{font-size:17px;font-weight:800;color:var(--text);}
+.hdr p{font-size:11px;color:var(--text2);margin-top:1px;}
+.hdr-right{display:flex;gap:7px;}
+
+/* TABS */
+.tabs{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;flex-shrink:0;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;padding:11px 16px;font-family:'Heebo',sans-serif;font-size:12px;font-weight:700;color:var(--text3);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.tab:hover{color:var(--text2);}
+.tab.on{color:var(--tip);border-bottom-color:var(--tip);}
+
+/* BODY */
+.body{flex:1;overflow-y:auto;overflow-x:hidden;padding:14px;max-width:900px;margin:0 auto;width:100%;}
+.body::-webkit-scrollbar{width:4px;}
+.body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px;}
+
+/* DATE NAV */
+.date-nav{display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:9px 14px;margin-bottom:12px;}
+.arr{width:30px;height:30px;border-radius:50%;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.arr:hover{background:var(--bg4);color:var(--text);}
+.date-ctr{text-align:center;}
+.date-ctr .dm{font-size:14px;font-weight:700;}
+.date-ctr .ds{font-size:10px;color:var(--text3);margin-top:1px;}
+.today-btn{font-family:'Heebo',sans-serif;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;transition:all .2s;}
+.today-btn:hover{background:var(--tip);color:#fff;border-color:var(--tip);}
+
+/* QUICK ADD */
+.qadd{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
+.qbtn{flex:1;min-width:70px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px;border-radius:var(--rsm);border:1px solid var(--border);background:var(--bg2);cursor:pointer;transition:all .18s;font-family:'Heebo',sans-serif;}
+.qbtn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.3);}
+.qbtn .qi{font-size:20px;}
+.qbtn .ql{font-size:11px;font-weight:700;color:var(--text2);}
+.qbtn.feed{border-color:var(--feed-b);}.qbtn.feed:hover{background:var(--feed-bg);}
+.qbtn.sleep{border-color:var(--sleep-b);}.qbtn.sleep:hover{background:var(--sleep-bg);}
+.qbtn.poop{border-color:var(--poop-b);}.qbtn.poop:hover{background:var(--poop-bg);}
+.qbtn.pee{border-color:var(--pee-b);}.qbtn.pee:hover{background:var(--pee-bg);}
+.qbtn.spit{border-color:var(--spit-b);}.qbtn.spit:hover{background:var(--spit-bg);}
+
+/* STATS GRID */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:12px;}
+.scard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rsm);padding:12px 14px;}
+.scard.feed{border-color:var(--feed-b);} .scard.sleep{border-color:var(--sleep-b);}
+.scard.poop{border-color:var(--poop-b);} .scard.pee{border-color:var(--pee-b);}  .scard.spit{border-color:var(--spit-b);}
+.slbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:3px;}
+.sval{font-size:22px;font-weight:900;line-height:1;}
+.ssub{font-size:10px;color:var(--text2);margin-top:3px;}
+
+/* TIMELINE */
+.sec-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin-bottom:8px;padding-right:2px;}
+.timeline{display:flex;flex-direction:column;gap:5px;}
+.ecard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rsm);padding:9px 12px;display:flex;align-items:center;gap:10px;transition:all .18s;position:relative;}
+.ecard:hover{border-color:var(--border2);}
+.ecard.abnormal{border-color:var(--warn)!important;background:var(--warn-bg);}
+.ecard.feed{border-right:3px solid var(--feed);}
+.ecard.sleep{border-right:3px solid var(--sleep);}
+.ecard.poop{border-right:3px solid var(--poop);}
+.ecard.pee{border-right:3px solid var(--pee);}
+.ecard.spit{border-right:3px solid var(--spit);}
+.etype{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.ecard.feed .etype{background:var(--feed-bg);} .ecard.sleep .etype{background:var(--sleep-bg);}
+.ecard.poop .etype{background:var(--poop-bg);} .ecard.pee .etype{background:var(--pee-bg);}
+.ecard.spit .etype{background:var(--spit-bg);}
+.einfo{flex:1;}
+.emain{font-size:12px;font-weight:700;color:var(--text);}
+.edet{font-size:10px;color:var(--text2);margin-top:2px;line-height:1.4;}
+.etime{font-size:12px;font-weight:800;color:var(--text2);white-space:nowrap;}
+.eacts{display:flex;gap:3px;}
+.ibtn{width:26px;height:26px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text3);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .18s;}
+.ibtn:hover{background:var(--bg4);color:var(--text);}
+.ibtn.del:hover{background:rgba(240,112,69,.15);color:var(--warn);border-color:var(--warn);}
+.abnorm-tag{position:absolute;top:5px;left:8px;background:var(--warn);color:#fff;font-size:9px;font-weight:800;padding:1px 6px;border-radius:20px;}
+
+/* EMPTY */
+.empty{text-align:center;padding:36px 20px;color:var(--text3);}
+.empty .ei{font-size:38px;margin-bottom:8px;}
+
+/* INSIGHTS */
+.ilist{display:flex;flex-direction:column;gap:7px;margin-bottom:12px;}
+.iitem{display:flex;gap:9px;align-items:flex-start;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rsm);padding:11px 13px;}
+.iitem.warn{border-color:rgba(240,112,69,.35);background:var(--warn-bg);}
+.iitem.ok{border-color:rgba(91,201,138,.3);background:var(--ok-bg);}
+.iitem.tip{border-color:rgba(111,157,232,.3);background:var(--tip-bg);}
+.iicon{font-size:17px;flex-shrink:0;margin-top:1px;}
+.itxt .ititle{font-size:12px;font-weight:800;color:var(--text);margin-bottom:2px;}
+.itxt .idesc{font-size:11px;color:var(--text2);line-height:1.5;}
+
+/* WEEK */
+.wdays{display:flex;gap:5px;overflow-x:auto;margin-bottom:12px;padding-bottom:2px;scrollbar-width:none;}
+.wdays::-webkit-scrollbar{display:none;}
+.wdpill{flex-shrink:0;padding:7px 10px;border-radius:var(--rsm);border:1px solid var(--border);background:var(--bg2);text-align:center;min-width:56px;cursor:pointer;transition:all .18s;}
+.wdpill:hover{border-color:var(--border2);}
+.wdpill.on{border-color:var(--tip);background:rgba(111,157,232,.1);}
+.wdn{font-size:9px;font-weight:800;color:var(--text3);text-transform:uppercase;}
+.wdd{font-size:13px;font-weight:900;color:var(--text);margin:2px 0;}
+.wddots{display:flex;gap:2px;justify-content:center;}
+.dot{width:5px;height:5px;border-radius:50%;}
+
+.wchart{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:12px;}
+.chtitle{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px;}
+.chbars{display:flex;gap:5px;align-items:flex-end;height:70px;}
+.cbw{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.cbbg{width:100%;background:var(--bg3);border-radius:4px;position:relative;overflow:hidden;}
+.cbfill{position:absolute;bottom:0;width:100%;border-radius:4px;transition:height .5s ease;}
+.cblbl{font-size:9px;color:var(--text3);font-weight:700;}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9000;display:none;align-items:center;justify-content:center;padding:14px;}
+.overlay.on{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:18px;width:100%;max-width:390px;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:su .2s ease;}
+@keyframes su{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
+.mhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.mtitle{font-size:15px;font-weight:900;}
+.mclose{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:2px 6px;border-radius:5px;}
+.mclose:hover{color:var(--text);background:var(--bg3);}
+.fg{margin-bottom:10px;}
+.fl{font-size:10px;font-weight:800;color:var(--text2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
+.fi,.fs,.fta{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:var(--rsm);padding:8px 11px;color:var(--text);font-family:'Heebo',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
+.fi:focus,.fs:focus{border-color:var(--tip);}
+.fs option{background:var(--bg2);}
+.fta{resize:vertical;min-height:52px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.mftr{display:flex;gap:7px;margin-top:14px;justify-content:flex-end;}
+.btn{font-family:'Heebo',sans-serif;padding:8px 16px;border-radius:var(--rsm);font-size:13px;font-weight:800;cursor:pointer;border:none;transition:all .2s;}
+.btn-p{background:#4466cc;color:#fff;}.btn-p:hover{background:#5577dd;}
+.btn-s{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);}.btn-s:hover{background:var(--bg4);color:var(--text);}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1d2336;border:1px solid var(--border2);color:var(--text);padding:9px 18px;border-radius:20px;font-size:12px;font-weight:700;z-index:99999;box-shadow:0 6px 20px rgba(0,0,0,.4);opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;}
+.toast.on{opacity:1;}
+
+/* SMALL BTN */
+.sbtn{font-family:'Heebo',sans-serif;font-size:11px;font-weight:700;padding:5px 11px;border-radius:var(--rsm);border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;transition:all .18s;}
+.sbtn:hover{background:var(--bg4);color:var(--text);}
+
+@media(max-width:560px){.sgrid{grid-template-columns:1fr 1fr;}.qbtn .ql{font-size:10px;}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-icon">🍼</div>
+    <div>
+      <h1>מעקב תינוק</h1>
+      <p id="age-lbl">טוען...</p>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <button class="sbtn" onclick="openSettings()">⚙️ הגדרות</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab on" data-tab="day"     onclick="switchTab(this)">📅 יומי</button>
+  <button class="tab"    data-tab="week"    onclick="switchTab(this)">📊 שבועי</button>
+  <button class="tab"    data-tab="insights" onclick="switchTab(this)">💡 תובנות</button>
+</div>
+
+<div class="body" id="body"></div>
+<div class="toast" id="toast"></div>
+
+<!-- ENTRY MODAL -->
+<div class="overlay" id="emodal">
+  <div class="modal">
+    <div class="mhdr">
+      <div class="mtitle" id="mtitle">הוסף רשומה</div>
+      <button class="mclose" onclick="closeModal()">×</button>
+    </div>
+    <div id="mbody"></div>
+    <div class="mftr">
+      <button class="btn btn-s" onclick="closeModal()">ביטול</button>
+      <button class="btn btn-p" onclick="saveEntry()">שמור</button>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="overlay" id="smodal">
+  <div class="modal">
+    <div class="mhdr">
+      <div class="mtitle">⚙️ הגדרות</div>
+      <button class="mclose" onclick="closeSett()">×</button>
+    </div>
+    <div class="fg"><label class="fl">שם התינוק/ת</label><input class="fi" id="s-name" placeholder="שם"></div>
+    <div class="fg"><label class="fl">תאריך לידה</label><input class="fi" id="s-dob" type="date"></div>
+    <div class="mftr">
+      <button class="btn btn-s" onclick="closeSett()">ביטול</button>
+      <button class="btn btn-p" onclick="saveSett()">שמור</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DB ──────────────────────────────────────────────────────────
+let db = JSON.parse(localStorage.getItem('bt3')||'null') || {cfg:{name:'התינוק',dob:''},entries:[]};
+const save = () => localStorage.setItem('bt3', JSON.stringify(db));
+
+// ── STATE ────────────────────────────────────────────────────────
+let tab = 'day';
+let curDate = today();
+let editId = null, modType = null;
+
+function today(){ return new Date().toISOString().slice(0,10); }
+function genId(){ return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+
+// ── TYPES ────────────────────────────────────────────────────────
+const T = {
+  feed:  {lbl:'האכלה', icon:'🍼', cv:'--feed'},
+  sleep: {lbl:'שינה',  icon:'😴', cv:'--sleep'},
+  poop:  {lbl:'קקי',   icon:'💩', cv:'--poop'},
+  pee:   {lbl:'פיפי',  icon:'💧', cv:'--pee'},
+  spit:  {lbl:'פליטה', icon:'🤮', cv:'--spit'},
+};
+
+// ── HELPERS ──────────────────────────────────────────────────────
+function diffMin(a,b){
+  if(!a||!b) return 0;
+  const [ah,am]=a.split(':').map(Number),[bh,bm]=b.split(':').map(Number);
+  let d=(bh*60+bm)-(ah*60+am); if(d<0) d+=1440; return d;
+}
+function minStr(m){ if(m<=0) return '—'; const h=Math.floor(m/60),r=m%60; return h?`${h}ש' ${r?r+"ד'":''}`:r+"ד'"; }
+function forDate(ds){ return db.entries.filter(e=>e.date===ds).sort((a,b)=>a.startTime.localeCompare(b.startTime)); }
+function dateLabel(ds){
+  const d=new Date(ds+'T00:00:00');
+  const days=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+  const mons=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  return `יום ${days[d.getDay()]}, ${d.getDate()} ${mons[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+// ── AGE ──────────────────────────────────────────────────────────
+function ageStr(){
+  if(!db.cfg.dob) return 'הגדר תאריך לידה';
+  const d=Math.floor((Date.now()-new Date(db.cfg.dob))/86400000);
+  if(d<7) return `${d} ימים`;
+  if(d<60) return `${Math.floor(d/7)} שבועות`;
+  const m=Math.floor(d/30.44);
+  return m<24?`${m} חודשים`:`${Math.floor(m/12)} שנים ו-${m%12} חודשים`;
+}
+function updateAge(){
+  document.getElementById('age-lbl').textContent=`${db.cfg.name} · גיל: ${ageStr()}`;
+}
+
+// ── ABNORMAL ─────────────────────────────────────────────────────
+function abnormal(e){
+  if(e.type==='feed'){
+    const a=parseFloat(e.amount||0),d=parseInt(e.duration||0);
+    if(a>0&&a<30) return '⚠️ כמות קטנה מאוד';
+    if(a>260)     return '⚠️ כמות גדולה מאוד';
+    if(d>45)      return '⚠️ האכלה ארוכה מאוד';
+  }
+  if(e.type==='sleep'&&e.endTime){
+    const d=diffMin(e.startTime,e.endTime);
+    if(d>0&&d<20) return '⚠️ שינה קצרה מאוד';
+    if(d>500)     return '⚠️ שינה ארוכה מאוד';
+  }
+  if(e.type==='spit'&&e.amount==='הרבה') return '⚠️ פליטה מרובה';
+  return null;
+}
+
+// ── RENDER ROUTER ────────────────────────────────────────────────
+function render(){
+  updateAge();
+  const body=document.getElementById('body');
+  if(tab==='day')      body.innerHTML=renderDay();
+  else if(tab==='week')body.innerHTML=renderWeek();
+  else                  body.innerHTML=renderInsights();
+}
+
+// ── DAY TAB ──────────────────────────────────────────────────────
+function renderDay(){
+  const es=forDate(curDate), isToday=curDate===today();
+  const feeds=es.filter(e=>e.type==='feed');
+  const sleeps=es.filter(e=>e.type==='sleep');
+  const poops=es.filter(e=>e.type==='poop');
+  const pees=es.filter(e=>e.type==='pee');
+  const spits=es.filter(e=>e.type==='spit');
+  const totMl=feeds.reduce((s,e)=>s+(parseFloat(e.amount)||0),0);
+  const totSlp=sleeps.reduce((s,e)=>s+diffMin(e.startTime,e.endTime||''),0);
+
+  let h=`
+  <div class="date-nav">
+    <div style="display:flex;gap:5px">
+      <button class="arr" onclick="shiftDate(-1)">›</button>
+      <button class="arr" onclick="shiftDate(1)">‹</button>
+    </div>
+    <div class="date-ctr">
+      <div class="dm">${dateLabel(curDate)}</div>
+      <div class="ds">${isToday?'📍 היום':''}</div>
+    </div>
+    <button class="today-btn" onclick="goToday()">היום</button>
+  </div>
+
+  <div class="qadd">
+    <button class="qbtn feed"  onclick="openAdd('feed')"><span class="qi">🍼</span><span class="ql">האכלה</span></button>
+    <button class="qbtn sleep" onclick="openAdd('sleep')"><span class="qi">😴</span><span class="ql">שינה</span></button>
+    <button class="qbtn poop"  onclick="openAdd('poop')"><span class="qi">💩</span><span class="ql">קקי</span></button>
+    <button class="qbtn pee"   onclick="openAdd('pee')"><span class="qi">💧</span><span class="ql">פיפי</span></button>
+    <button class="qbtn spit"  onclick="openAdd('spit')"><span class="qi">🤮</span><span class="ql">פליטה</span></button>
+  </div>
+
+  <div class="sgrid">
+    <div class="scard feed"><div class="slbl">האכלות</div><div class="sval" style="color:var(--feed)">${feeds.length}</div><div class="ssub">${totMl?totMl+' מ"ל':'ללא כמות'}</div></div>
+    <div class="scard sleep"><div class="slbl">שינה</div><div class="sval" style="color:var(--sleep)">${sleeps.length}</div><div class="ssub">${totSlp?minStr(totSlp):'ללא נתון'}</div></div>
+    <div class="scard poop"><div class="slbl">קקי</div><div class="sval" style="color:var(--poop)">${poops.length}</div><div class="ssub">${poops.length===0?'עוד לא':poops.length+'×'}</div></div>
+    <div class="scard pee"><div class="slbl">פיפי</div><div class="sval" style="color:var(--pee)">${pees.length}</div><div class="ssub">${pees.length>=6?'✓ תקין':pees.length>0?'⚠️ מעט':'—'}</div></div>
+    <div class="scard spit"><div class="slbl">פליטות</div><div class="sval" style="color:var(--spit)">${spits.length}</div><div class="ssub">${spits.length>3?'⚠️ הרבה':spits.length?'נרשמו':'—'}</div></div>
+  </div>
+
+  <div class="sec-title">📋 ציר זמן</div>
+  <div class="timeline">`;
+
+  if(!es.length){
+    h+=`<div class="empty"><div class="ei">👶</div><div>אין רשומות ליום זה</div><div style="font-size:11px;margin-top:5px">לחצו על כפתור למעלה להוספה</div></div>`;
+  } else {
+    for(const e of es) h+=renderCard(e);
+  }
+  h+=`</div>`;
+
+  // daily insights
+  const ins=genDayIns(feeds,sleeps,poops,pees,spits,totMl,totSlp);
+  if(ins.length){
+    h+=`<div class="sec-title" style="margin-top:12px">💡 תובנות יומיות</div><div class="ilist">`;
+    for(const i of ins) h+=`<div class="iitem ${i.t}"><div class="iicon">${i.ic}</div><div class="itxt"><div class="ititle">${i.tt}</div><div class="idesc">${i.dc}</div></div></div>`;
+    h+=`</div>`;
+  }
+  return h;
+}
+
+function renderCard(e){
+  const ty=T[e.type], ab=abnormal(e);
+  let det='';
+  if(e.type==='feed'){
+    const pts=[];
+    if(e.amount) pts.push(`${e.amount} מ"ל`);
+    if(e.endTime) pts.push(`סיום: ${e.endTime} · ${minStr(diffMin(e.startTime,e.endTime))}`);
+    if(e.feedType) pts.push(e.feedType);
+    det=pts.join(' · ');
+  } else if(e.type==='sleep'){
+    det=e.endTime?`התעוררות: ${e.endTime} · ${minStr(diffMin(e.startTime,e.endTime))}`:'עדיין ישן...';
+  } else if(e.type==='spit' && e.amount){
+    det=`כמות: ${e.amount}`;
+  }
+  if(e.notes) det+=(det?' · ':'')+`💬 ${e.notes}`;
+
+  return `<div class="ecard ${e.type}${ab?' abnormal':''}">
+    ${ab?`<div class="abnorm-tag">חריג</div>`:''}
+    <div class="etype">${ty.icon}</div>
+    <div class="einfo">
+      <div class="emain">${ty.lbl}</div>
+      ${det?`<div class="edet">${det}</div>`:''}
+    </div>
+    <div class="etime">${e.startTime}</div>
+    <div class="eacts">
+      <button class="ibtn" onclick="openEdit('${e.id}')" title="ערוך">✏️</button>
+      <button class="ibtn del" onclick="delEntry('${e.id}')" title="מחק">🗑️</button>
+    </div>
+  </div>`;
+}
+
+function genDayIns(feeds,sleeps,poops,pees,spits,totMl,totSlp){
+  const ins=[];
+  if(!feeds.length && (sleeps.length||poops.length||pees.length))
+    ins.push({t:'warn',ic:'⚠️',tt:'לא נרשמו האכלות',dc:'בדוק שלא פיספסת רישום — חשוב לתעד כל האכלה.'});
+  else if(feeds.length>0&&feeds.length<6)
+    ins.push({t:'warn',ic:'⚠️',tt:`רק ${feeds.length} האכלות`,dc:'תינוקות עד 3 חודשים זקוקים בדרך כלל ל-8-12 האכלות ביום.'});
+  else if(feeds.length>=8)
+    ins.push({t:'ok',ic:'✅',tt:'מספר האכלות תקין',dc:`${feeds.length} האכלות — יפה מאוד!`});
+
+  if(totMl>0&&totMl<400)
+    ins.push({t:'warn',ic:'⚠️',tt:'כמות מזון נמוכה',dc:`סה"כ ${totMl} מ"ל — מתחת לממוצע. שוחח עם רופא הילדים.`});
+  else if(totMl>=500)
+    ins.push({t:'ok',ic:'✅',tt:'כמות מזון תקינה',dc:`סה"כ ${totMl} מ"ל — מצוין!`});
+
+  if(totSlp>0&&totSlp<300)
+    ins.push({t:'warn',ic:'⚠️',tt:'שינה קצרה',dc:`רק ${minStr(totSlp)}. תינוקות זקוקים ל-14-17 שעות שינה ביממה.`});
+  else if(totSlp>=720)
+    ins.push({t:'ok',ic:'😴',tt:'שינה מספקת',dc:`${minStr(totSlp)} — ממש טוב!`});
+
+  if(pees.length>0&&pees.length<4)
+    ins.push({t:'warn',ic:'⚠️',tt:'מעט פיפי — בדוק הידרציה',dc:`רק ${pees.length} פעמים. מינימום 6 חיתולים רטובים ביום.`});
+
+  if(spits.filter(e=>e.amount==='הרבה').length>=2)
+    ins.push({t:'warn',ic:'⚠️',tt:'פליטות מרובות',dc:'2+ פליטות כבדות — אם חוזר, כדאי להתייעץ עם רופא.'});
+
+  if(!poops.length&&(feeds.length>=4||pees.length>=4))
+    ins.push({t:'tip',ic:'💡',tt:'לא נרשם קקי היום',dc:'בתינוקות יונקים, יום ללא קקי עשוי להיות תקין. עקוב אחרי המגמה.'});
+
+  if(!ins.length&&feeds.length>=6)
+    ins.push({t:'ok',ic:'🌟',tt:'יום מעולה!',dc:'כל הנתונים נראים תקינים. המשך כך!'});
+
+  return ins;
+}
+
+// ── WEEK TAB ─────────────────────────────────────────────────────
+function renderWeek(){
+  const sun=new Date(); sun.setDate(sun.getDate()-sun.getDay());
+  const days=[]; for(let i=0;i<7;i++){const d=new Date(sun);d.setDate(sun.getDate()+i);days.push(d.toISOString().slice(0,10));}
+  const dn=['א','ב','ג','ד','ה','ו','ש'];
+
+  let h=`<div class="sec-title">ימי השבוע</div><div class="wdays">`;
+  for(let i=0;i<7;i++){
+    const ds=days[i],es=forDate(ds),on=ds===curDate;
+    const nd=new Date(ds+'T00:00:00');
+    const dots=[
+      es.some(e=>e.type==='feed')?`<div class="dot" style="background:var(--feed)"></div>`:'',
+      es.some(e=>e.type==='sleep')?`<div class="dot" style="background:var(--sleep)"></div>`:'',
+      es.some(e=>e.type==='poop')?`<div class="dot" style="background:var(--poop)"></div>`:'',
+    ].join('');
+    h+=`<div class="wdpill ${on?'on':''}" onclick="curDate='${ds}';render()">
+      <div class="wdn">יום ${dn[nd.getDay()]}'</div>
+      <div class="wdd">${nd.getDate()}</div>
+      <div class="wddots">${dots}</div>
+    </div>`;
+  }
+  h+=`</div>`;
+
+  const all=days.flatMap(ds=>forDate(ds));
+  const wf=all.filter(e=>e.type==='feed');
+  const ws=all.filter(e=>e.type==='sleep');
+  const wp=all.filter(e=>e.type==='poop');
+  const wpe=all.filter(e=>e.type==='pee');
+  const totMl=wf.reduce((s,e)=>s+(parseFloat(e.amount)||0),0);
+  const totSlp=ws.reduce((s,e)=>s+diffMin(e.startTime,e.endTime||''),0);
+  const active=days.filter(ds=>forDate(ds).length>0).length||1;
+
+  h+=`<div class="sgrid">
+    <div class="scard feed"><div class="slbl">האכלות השבוע</div><div class="sval" style="color:var(--feed)">${wf.length}</div><div class="ssub">${totMl?totMl+' מ"ל':''} · ממוצע ${(wf.length/active).toFixed(1)}/יום</div></div>
+    <div class="scard sleep"><div class="slbl">שינה השבוע</div><div class="sval" style="color:var(--sleep)">${ws.length}</div><div class="ssub">${minStr(Math.round(totSlp/active))}/יום בממוצע</div></div>
+    <div class="scard poop"><div class="slbl">קקי השבוע</div><div class="sval" style="color:var(--poop)">${wp.length}</div><div class="ssub">ממוצע ${(wp.length/active).toFixed(1)}/יום</div></div>
+    <div class="scard pee"><div class="slbl">פיפי השבוע</div><div class="sval" style="color:var(--pee)">${wpe.length}</div><div class="ssub">ממוצע ${(wpe.length/active).toFixed(1)}/יום</div></div>
+  </div>`;
+
+  // feed bar chart
+  const maxF=Math.max(1,...days.map(ds=>forDate(ds).filter(e=>e.type==='feed').length));
+  h+=`<div class="wchart"><div class="chtitle">🍼 האכלות לפי יום</div><div class="chbars">`;
+  for(let i=0;i<7;i++){
+    const cnt=forDate(days[i]).filter(e=>e.type==='feed').length;
+    const pct=Math.round(cnt/maxF*100);
+    h+=`<div class="cbw"><div class="cbbg" style="height:55px"><div class="cbfill" style="height:${pct}%;background:var(--feed);opacity:.75"></div></div><div class="cblbl">${dn[i]}'</div></div>`;
+  }
+  h+=`</div></div>`;
+
+  // sleep bar chart
+  const maxS=Math.max(1,...days.map(ds=>forDate(ds).filter(e=>e.type==='sleep').reduce((s,e)=>s+diffMin(e.startTime,e.endTime||''),0)));
+  h+=`<div class="wchart"><div class="chtitle">😴 שינה לפי יום</div><div class="chbars">`;
+  for(let i=0;i<7;i++){
+    const mins=forDate(days[i]).filter(e=>e.type==='sleep').reduce((s,e)=>s+diffMin(e.startTime,e.endTime||''),0);
+    const pct=Math.round(mins/maxS*100);
+    h+=`<div class="cbw"><div class="cbbg" style="height:55px"><div class="cbfill" style="height:${pct}%;background:var(--sleep);opacity:.75"></div></div><div class="cblbl">${dn[i]}'</div></div>`;
+  }
+  h+=`</div></div>`;
+
+  // weekly insights
+  const wins=genWeekIns(wf,ws,wp,wpe,days,active);
+  if(wins.length){
+    h+=`<div class="sec-title">💡 תובנות שבועיות</div><div class="ilist">`;
+    for(const i of wins) h+=`<div class="iitem ${i.t}"><div class="iicon">${i.ic}</div><div class="itxt"><div class="ititle">${i.tt}</div><div class="idesc">${i.dc}</div></div></div>`;
+    h+=`</div>`;
+  }
+  return h;
+}
+
+function genWeekIns(wf,ws,wp,wpe,days,active){
+  const ins=[];
+  if(active<3){ins.push({t:'tip',ic:'📝',tt:'תיעוד חסר',dc:`תועדו רק ${active} ימים. תיעוד יומי עוזר לזהות דפוסים בריאותיים.`});return ins;}
+  const avgF=wf.length/active;
+  const avgS=ws.reduce((s,e)=>s+diffMin(e.startTime,e.endTime||''),0)/active;
+  const avgPee=wpe.length/active;
+
+  if(avgF>=8) ins.push({t:'ok',ic:'✅',tt:'תדירות האכלה מצוינת',dc:`ממוצע ${avgF.toFixed(1)}/יום — בדיוק מה שנדרש לצמיחה.`});
+  else if(avgF<6) ins.push({t:'warn',ic:'⚠️',tt:'האכלות מעטות מהרצוי',dc:`ממוצע ${avgF.toFixed(1)}/יום. שבוע הבא: נסו להגיע ל-8 האכלות.`});
+
+  if(avgS>=720) ins.push({t:'ok',ic:'😴',tt:'שינה שבועית תקינה',dc:`ממוצע ${minStr(Math.round(avgS))} ביום — מצוין!`});
+  else if(avgS>0&&avgS<480) ins.push({t:'warn',ic:'⚠️',tt:'שינה מועטה השבוע',dc:`ממוצע ${minStr(Math.round(avgS))} ביום. נסו לזהות גורמים שמפריעים.`});
+
+  if(avgPee>0&&avgPee<5) ins.push({t:'warn',ic:'💧',tt:'מעט פיפי בממוצע',dc:`${avgPee.toFixed(1)}/יום — מתחת ל-6 המומלצים. בדוק נוזלים.`});
+
+  // trend first vs second half
+  const h1=days.slice(0,3).flatMap(ds=>forDate(ds)).filter(e=>e.type==='feed').length;
+  const h2=days.slice(4,7).flatMap(ds=>forDate(ds)).filter(e=>e.type==='feed').length;
+  if(h1>0&&h2>h1*1.3) ins.push({t:'tip',ic:'📈',tt:'מגמת עלייה בהאכלות',dc:'יתכן שהתינוק עובר גדילה מואצת — זה תקין לחלוטין!'});
+  else if(h1>0&&h2<h1*0.7) ins.push({t:'warn',ic:'📉',tt:'ירידה בהאכלות בסוף השבוע',dc:'וודא שהתינוק אוכל מספיק. שוחח עם רופא אם ממשיך.'});
+
+  ins.push({t:'tip',ic:'🎯',tt:'המלצה לשבוע הבא',dc:`יעד: ${Math.max(8,Math.ceil(avgF))} האכלות/יום, ${minStr(Math.round(Math.max(840,avgS)))} שינה/יום.`});
+  return ins;
+}
+
+// ── INSIGHTS TAB ─────────────────────────────────────────────────
+function renderInsights(){
+  const last7=[]; for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);last7.push(d.toISOString().slice(0,10));}
+  const all=last7.flatMap(ds=>forDate(ds));
+  const abns=all.filter(e=>abnormal(e));
+
+  let h=`<div class="sec-title">🔍 אירועים חריגים (7 ימים אחרונים)</div><div class="ilist">`;
+  if(!abns.length){
+    h+=`<div class="iitem ok"><div class="iicon">✅</div><div class="itxt"><div class="ititle">אין אירועים חריגים</div><div class="idesc">כל הרשומות ב-7 הימים האחרונים נראות תקינות.</div></div></div>`;
+  } else {
+    for(const e of abns){
+      const ty=T[e.type],msg=abnormal(e);
+      const nd=new Date(e.date+'T00:00:00');
+      h+=`<div class="iitem warn"><div class="iicon">${ty.icon}</div><div class="itxt"><div class="ititle">${msg}</div><div class="idesc">${ty.lbl} · ${nd.getDate()}/${nd.getMonth()+1} · ${e.startTime}</div></div></div>`;
+    }
+  }
+  h+=`</div>`;
+
+  // recommendations
+  const active=last7.filter(ds=>forDate(ds).length>0).length||1;
+  const wf=all.filter(e=>e.type==='feed');
+  const ws=all.filter(e=>e.type==='sleep');
+  const wpe=all.filter(e=>e.type==='pee');
+  const wsp=all.filter(e=>e.type==='spit');
+  const avgF=wf.length/active;
+  const avgS=ws.reduce((s,e)=>s+diffMin(e.startTime,e.endTime||''),0)/active;
+  const recs=[];
+
+  if(active<3) recs.push({t:'tip',ic:'📝',tt:'התחל לתעד',dc:'הוסף רשומות יומיות כדי לקבל המלצות מותאמות אישית.'});
+  else {
+    if(avgF<8) recs.push({t:'warn',ic:'🍼',tt:`הגדל האכלות ל-${Math.max(8,Math.ceil(avgF+1))}/יום`,dc:'נסה להוסיף האכלה נוספת בשעות הצהריים — שעות שבהן תינוקות לרוב פחות עייפים.'});
+    if(avgS<600&&avgS>0) recs.push({t:'warn',ic:'😴',tt:'שפר שגרת שינה',dc:'שגרת הרדמה קבועה: אמבטיה חמה → עיסוי → האכלה → שינה — באותה שעה מדי יום.'});
+    if(wpe.length/active<5) recs.push({t:'warn',ic:'💧',tt:'הגדל נוזלים',dc:'מיעוט פיפי עשוי להצביע על חוסר נוזלים. שוחח עם רופא הילדים.'});
+    if(wsp.filter(e=>e.amount==='הרבה').length>=3) recs.push({t:'warn',ic:'🤮',tt:'פליטות מרובות — התייעץ עם רופא',dc:'3+ פליטות כבדות בשבוע עשויות להצביע על ריפלוקס.'});
+    if(!recs.length) recs.push({t:'ok',ic:'🌟',tt:'המשך כך!',dc:'כל הפרמטרים תקינים. שמור על אותה שגרה.'});
+    recs.push({t:'tip',ic:'📅',tt:'עקביות בתיעוד',dc:'תיעוד יומי מאפשר לרופא לקבל תמונה מלאה ולזהות שינויים מוקדם.'});
+  }
+
+  h+=`<div class="sec-title" style="margin-top:12px">💊 המלצות לשבוע הבא</div><div class="ilist">`;
+  for(const r of recs) h+=`<div class="iitem ${r.t}"><div class="iicon">${r.ic}</div><div class="itxt"><div class="ititle">${r.tt}</div><div class="idesc">${r.dc}</div></div></div>`;
+  h+=`</div>`;
+  return h;
+}
+
+// ── MODAL ────────────────────────────────────────────────────────
+function openAdd(type){
+  editId=null; modType=type;
+  const now=new Date();
+  const ts=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  document.getElementById('mtitle').textContent=`➕ הוסף ${T[type].lbl}`;
+  document.getElementById('mbody').innerHTML=buildFields(type,{startTime:ts,date:curDate});
+  document.getElementById('emodal').classList.add('on');
+}
+
+function openEdit(id){
+  const e=db.entries.find(x=>x.id===id); if(!e) return;
+  editId=id; modType=e.type;
+  document.getElementById('mtitle').textContent=`✏️ ערוך ${T[e.type].lbl}`;
+  document.getElementById('mbody').innerHTML=buildFields(e.type,e);
+  document.getElementById('emodal').classList.add('on');
+}
+
+function buildFields(type,d){
+  d=d||{};
+  let h=`<div class="frow">
+    <div class="fg"><label class="fl">תאריך</label><input class="fi" id="f-date" type="date" value="${d.date||curDate}"></div>
+    <div class="fg"><label class="fl">שעת התחלה</label><input class="fi" id="f-st" type="time" value="${d.startTime||''}"></div>
+  </div>`;
+
+  if(type==='feed'){
+    h+=`<div class="frow">
+      <div class="fg"><label class="fl">שעת סיום</label><input class="fi" id="f-et" type="time" value="${d.endTime||''}"></div>
+      <div class="fg"><label class="fl">כמות (מ"ל)</label><input class="fi" id="f-amt" type="number" min="0" placeholder="120" value="${d.amount||''}"></div>
+    </div>
+    <div class="fg"><label class="fl">סוג האכלה</label>
+      <select class="fs" id="f-ft">
+        <option value="">בחר...</option>
+        ${['הנקה','בקבוק','תערובת','מוצק'].map(v=>`<option ${d.feedType===v?'selected':''}>${v}</option>`).join('')}
+      </select>
+    </div>`;
+  }
+  if(type==='sleep'){
+    h+=`<div class="fg"><label class="fl">שעת התעוררות</label><input class="fi" id="f-et" type="time" value="${d.endTime||''}"></div>`;
+  }
+  if(type==='spit'){
+    h+=`<div class="fg"><label class="fl">כמות פליטה</label>
+      <select class="fs" id="f-sa">
+        <option value="">בחר...</option>
+        ${['קצת','בינוני','הרבה'].map(v=>`<option ${d.amount===v?'selected':''}>${v}</option>`).join('')}
+      </select>
+    </div>`;
+  }
+  h+=`<div class="fg"><label class="fl">הערות</label><textarea class="fta" id="f-notes" placeholder="הערות נוספות...">${d.notes||''}</textarea></div>`;
+  return h;
+}
+
+function saveEntry(){
+  const date=document.getElementById('f-date')?.value||curDate;
+  const st=document.getElementById('f-st')?.value||'';
+  if(!st){showToast('⚠️ חובה להזין שעת התחלה');return;}
+  const et=document.getElementById('f-et')?.value||'';
+  const notes=document.getElementById('f-notes')?.value||'';
+  const entry={id:editId||genId(),type:modType,date,startTime:st,notes};
+  if(et) entry.endTime=et;
+  if(modType==='feed'){
+    const a=document.getElementById('f-amt')?.value;
+    const ft=document.getElementById('f-ft')?.value;
+    if(a) entry.amount=a;
+    if(ft) entry.feedType=ft;
+  }
+  if(modType==='spit'){const sa=document.getElementById('f-sa')?.value;if(sa)entry.amount=sa;}
+  if(editId){const i=db.entries.findIndex(x=>x.id===editId);if(i>=0)db.entries[i]=entry;}
+  else db.entries.push(entry);
+  save(); closeModal(); render();
+  showToast(editId?'✅ רשומה עודכנה':`✅ ${T[modType].lbl} נוספה`);
+}
+
+function delEntry(id){
+  if(!confirm('למחוק את הרשומה?'))return;
+  db.entries=db.entries.filter(e=>e.id!==id);
+  save(); render(); showToast('🗑️ נמחק');
+}
+
+function closeModal(){document.getElementById('emodal').classList.remove('on');editId=null;modType=null;}
+
+// ── SETTINGS ─────────────────────────────────────────────────────
+function openSettings(){document.getElementById('s-name').value=db.cfg.name||'';document.getElementById('s-dob').value=db.cfg.dob||'';document.getElementById('smodal').classList.add('on');}
+function closeSett(){document.getElementById('smodal').classList.remove('on');}
+function saveSett(){db.cfg.name=document.getElementById('s-name').value||'התינוק';db.cfg.dob=document.getElementById('s-dob').value||'';save();closeSett();render();showToast('✅ הגדרות נשמרו');}
+
+// ── NAV ───────────────────────────────────────────────────────────
+function shiftDate(d){const x=new Date(curDate+'T00:00:00');x.setDate(x.getDate()+d);curDate=x.toISOString().slice(0,10);render();}
+function goToday(){curDate=today();render();}
+function switchTab(el){tab=el.dataset.tab;document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));el.classList.add('on');render();}
+
+// ── TOAST ─────────────────────────────────────────────────────────
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2600);}
+
+// ── INIT ──────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
