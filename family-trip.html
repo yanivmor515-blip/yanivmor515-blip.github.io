@@ -1015,7 +1015,7 @@
                 <div class="sidebar-content">
                     <div id="panel-itinerary" class="panel active"></div>
                     <div id="panel-locations" class="panel">
-                        <div id="locations-list"><div class="location-card deletable"><button class="del-btn" onclick="event.stopPropagation();removeUserPin('upin-1');deleteEl(this.closest('.location-card'))">×</button><div class="loc-header"><span class="loc-icon">🏛️</span><div><div class="loc-name">הקולוסיאום</div><div class="loc-region"></div></div></div><div class="loc-desc">FXX</div><span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#58a6ff;cursor:pointer;margin-top:4px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);border-radius:8px;padding:2px 7px;" onclick="const p=userPins.find(x=&gt;x.id==='upin-1');if(p){map.flyTo([p.lat,p.lng],16,{duration:1});setTimeout(()=&gt;p.marker.openPopup(),1100);}">📍 Colosseum, Piazza del Colosseo, Rome, Lazio, Italy</span><div class="loc-tags"><span class="loc-tag">חובה</span><span class="loc-tag">לילדים</span></div></div></div>
+                        <div id="locations-list"></div>
                     </div>
                     <div id="panel-hotels" class="panel">
                         <div style="font-size:11px;color:#58a6ff;margin-bottom:10px;padding:6px 8px;background:rgba(88,166,255,0.07);border-radius:6px;">💡 כל ההמלצות לחדרים משפחתיים ל-5 אנשים — בדקו ב-Booking.com</div>
@@ -1035,7 +1035,7 @@
                 </div>
             </div>
             <div id="map" class="leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;">	
-        <div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(288px, 219px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 19; transform: translate3d(-117px, -39px, 0px) scale(1);"><img alt="" src="https://a.tile.openstreetmap.org/15/17520/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(141px, 37px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17521/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(397px, 37px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17520/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(141px, -219px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17521/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(397px, -219px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17520/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(141px, 293px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17521/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(397px, 293px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17519/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-115px, 37px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17522/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(653px, 37px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17519/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-115px, -219px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17522/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(653px, -219px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17519/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-115px, 293px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17522/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(653px, 293px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17520/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(141px, -475px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17521/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(397px, -475px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17520/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(141px, 549px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17521/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(397px, 549px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17519/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-115px, -475px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17522/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(653px, -475px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17518/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-371px, 37px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17523/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(909px, 37px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17519/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-115px, 549px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17522/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(653px, 549px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17518/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-371px, -219px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17523/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(909px, -219px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17518/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-371px, 293px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17523/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(909px, 293px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17518/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-371px, -475px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17523/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(909px, -475px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17518/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-371px, 549px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17523/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(909px, 549px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17517/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-627px, 37px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17524/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1165px, 37px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17517/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-627px, -219px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17524/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1165px, -219px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17517/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-627px, 293px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17524/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1165px, 293px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17517/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-627px, -475px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17524/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1165px, -475px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17517/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-627px, 549px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17524/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1165px, 549px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-shadow-pane"></div><div class="leaflet-pane leaflet-marker-pane"><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(290px, 97px, 0px); z-index: 97;"><div style="background:#fb923c;width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid white;box-shadow:0 3px 10px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:14px;line-height:1">🏛️</div></div></div></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(4.48539e+06px, 3.11741e+06px, 0px) scale(16384);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in" aria-disabled="false"><span aria-hidden="true">+</span></a><a class="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out" aria-disabled="false"><span aria-hidden="true">−</span></a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"></div></div></div>
+        </div>
         <div class="toast" id="toast"></div>
         <div class="edit-bar" id="edit-bar">
             <span class="edit-bar-label"></span>
@@ -1055,14 +1055,8 @@
         </div>
         <div class="modal-overlay" id="modal">
             <div class="modal">
-                <h3 id="modal-title">➕ הוסף אטרקציה</h3>
-                <div id="modal-body">
-<label>שם האטרקציה</label><input id="m-lname" placeholder="פיאצה נבונה">
-<label>אזור / עיר</label><input id="m-lregion" placeholder="רומא">
-<label>אמוג'י</label><input id="m-licon" placeholder="🏛️" maxlength="4" value="🏛️">
-<label>תיאור</label><textarea id="m-ldesc" placeholder="תיאור קצר של המקום..."></textarea>
-<label>תגיות (מופרדות בפסיק)</label><input id="m-ltags" placeholder="חובה, לילדים, חינם">
-<label>📍 כתובת / שם מקום (אופציונלי)</label><div class="ac-wrap"><input id="m-laddr" placeholder="Piazza Navona, Rome" autocomplete="off"></div></div>
+                <h3 id="modal-title">הוסף פריט</h3>
+                <div id="modal-body"></div>
                 <div class="modal-btns">
                     <button class="modal-cancel" onclick="closeModal()">ביטול</button>
                     <button class="modal-ok" id="modal-ok" onclick="modalOk()">הוסף</button>
@@ -1071,7 +1065,7 @@
         </div>
         <script>
 			const defaultZoom = 6;
-			let userLocations = [{"id":"upin-1","lat":41.8909421,"lng":12.491903,"name":"הקולוסיאום","region":"","icon":"🏛️","color":"#fb923c","desc":"FXX","tags":["חובה"," לילדים"]}]
+			let userLocations = [];
 			let defaultLocation = userLocations[0];
 			if (!defaultLocation){
 				defaultLocation = {lat: 41.8902, lng: 12.4922};
@@ -1099,6 +1093,13 @@
                 }).addTo(map).bindPopup(`<div class="popup-content"><div class="popup-icon">${l.icon}</div><div class="popup-name">${l.name}</div><div class="popup-region">${l.region}</div><div class="popup-desc">${l.desc}</div><div class="popup-tags">${l.tags.map( (t, i) => `<span class="popup-tag ${i === 0 ? 'highlight' : ''}">${t}</span>`).join('')}</div></div>`, {
                     maxWidth: 260
                 });
+                userPins.push({
+                    l.id,
+                    marker: m,
+                    l.lat,
+                    l.lng
+                });				
+				
             }
             );
 
@@ -1364,6 +1365,10 @@
                     map.removeLayer(userPins[idx].marker);
                     userPins.splice(idx, 1);
                 }
+                const locationIndex = userLocations.findIndex(p => p.id === pinId);
+                if (locationIndex >= 0) {
+                    userLocations.splice(locationIndex, 1);
+                }				
             }
 
             // location-link style for clickable map links inside cards
@@ -1669,4 +1674,4 @@
         </script>
     
 
-</div></body></html>
+</body></html>
