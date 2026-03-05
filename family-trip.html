@@ -1,0 +1,2563 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>טיול משפחתי לאיטליה - יולי 2026</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Segoe UI',Arial,sans-serif;
+                background: #0d1117;
+                color: #e6edf3;
+                height: 100vh;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .header {
+                background: linear-gradient(135deg,#1a1f2e,#16213e,#0f3460);
+                padding: 12px 20px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                flex-shrink: 0;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            }
+
+            .header-title {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .flag {
+                font-size: 28px;
+            }
+
+            .title-text h1 {
+                font-size: 18px;
+                font-weight: 700;
+                background: linear-gradient(90deg,#f7c59f,#e88e5a,#c0392b);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .edit-mode .title-text h1 {
+                -webkit-text-fill-color: #f7c59f !important;
+                background: none !important;
+            }
+
+            .title-text p {
+                font-size: 11px;
+                color: #8b949e;
+                margin-top: 1px;
+            }
+
+            .header-badges {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .badge {
+                background: rgba(255,255,255,0.07);
+                border: 1px solid rgba(255,255,255,0.15);
+                border-radius: 20px;
+                padding: 4px 12px;
+                font-size: 11px;
+                color: #c9d1d9;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                white-space: nowrap;
+            }
+
+            .badge.green {
+                border-color: rgba(63,185,80,0.4);
+                color: #3fb950;
+            }
+
+            .badge.blue {
+                border-color: rgba(88,166,255,0.4);
+                color: #58a6ff;
+            }
+
+            .badge.orange {
+                border-color: rgba(249,117,131,0.4);
+                color: #f97583;
+            }
+
+            .main {
+                display: flex;
+                flex: 1;
+                overflow: hidden;
+            }
+
+            .sidebar {
+                width: 380px;
+                min-width: 380px;
+                background: #161b22;
+                border-left: 1px solid rgba(255,255,255,0.08);
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
+
+            .sidebar-tabs {
+                display: flex;
+                background: #0d1117;
+                border-bottom: 1px solid rgba(255,255,255,0.08);
+                flex-shrink: 0;
+            }
+
+            .tab {
+                flex: 1;
+                padding: 10px 6px;
+                text-align: center;
+                font-size: 11px;
+                cursor: pointer;
+                color: #8b949e;
+                border-bottom: 2px solid transparent;
+                transition: all 0.2s;
+                font-weight: 500;
+            }
+
+            .tab:hover {
+                color: #c9d1d9;
+                background: rgba(255,255,255,0.03);
+            }
+
+            .tab.active {
+                color: #58a6ff;
+                border-bottom-color: #58a6ff;
+                background: rgba(88,166,255,0.05);
+            }
+
+            .sidebar-content {
+                flex: 1;
+                overflow-y: auto;
+                padding: 0;
+            }
+
+            .sidebar-content::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .sidebar-content::-webkit-scrollbar-thumb {
+                background: rgba(255,255,255,0.15);
+                border-radius: 4px;
+            }
+
+            .panel {
+                display: none;
+                padding: 12px;
+            }
+
+            .panel.active {
+                display: block;
+            }
+
+            .day-card {
+                background: #1c2128;
+                border: 1px solid rgba(255,255,255,0.07);
+                border-radius: 10px;
+                margin-bottom: 10px;
+                overflow: hidden;
+                transition: all 0.2s;
+                position: relative;
+            }
+
+            .day-card:hover {
+                border-color: rgba(88,166,255,0.3);
+            }
+
+            .day-card.active {
+                border-color: #58a6ff;
+            }
+
+            .day-header {
+                padding: 10px 14px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                cursor: pointer;
+            }
+
+            .day-num {
+                background: linear-gradient(135deg,#1f6feb,#388bfd);
+                color: white;
+                font-weight: 700;
+                font-size: 12px;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .day-info {
+                flex: 1;
+            }
+
+            .day-title {
+                font-size: 13px;
+                font-weight: 600;
+                color: #e6edf3;
+            }
+
+            .day-sub {
+                font-size: 11px;
+                color: #8b949e;
+                margin-top: 2px;
+            }
+
+            .day-icon {
+                font-size: 20px;
+            }
+
+            .day-body {
+                padding: 0 14px 12px;
+                display: none;
+            }
+
+            .day-body.open {
+                display: block;
+            }
+
+            .activity-item {
+                display: flex;
+                gap: 10px;
+                align-items: flex-start;
+                padding: 6px 0;
+                border-bottom: 1px solid rgba(255,255,255,0.04);
+                position: relative;
+            }
+
+            .activity-item:last-child {
+                border-bottom: none;
+            }
+
+            .activity-time {
+                font-size: 10px;
+                color: #6e7681;
+                min-width: 45px;
+                padding-top: 2px;
+                font-weight: 500;
+            }
+
+            .activity-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                margin-top: 5px;
+                flex-shrink: 0;
+            }
+
+            .activity-text {
+                flex: 1;
+            }
+
+            .activity-name {
+                font-size: 12px;
+                color: #c9d1d9;
+                font-weight: 500;
+            }
+
+            .activity-detail {
+                font-size: 11px;
+                color: #6e7681;
+                margin-top: 2px;
+                line-height: 1.4;
+            }
+
+            .tip-box {
+                background: rgba(255,193,7,0.08);
+                border: 1px solid rgba(255,193,7,0.2);
+                border-radius: 6px;
+                padding: 8px 10px;
+                margin-top: 8px;
+                font-size: 11px;
+                color: #d4a017;
+                display: flex;
+                gap: 6px;
+                align-items: flex-start;
+                line-height: 1.4;
+                position: relative;
+            }
+
+            .location-card {
+                background: #1c2128;
+                border: 1px solid rgba(255,255,255,0.07);
+                border-radius: 10px;
+                padding: 12px 14px;
+                margin-bottom: 8px;
+                cursor: pointer;
+                transition: all 0.2s;
+                position: relative;
+            }
+
+            .location-card:hover {
+                border-color: rgba(88,166,255,0.3);
+            }
+
+            .location-card.active {
+                border-color: #58a6ff;
+                background: rgba(88,166,255,0.05);
+            }
+
+            .loc-header {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 6px;
+            }
+
+            .loc-icon {
+                font-size: 22px;
+            }
+
+            .loc-name {
+                font-size: 13px;
+                font-weight: 600;
+                color: #e6edf3;
+            }
+
+            .loc-region {
+                font-size: 11px;
+                color: #58a6ff;
+                margin-top: 1px;
+            }
+
+            .loc-desc {
+                font-size: 11px;
+                color: #8b949e;
+                line-height: 1.5;
+            }
+
+            .loc-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+                margin-top: 8px;
+            }
+
+            .loc-tag {
+                background: rgba(255,255,255,0.06);
+                border-radius: 10px;
+                padding: 2px 8px;
+                font-size: 10px;
+                color: #8b949e;
+            }
+
+            .loc-tag.kids {
+                background: rgba(63,185,80,0.1);
+                color: #3fb950;
+            }
+
+            .loc-tag.must {
+                background: rgba(249,117,131,0.1);
+                color: #f97583;
+            }
+
+            .hotel-card {
+                background: #1c2128;
+                border: 1px solid rgba(255,255,255,0.07);
+                border-radius: 10px;
+                padding: 12px 14px;
+                margin-bottom: 8px;
+                position: relative;
+            }
+
+            .hotel-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 6px;
+            }
+
+            .hotel-name {
+                font-size: 13px;
+                font-weight: 600;
+                color: #e6edf3;
+            }
+
+            .hotel-city {
+                font-size: 11px;
+                color: #58a6ff;
+                margin-top: 1px;
+            }
+
+            .hotel-price {
+                background: rgba(63,185,80,0.1);
+                border: 1px solid rgba(63,185,80,0.3);
+                color: #3fb950;
+                font-size: 11px;
+                font-weight: 700;
+                padding: 2px 8px;
+                border-radius: 6px;
+                white-space: nowrap;
+            }
+
+            .hotel-detail {
+                font-size: 11px;
+                color: #8b949e;
+                line-height: 1.5;
+            }
+
+            .hotel-features {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+                margin-top: 6px;
+            }
+
+            .hotel-feat {
+                background: rgba(255,255,255,0.05);
+                border-radius: 8px;
+                padding: 2px 7px;
+                font-size: 10px;
+                color: #8b949e;
+            }
+
+            .tips-section {
+                padding: 4px 0;
+            }
+
+            .tips-category {
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #58a6ff;
+                margin: 12px 0 6px;
+                position: relative;
+            }
+
+            .tip-item {
+                display: flex;
+                gap: 8px;
+                padding: 6px 0;
+                border-bottom: 1px solid rgba(255,255,255,0.04);
+                font-size: 11px;
+                color: #c9d1d9;
+                line-height: 1.5;
+                align-items: flex-start;
+                position: relative;
+            }
+
+            .tip-item:last-child {
+                border-bottom: none;
+            }
+
+            .tip-emoji {
+                flex-shrink: 0;
+                font-size: 14px;
+            }
+
+            .cost-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 8px;
+            }
+
+            .cost-table tr {
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+                position: relative;
+            }
+
+            .cost-table tr:last-child {
+                border-bottom: none;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .cost-table td {
+                padding: 7px 4px;
+                font-size: 11px;
+                color: #c9d1d9;
+            }
+
+            .cost-table td:last-child {
+                text-align: left;
+                font-weight: 600;
+                color: #3fb950;
+            }
+
+            .cost-table tr:last-child td {
+                color: #f7c59f;
+                font-weight: 700;
+                font-size: 13px;
+            }
+
+            #map {
+                flex: 1;
+                height: 100%;
+                z-index: 1;
+                background: #aad3df;
+            }
+
+            .leaflet-popup-content-wrapper {
+                background: #1c2128 !important;
+                border: 1px solid rgba(255,255,255,0.15) !important;
+                border-radius: 10px !important;
+                color: #e6edf3 !important;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
+                min-width: 220px;
+            }
+
+            .leaflet-popup-tip {
+                background: #1c2128 !important;
+            }
+
+            .leaflet-popup-close-button {
+                color: #8b949e !important;
+                font-size: 16px !important;
+            }
+
+            .popup-content {
+                padding: 4px;
+            }
+
+            .popup-icon {
+                font-size: 28px;
+                text-align: center;
+                margin-bottom: 6px;
+            }
+
+            .popup-name {
+                font-size: 14px;
+                font-weight: 700;
+                color: #e6edf3;
+                margin-bottom: 2px;
+            }
+
+            .popup-region {
+                font-size: 11px;
+                color: #58a6ff;
+                margin-bottom: 6px;
+            }
+
+            .popup-desc {
+                font-size: 11px;
+                color: #8b949e;
+                line-height: 1.5;
+                margin-bottom: 8px;
+            }
+
+            .popup-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+
+            .popup-tag {
+                background: rgba(255,255,255,0.08);
+                border-radius: 8px;
+                padding: 2px 7px;
+                font-size: 10px;
+                color: #8b949e;
+            }
+
+            .popup-tag.highlight {
+                background: rgba(249,117,131,0.15);
+                color: #f97583;
+            }
+
+            .route-legend {
+                position: absolute;
+                bottom: 30px;
+                right: 10px;
+                background: rgba(22,27,34,0.95);
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 10px;
+                padding: 10px 14px;
+                z-index: 999;
+                font-size: 11px;
+            }
+
+            .legend-title {
+                font-weight: 700;
+                color: #e6edf3;
+                margin-bottom: 6px;
+                font-size: 12px;
+            }
+
+            .legend-item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 4px;
+                color: #8b949e;
+            }
+
+            .legend-dot {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+
+            .edit-bar {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 8px;
+                z-index: 9999;
+                background: rgba(13,17,23,0.97);
+                border: 1px solid rgba(255,255,255,0.15);
+                border-radius: 30px;
+                padding: 8px 14px;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+                align-items: center;
+                flex-wrap: wrap;
+                max-width: 95vw;
+                justify-content: center;
+            }
+
+            .edit-bar-label {
+                font-size: 12px;
+                color: #8b949e;
+                white-space: nowrap;
+            }
+
+            .edit-sep {
+                width: 1px;
+                height: 20px;
+                background: rgba(255,255,255,0.1);
+                margin: 0 2px;
+            }
+
+            .btn {
+                border: none;
+                border-radius: 20px;
+                padding: 6px 14px;
+                font-size: 11px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                white-space: nowrap;
+            }
+
+            .btn:hover {
+                opacity: 0.85;
+                transform: scale(1.03);
+            }
+
+            .btn:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+            .btn-edit {
+                background: linear-gradient(135deg,#1f6feb,#388bfd);
+                color: white;
+            }
+
+            .btn-save {
+                background: linear-gradient(135deg,#238636,#2ea043);
+                color: white;
+            }
+
+            .btn-cancel {
+                background: rgba(255,255,255,0.07);
+                color: #c9d1d9;
+                border: 1px solid rgba(255,255,255,0.12);
+            }
+
+            .btn-add-activity {
+                background: rgba(88,166,255,0.15);
+                color: #58a6ff;
+                border: 1px solid rgba(88,166,255,0.3);
+            }
+
+            .btn-add-day {
+                background: rgba(63,185,80,0.15);
+                color: #3fb950;
+                border: 1px solid rgba(63,185,80,0.3);
+            }
+
+            .btn-add-tip {
+                background: rgba(255,193,7,0.15);
+                color: #d4a017;
+                border: 1px solid rgba(255,193,7,0.3);
+            }
+
+            .btn-add-hotel {
+                background: rgba(139,92,246,0.15);
+                color: #a78bfa;
+                border: 1px solid rgba(139,92,246,0.3);
+            }
+
+            .btn-add-loc {
+                background: rgba(249,115,22,0.15);
+                color: #fb923c;
+                border: 1px solid rgba(249,115,22,0.3);
+            }
+
+            .edit-mode [contenteditable="true"] {
+                outline: 1px dashed rgba(88,166,255,0.5);
+                border-radius: 3px;
+                cursor: text;
+                background: rgba(88,166,255,0.04);
+            }
+
+            .edit-mode [contenteditable="true"]:focus {
+                outline: 2px solid #58a6ff;
+                background: rgba(88,166,255,0.08);
+            }
+
+            .edit-mode .deletable {
+                position: relative;
+            }
+
+            .edit-mode .deletable:hover > .del-btn {
+                opacity: 1;
+            }
+
+            .del-btn {
+                position: absolute;
+                top: 4px;
+                left: 4px;
+                width: 20px;
+                height: 20px;
+                background: #da3633;
+                border: none;
+                border-radius: 50%;
+                color: white;
+                font-size: 12px;
+                font-weight: 700;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                transition: opacity 0.15s;
+                z-index: 10;
+                line-height: 1;
+            }
+
+            .del-btn:hover {
+                background: #f85149;
+                opacity: 1 !important;
+            }
+
+            .add-row-btn {
+                display: none;
+                width: 100%;
+                margin: 4px 0;
+                padding: 5px;
+                background: rgba(88,166,255,0.06);
+                border: 1px dashed rgba(88,166,255,0.25);
+                border-radius: 6px;
+                color: #58a6ff;
+                font-size: 11px;
+                cursor: pointer;
+                text-align: center;
+                transition: all 0.2s;
+            }
+
+            .add-row-btn:hover {
+                background: rgba(88,166,255,0.12);
+            }
+
+            .edit-mode .add-row-btn {
+                display: block;
+            }
+
+            .toast {
+                position: fixed;
+                top: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #238636;
+                color: white;
+                padding: 10px 22px;
+                border-radius: 20px;
+                font-size: 13px;
+                font-weight: 600;
+                z-index: 99999;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+                opacity: 0;
+                transition: opacity 0.3s;
+                pointer-events: none;
+                white-space: nowrap;
+            }
+
+            .toast.error {
+                background: #da3633;
+            }
+
+            .toast.show {
+                opacity: 1;
+            }
+
+            .spinner {
+                width: 14px;
+                height: 14px;
+                border: 2px solid rgba(255,255,255,0.3);
+                border-top-color: white;
+                border-radius: 50%;
+                animation: spin 0.7s linear infinite;
+                display: inline-block;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .modal-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.7);
+                z-index: 99998;
+                display: none;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .modal-overlay.show {
+                display: flex;
+            }
+
+            .modal {
+                background: #1c2128;
+                border: 1px solid rgba(255,255,255,0.12);
+                border-radius: 14px;
+                padding: 20px;
+                width: 340px;
+                max-width: 90vw;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            }
+
+            .modal h3 {
+                font-size: 14px;
+                font-weight: 700;
+                color: #e6edf3;
+                margin-bottom: 14px;
+            }
+
+            .modal label {
+                font-size: 11px;
+                color: #8b949e;
+                display: block;
+                margin-bottom: 4px;
+                margin-top: 10px;
+            }
+
+            .modal input, .modal textarea, .modal select {
+                width: 100%;
+                background: #0d1117;
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 6px;
+                padding: 7px 10px;
+                color: #e6edf3;
+                font-size: 12px;
+                outline: none;
+                font-family: inherit;
+            }
+
+            .modal input:focus, .modal textarea:focus {
+                border-color: #58a6ff;
+            }
+
+            .modal textarea {
+                resize: vertical;
+                min-height: 60px;
+            }
+
+            .modal-btns {
+                display: flex;
+                gap: 8px;
+                margin-top: 16px;
+                justify-content: flex-end;
+            }
+
+            .modal-btns button {
+                padding: 7px 16px;
+                border-radius: 8px;
+                border: none;
+                font-size: 12px;
+                font-weight: 600;
+                cursor: pointer;
+            }
+
+            .modal-ok {
+                background: #238636;
+                color: white;
+            }
+
+            .modal-cancel {
+                background: rgba(255,255,255,0.07);
+                color: #c9d1d9;
+            }
+
+            @media (max-width: 768px) {
+                .main {
+                    flex-direction:column;
+                }
+
+                .sidebar {
+                    width: 100%;
+                    min-width: 100%;
+                    height: 50vh;
+                }
+
+                #map {
+                    height: 50vh;
+                }
+
+                .header-badges {
+                    display: none;
+                }
+            }
+
+            /* Autocomplete */
+            .ac-wrap {
+                position: relative;
+            }
+
+            .ac-dropdown {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                left: 0;
+                background: #1c2128;
+                border: 1px solid rgba(88,166,255,0.4);
+                border-radius: 8px;
+                z-index: 100001;
+                max-height: 180px;
+                overflow-y: auto;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+                margin-top: 2px;
+            }
+
+            .ac-item {
+                padding: 8px 10px;
+                font-size: 11px;
+                color: #c9d1d9;
+                cursor: pointer;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+                line-height: 1.4;
+                display: flex;
+                gap: 6px;
+                align-items: flex-start;
+            }
+
+            .ac-item:last-child {
+                border-bottom: none;
+            }
+
+            .ac-item:hover {
+                background: rgba(88,166,255,0.12);
+                color: #e6edf3;
+            }
+
+            .ac-item-main {
+                font-weight: 600;
+                color: #e6edf3;
+            }
+
+            .ac-item-sub {
+                font-size: 10px;
+                color: #6e7681;
+                margin-top: 1px;
+            }
+
+            .ac-spinner {
+                padding: 8px 10px;
+                font-size: 11px;
+                color: #8b949e;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div class="header-title">
+                <span class="flag">🇮🇹</span>
+                <div class="title-text">
+                    <h1>טיול משפחתי לאיטליה — יולי 2026</h1>
+                    <p>2 מבוגרים + 3 ילדים (גילאי 8 ו-11) · 10 ימים · רומא הלוך ושוב</p>
+                </div>
+            </div>
+            <div class="header-badges">
+                <span class="badge blue">✈️ נחיתה והמראה: רומא FCO</span>
+                <span class="badge green">🚗 השכרת רכב כלולה</span>
+                <span class="badge orange">🎢 Gardaland</span>
+                <span class="badge">🌡️ יולי · שמש מובטחת</span>
+            </div>
+        </div>
+        <div class="main">
+            <div class="sidebar">
+                <div class="sidebar-tabs">
+                    <div class="tab active" onclick="switchTab('itinerary',this)">📅 מסלול</div>
+                    <div class="tab" onclick="switchTab('locations',this)">📍 אטרקציות</div>
+                    <div class="tab" onclick="switchTab('hotels',this)">🏨 לינה</div>
+                    <div class="tab" onclick="switchTab('tips',this)">💡 טיפים</div>
+                    <div class="tab" onclick="switchTab('budget',this)">💶 תקציב</div>
+                </div>
+                <div class="sidebar-content">
+                    <div id="panel-itinerary" class="panel active">
+                        <div class="day-card deletable" id="day-1">
+                            <button class="del-btn" onclick="deleteEl('day-1')">×</button>
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),1)">
+                                <div class="day-num">1</div>
+                                <div class="day-info">
+                                    <div class="day-title">הגעה לרומא</div>
+                                    <div class="day-sub">יום שישי, 17 יולי</div>
+                                </div>
+                                <div class="day-icon">✈️</div>
+                            </div>
+                            <div class="day-body" id="day-body-1">
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">11:00</div>
+                                    <div class="activity-dot" style="background:#58a6ff"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">נחיתה בנמל תעופה פיומיצ'ינו (FCO)</div>
+                                        <div class="activity-detail">איסוף מכונית שכורה מיד עם הנחיתה — מומלץ להזמין מראש (Hertz/Enterprise)</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">13:00</div>
+                                    <div class="activity-dot" style="background:#3fb950"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">הגעה לרומא + צ'ק-אין</div>
+                                        <div class="activity-detail">הגעה למלון, הנחת מזוודות, ארוחת צהריים קלה</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">16:00</div>
+                                    <div class="activity-dot" style="background:#f97583"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">מסע הגילוי הראשון</div>
+                                        <div class="activity-detail">טיול רגלי קל לכיוון פיאצה נבונה — הגלידה הכי טובה לפגוש את רומא!</div>
+                                    </div>
+                                </div>
+                                <button class="add-row-btn" onclick="openAddActivity('day-body-1')">+ הוסף פעילות</button>
+                                <div class="tip-box deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.tip-box'))">×</button>
+                                    💡 אל תנסו לנהוג למרכז רומא — חנו בסביבה והמשיכו ברגל או מטרו.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-card deletable" id="day-2">
+                            <button class="del-btn" onclick="deleteEl('day-2')">×</button>
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),2)">
+                                <div class="day-num">2</div>
+                                <div class="day-info">
+                                    <div class="day-title">רומא העתיקה</div>
+                                    <div class="day-sub">שבת, 18 יולי</div>
+                                </div>
+                                <div class="day-icon">🏟️</div>
+                            </div>
+                            <div class="day-body" id="day-body-2">
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">08:30</div>
+                                    <div class="activity-dot" style="background:#f97583"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">הקולוסיאום + הפורום הרומי</div>
+                                        <div class="activity-detail">כרטיס משולב ~18€ למבוגר | חובה להזמין מראש!</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">12:30</div>
+                                    <div class="activity-dot" style="background:#3fb950"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">גלידה ואוכל בסביבה</div>
+                                        <div class="activity-detail">מסעדות פשוטות סביב הפורום — פיצה אל טאגליו מומלצת לילדים</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">15:00</div>
+                                    <div class="activity-dot" style="background:#58a6ff"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">מזרקת טרווי + שלהוב מטבעות!</div>
+                                        <div class="activity-detail">הזריקה המסורתית — כל ילד צריך לזרוק מטבע!</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">17:30</div>
+                                    <div class="activity-dot" style="background:#e3b341"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">פיאצה נבונה + גלידה מספר 2</div>
+                                        <div class="activity-detail">הכי ציורי! פסל הנהרות האיתן — ילדים מתרגשים</div>
+                                    </div>
+                                </div>
+                                <button class="add-row-btn" onclick="openAddActivity('day-body-2')">+ הוסף פעילות</button>
+                                <div class="tip-box deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.tip-box'))">×</button>
+                                    🌡️ יולי = חם מאוד! צאו לפעילות בבוקר, מנוחה בצהריים, חזרה ב-16:00+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-card deletable" id="day-3">
+                            <button class="del-btn" onclick="deleteEl('day-3')">×</button>
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),3)">
+                                <div class="day-num">3</div>
+                                <div class="day-info">
+                                    <div class="day-title">הוותיקן</div>
+                                    <div class="day-sub">ראשון, 19 יולי</div>
+                                </div>
+                                <div class="day-icon">⛪</div>
+                            </div>
+                            <div class="day-body" id="day-body-3">
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">08:00</div>
+                                    <div class="activity-dot" style="background:#f97583"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">מוזיאוני הוותיקן + הקפלה הסיסטינית</div>
+                                        <div class="activity-detail">הזמינו כרטיסים מראש! ~17€ לאדם | 3-4 שעות</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">12:30</div>
+                                    <div class="activity-dot" style="background:#3fb950"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">בזיליקת פטרוס הקדוש</div>
+                                        <div class="activity-detail">כניסה חינם! הנוף מהכיפה שווה את העלייה</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">15:30</div>
+                                    <div class="activity-dot" style="background:#58a6ff"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">טיול בשכונת טראסטוורה</div>
+                                        <div class="activity-detail">השכונה הכי אותנטית ברומא — אוכל מעולה</div>
+                                    </div>
+                                </div>
+                                <button class="add-row-btn" onclick="openAddActivity('day-body-3')">+ הוסף פעילות</button>
+                            </div>
+                        </div>
+                        <div class="day-card deletable" id="day-4">
+                            <button class="del-btn" onclick="deleteEl('day-4')">×</button>
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),4)">
+                                <div class="day-num">4</div>
+                                <div class="day-info">
+                                    <div class="day-title">נסיעה לפירנצה + פיזה</div>
+                                    <div class="day-sub">שני, 20 יולי</div>
+                                </div>
+                                <div class="day-icon">🗼</div>
+                            </div>
+                            <div class="day-body" id="day-body-4">
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">09:00</div>
+                                    <div class="activity-dot" style="background:#58a6ff"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">יציאה מרומא ברכב לפיזה</div>
+                                        <div class="activity-detail">~3 שעות נסיעה | עצירה קלה באוטוסטראדה</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">12:30</div>
+                                    <div class="activity-dot" style="background:#f97583"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">מגדל פיזה הנטוי!</div>
+                                        <div class="activity-detail">צילומים המצחיקים עם המגדל — חוויה לכל המשפחה! עלייה ~20€</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">15:30</div>
+                                    <div class="activity-dot" style="background:#3fb950"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">הגעה לפירנצה + צ'ק-אין</div>
+                                        <div class="activity-detail">טיול ערב על גשר ורקיו וצפייה בשקיעה</div>
+                                    </div>
+                                </div>
+                                <button class="add-row-btn" onclick="openAddActivity('day-body-4')">+ הוסף פעילות</button>
+                                <div class="tip-box deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.tip-box'))">×</button>
+                                    🗺️ השאירו הרכב בחנייה מחוץ לאזור ה-ZTL של פירנצה — קנסות גבוהים!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-card deletable" id="day-5">
+                            <button class="del-btn" onclick="deleteEl('day-5')">×</button>
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),5)">
+                                <div class="day-num">5</div>
+                                <div class="day-info">
+                                    <div class="day-title">פירנצה</div>
+                                    <div class="day-sub">שלישי, 21 יולי</div>
+                                </div>
+                                <div class="day-icon">🎨</div>
+                            </div>
+                            <div class="day-body" id="day-body-5">
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">09:00</div>
+                                    <div class="activity-dot" style="background:#f97583"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">גלריית אופיצי (אופציונלי)</div>
+                                        <div class="activity-detail">לילדים מעל 10 — ונוס של בוטיצ'לי ועוד. ~12€</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">11:00</div>
+                                    <div class="activity-dot" style="background:#58a6ff"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">כתדרלת סנטה מריה דל פיורה</div>
+                                        <div class="activity-detail">אחת מהכיפות היפות בעולם — עלייה לכיפה ~18€</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">14:00</div>
+                                    <div class="activity-dot" style="background:#3fb950"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">גלידריה ארטיג'אנלה</div>
+                                        <div class="activity-detail">גלידה אמיתית איטלקית — הילדים יזכרו זאת כל חייהם!</div>
+                                    </div>
+                                </div>
+                                <button class="add-row-btn" onclick="openAddActivity('day-body-5')">+ הוסף פעילות</button>
+                            </div>
+                        </div>
+                        <div class="day-card deletable" id="day-6">
+                            <button class="del-btn" onclick="deleteEl('day-6')">×</button>
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),6)">
+                                <div class="day-num">6</div>
+                                <div class="day-info">
+                                    <div class="day-title">נסיעה לוונציה</div>
+                                    <div class="day-sub">רביעי, 22 יולי</div>
+                                </div>
+                                <div class="day-icon">🚤</div>
+                            </div>
+                            <div class="day-body" id="day-body-6">
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">09:00</div>
+                                    <div class="activity-dot" style="background:#58a6ff"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">נסיעה מפירנצה לוונציה</div>
+                                        <div class="activity-detail">~2.5 שעות | חנו מחוץ לוונציה (מסטרה)</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">12:00</div>
+                                    <div class="activity-dot" style="background:#f97583"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">פיאצה סן מרקו + הקתדרלה</div>
+                                        <div class="activity-detail">לב וונציה! הכניסה לכיכר חינם</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">14:30</div>
+                                    <div class="activity-dot" style="background:#3fb950"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">נסיעה בגונדולה!</div>
+                                        <div class="activity-detail">~80€ לגונדולה (5 נוסעים)</div>
+                                    </div>
+                                </div>
+                                <button class="add-row-btn" onclick="openAddActivity('day-body-6')">+ הוסף פעילות</button>
+                                <div class="tip-box deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.tip-box'))">×</button>
+                                    🌊 ביולי הגאות נדירה אבל שמרו נעלי גומי!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-card deletable" id="day-7">
+                            <button class="del-btn" onclick="deleteEl('day-7')">×</button>
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),7)">
+                                <div class="day-num">7</div>
+                                <div class="day-info">
+                                    <div class="day-title">🎢 GARDALAND!</div>
+                                    <div class="day-sub">חמישי, 23 יולי</div>
+                                </div>
+                                <div class="day-icon">🎡</div>
+                            </div>
+                            <div class="day-body" id="day-body-7">
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">09:00</div>
+                                    <div class="activity-dot" style="background:#f97583"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">הגעה מוקדמת לגרדלנד!</div>
+                                        <div class="activity-detail">~1 שעה מוונציה | הגיעו בפתיחה להימנע מתורים</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">09:00-18:00</div>
+                                    <div class="activity-dot" style="background:#3fb950"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">יום שלם בפארק!</div>
+                                        <div class="activity-detail">כ-40 אטרקציות | Fast Pass מומלץ ביולי!</div>
+                                    </div>
+                                </div>
+                                <button class="add-row-btn" onclick="openAddActivity('day-body-7')">+ הוסף פעילות</button>
+                                <div class="tip-box deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.tip-box'))">×</button>
+                                    🎢 קנו כרטיסים מראש באתר! חסכון עד 30%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="day-card deletable" id="day-8">
+                            <button class="del-btn" onclick="deleteEl('day-8')">×</button>
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),8)">
+                                <div class="day-num">8</div>
+                                <div class="day-info">
+                                    <div class="day-title">אגם גארדה + סירמיונה</div>
+                                    <div class="day-sub">שישי, 24 יולי</div>
+                                </div>
+                                <div class="day-icon">🏰</div>
+                            </div>
+                            <div class="day-body" id="day-body-8">
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">09:30</div>
+                                    <div class="activity-dot" style="background:#58a6ff"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">סירמיונה — כפר הלשונית הקסומה</div>
+                                        <div class="activity-detail">מבצר ימי ביניים, ילדים מתעופפים מזה!</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">12:00</div>
+                                    <div class="activity-dot" style="background:#3fb950"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">שחייה באגם גארדה</div>
+                                        <div class="activity-detail">המים נקיים וצלולים — חוף ציבורי מצוין</div>
+                                    </div>
+                                </div>
+                                <button class="add-row-btn" onclick="openAddActivity('day-body-8')">+ הוסף פעילות</button>
+                            </div>
+                        </div>
+                        <div class="day-card deletable" id="day-9">
+                            <button class="del-btn" onclick="deleteEl('day-9')">×</button>
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),9)">
+                                <div class="day-num">9</div>
+                                <div class="day-info">
+                                    <div class="day-title">חזרה לרומא</div>
+                                    <div class="day-sub">שבת, 26 יולי</div>
+                                </div>
+                                <div class="day-icon">🚗</div>
+                            </div>
+                            <div class="day-body" id="day-body-9">
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">09:00</div>
+                                    <div class="activity-dot" style="background:#58a6ff"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">נסיעה חזרה לרומא</div>
+                                        <div class="activity-detail">~5.5 שעות | עצרו בבולוניה — בירת הפסטה!</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">16:00</div>
+                                    <div class="activity-dot" style="background:#3fb950"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">הגעה לרומא — צ'ק-אין אחרון</div>
+                                        <div class="activity-detail">ארוחת ערב אחרונה ברומא — פסטה אמיתית!</div>
+                                    </div>
+                                </div>
+                                <button class="add-row-btn" onclick="openAddActivity('day-body-9')">+ הוסף פעילות</button>
+                            </div>
+                        </div>
+                        <div class="day-card deletable" id="day-10">
+                            <button class="del-btn" onclick="deleteEl('day-10')">×</button>
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),10)">
+                                <div class="day-num">10</div>
+                                <div class="day-info">
+                                    <div class="day-title">יום אחרון + טיסה</div>
+                                    <div class="day-sub">ראשון, 26 יולי</div>
+                                </div>
+                                <div class="day-icon">👋</div>
+                            </div>
+                            <div class="day-body" id="day-body-10">
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">בוקר</div>
+                                    <div class="activity-dot" style="background:#3fb950"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">קניות אחרונות + קפה איטלקי</div>
+                                        <div class="activity-detail">espresso ו-cornetto לפני הנסיעה</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item deletable">
+                                    <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
+                                    <div class="activity-time">3 שעות לפני</div>
+                                    <div class="activity-dot" style="background:#f97583"></div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">החזרת רכב + נמל תעופה FCO</div>
+                                        <div class="activity-detail">החזרו את הרכב כ-3 שעות לפני הטיסה</div>
+                                    </div>
+                                </div>
+                                <button class="add-row-btn" onclick="openAddActivity('day-body-10')">+ הוסף פעילות</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="panel-locations" class="panel">
+                        <div id="locations-list">
+                            <div class="location-card deletable" onclick="focusMap(41.8902,12.4922,'colosseum',event)">
+                                <button class="del-btn" onclick="event.stopPropagation();deleteEl(this.closest('.location-card'))">×</button>
+                                <div class="loc-header">
+                                    <span class="loc-icon">🏟️</span>
+                                    <div>
+                                        <div class="loc-name">הקולוסיאום</div>
+                                        <div class="loc-region">רומא</div>
+                                    </div>
+                                </div>
+                                <div class="loc-desc">אמפיתאטרון עתיק — אחת מ-7 פלאי העולם החדש.</div>
+                                <div class="loc-tags">
+                                    <span class="loc-tag must">⭐ חובה</span>
+                                    <span class="loc-tag kids">👧 לילדים</span>
+                                    <span class="loc-tag">💶 18€</span>
+                                </div>
+                            </div>
+                            <div class="location-card deletable" onclick="focusMap(41.9065,12.4536,'vatican',event)">
+                                <button class="del-btn" onclick="event.stopPropagation();deleteEl(this.closest('.location-card'))">×</button>
+                                <div class="loc-header">
+                                    <span class="loc-icon">🎨</span>
+                                    <div>
+                                        <div class="loc-name">מוזיאוני הוותיקן</div>
+                                        <div class="loc-region">הוותיקן, רומא</div>
+                                    </div>
+                                </div>
+                                <div class="loc-desc">הקפלה הסיסטינית של מיקלאנג'לו.</div>
+                                <div class="loc-tags">
+                                    <span class="loc-tag must">⭐ חובה</span>
+                                    <span class="loc-tag">💶 17€</span>
+                                </div>
+                            </div>
+                            <div class="location-card deletable" onclick="focusMap(41.9009,12.4833,'trevi',event)">
+                                <button class="del-btn" onclick="event.stopPropagation();deleteEl(this.closest('.location-card'))">×</button>
+                                <div class="loc-header">
+                                    <span class="loc-icon">⛲</span>
+                                    <div>
+                                        <div class="loc-name">מזרקת טרווי</div>
+                                        <div class="loc-region">רומא</div>
+                                    </div>
+                                </div>
+                                <div class="loc-desc">המזרקה היפה בעולם — זרקו מטבע!</div>
+                                <div class="loc-tags">
+                                    <span class="loc-tag must">⭐ חובה</span>
+                                    <span class="loc-tag kids">👧 לילדים</span>
+                                    <span class="loc-tag">🆓 חינם</span>
+                                </div>
+                            </div>
+                            <div class="location-card deletable" onclick="focusMap(43.7229,10.3966,'pisa',event)">
+                                <button class="del-btn" onclick="event.stopPropagation();deleteEl(this.closest('.location-card'))">×</button>
+                                <div class="loc-header">
+                                    <span class="loc-icon">🗼</span>
+                                    <div>
+                                        <div class="loc-name">מגדל פיזה</div>
+                                        <div class="loc-region">פיזה</div>
+                                    </div>
+                                </div>
+                                <div class="loc-desc">המגדל הנטוי המפורסם!</div>
+                                <div class="loc-tags">
+                                    <span class="loc-tag must">⭐ חובה</span>
+                                    <span class="loc-tag kids">👧 לילדים</span>
+                                    <span class="loc-tag">💶 20€</span>
+                                </div>
+                            </div>
+                            <div class="location-card deletable" onclick="focusMap(43.7678,11.2553,'uffizi',event)">
+                                <button class="del-btn" onclick="event.stopPropagation();deleteEl(this.closest('.location-card'))">×</button>
+                                <div class="loc-header">
+                                    <span class="loc-icon">🖼️</span>
+                                    <div>
+                                        <div class="loc-name">גלריית אופיצי</div>
+                                        <div class="loc-region">פירנצה</div>
+                                    </div>
+                                </div>
+                                <div class="loc-desc">אחד המוזיאונים הגדולים בעולם.</div>
+                                <div class="loc-tags">
+                                    <span class="loc-tag">💶 12€</span>
+                                </div>
+                            </div>
+                            <div class="location-card deletable" onclick="focusMap(45.4342,12.3385,'venice',event)">
+                                <button class="del-btn" onclick="event.stopPropagation();deleteEl(this.closest('.location-card'))">×</button>
+                                <div class="loc-header">
+                                    <span class="loc-icon">🚤</span>
+                                    <div>
+                                        <div class="loc-name">פיאצה סן מרקו</div>
+                                        <div class="loc-region">וונציה</div>
+                                    </div>
+                                </div>
+                                <div class="loc-desc">לב וונציה הצפה.</div>
+                                <div class="loc-tags">
+                                    <span class="loc-tag must">⭐ חובה</span>
+                                    <span class="loc-tag kids">👧 לילדים</span>
+                                </div>
+                            </div>
+                            <div class="location-card deletable" onclick="focusMap(45.4563,10.7133,'gardaland',event)">
+                                <button class="del-btn" onclick="event.stopPropagation();deleteEl(this.closest('.location-card'))">×</button>
+                                <div class="loc-header">
+                                    <span class="loc-icon">🎢</span>
+                                    <div>
+                                        <div class="loc-name">גרדלנד</div>
+                                        <div class="loc-region">אגם גארדה</div>
+                                    </div>
+                                </div>
+                                <div class="loc-desc">הפארק הגדול באיטליה! 40+ אטרקציות.</div>
+                                <div class="loc-tags">
+                                    <span class="loc-tag must">⭐ חובה</span>
+                                    <span class="loc-tag kids">👧 לילדים</span>
+                                    <span class="loc-tag">💶 ~40€</span>
+                                </div>
+                            </div>
+                            <div class="location-card deletable" onclick="focusMap(45.465,10.607,'sirmione',event)">
+                                <button class="del-btn" onclick="event.stopPropagation();deleteEl(this.closest('.location-card'))">×</button>
+                                <div class="loc-header">
+                                    <span class="loc-icon">🏰</span>
+                                    <div>
+                                        <div class="loc-name">סירמיונה</div>
+                                        <div class="loc-region">אגם גארדה</div>
+                                    </div>
+                                </div>
+                                <div class="loc-desc">כפר הלשונית הקסום.</div>
+                                <div class="loc-tags">
+                                    <span class="loc-tag kids">👧 לילדים</span>
+                                    <span class="loc-tag">🏊 שחייה</span>
+                                </div>
+                            </div>
+                            <div class="location-card deletable" onclick="focusMap(46.016,9.257,'como',event)">
+                                <button class="del-btn" onclick="event.stopPropagation();deleteEl(this.closest('.location-card'))">×</button>
+                                <div class="loc-header">
+                                    <span class="loc-icon">⛰️</span>
+                                    <div>
+                                        <div class="loc-name">אגם קומו</div>
+                                        <div class="loc-region">לומברדיה</div>
+                                    </div>
+                                </div>
+                                <div class="loc-desc">האגם היפה באיטליה.</div>
+                                <div class="loc-tags">
+                                    <span class="loc-tag">🌄 נוף</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="panel-hotels" class="panel">
+                        <div style="font-size:11px;color:#58a6ff;margin-bottom:10px;padding:6px 8px;background:rgba(88,166,255,0.07);border-radius:6px;">💡 כל ההמלצות לחדרים משפחתיים ל-5 אנשים — בדקו ב-Booking.com</div>
+                        <div id="hotels-list">
+                            <div class="hotel-card deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.hotel-card'))">×</button>
+                                <div class="hotel-header">
+                                    <div>
+                                        <div class="hotel-name">🏛️ Hotel Quirinale / בתי מלון בצנטרו</div>
+                                        <div class="hotel-city">רומא — 3 לילות</div>
+                                    </div>
+                                    <div class="hotel-price">€90-140</div>
+                                </div>
+                                <div class="hotel-detail">חפשו: "Hotel Sonya Roma" — נקיים ומרכזיים עם חדרים משפחתיים.</div>
+                                <div class="hotel-features">
+                                    <span class="hotel-feat">🚇 קרוב למטרו</span>
+                                    <span class="hotel-feat">🛏️ חדר משפחתי</span>
+                                </div>
+                            </div>
+                            <div class="hotel-card deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.hotel-card'))">×</button>
+                                <div class="hotel-header">
+                                    <div>
+                                        <div class="hotel-name">🌺 Agriturismo / B&B פירנצה</div>
+                                        <div class="hotel-city">פירנצה — 2 לילות</div>
+                                    </div>
+                                    <div class="hotel-price">€80-130</div>
+                                </div>
+                                <div class="hotel-detail">B&Bs יפים בגבעות עם נוף ופרקינג חינם.</div>
+                                <div class="hotel-features">
+                                    <span class="hotel-feat">🚗 פרקינג חינם</span>
+                                    <span class="hotel-feat">🍳 ארוחת בוקר</span>
+                                </div>
+                            </div>
+                            <div class="hotel-card deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.hotel-card'))">×</button>
+                                <div class="hotel-header">
+                                    <div>
+                                        <div class="hotel-name">🚂 Hotel Mestre / אפארטמנט</div>
+                                        <div class="hotel-city">מסטרה (ליד וונציה) — 1 לילה</div>
+                                    </div>
+                                    <div class="hotel-price">€70-110</div>
+                                </div>
+                                <div class="hotel-detail">חנייה במסטרה חוסכת עד 50€/יום!</div>
+                                <div class="hotel-features">
+                                    <span class="hotel-feat">🚂 רכבת לוונציה 10 דק'</span>
+                                    <span class="hotel-feat">🚗 פרקינג חינם</span>
+                                </div>
+                            </div>
+                            <div class="hotel-card deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.hotel-card'))">×</button>
+                                <div class="hotel-header">
+                                    <div>
+                                        <div class="hotel-name">🌊 Hotel/Garni אגם גארדה</div>
+                                        <div class="hotel-city">לזיזה / פסקיארה — 2 לילות</div>
+                                    </div>
+                                    <div class="hotel-price">€90-150</div>
+                                </div>
+                                <div class="hotel-detail">בריכה, נוף לאגם, נגישות לגרדלנד.</div>
+                                <div class="hotel-features">
+                                    <span class="hotel-feat">🏊 בריכה</span>
+                                    <span class="hotel-feat">🌊 נוף לאגם</span>
+                                    <span class="hotel-feat">🎢 קרוב לגרדלנד</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="panel-tips" class="panel">
+                        <div class="tips-section" id="tips-list">
+                            <div class="tips-category deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tips-category'))">×</button>
+                                🌡️ יולי — מה לצפות
+                            </div>
+                            <div class="tip-item deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button>
+                                <span class="tip-emoji">☀️</span>
+                                חום של 30-38°C ביום — תכננו פעילות בבוקר ובערב
+                            </div>
+                            <div class="tip-item deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button>
+                                <span class="tip-emoji">🧴</span>
+                                קרם הגנה SPF 50 לילדים — חיוני!
+                            </div>
+                            <div class="tip-item deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button>
+                                <span class="tip-emoji">💧</span>
+                                בקבוק מים — יש ברזיות "nasoni" ברומא עם מים קרים וחינמיים
+                            </div>
+                            <div class="tips-category deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tips-category'))">×</button>
+                                🚗 השכרת רכב
+                            </div>
+                            <div class="tip-item deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button>
+                                <span class="tip-emoji">📋</span>
+                                הזמינו מראש — Hertz, Europcar, Sixt
+                            </div>
+                            <div class="tip-item deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button>
+                                <span class="tip-emoji">🛡️</span>
+                                קחו ביטוח מלא (CDW) — שלום נפש עם 3 ילדים!
+                            </div>
+                            <div class="tip-item deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button>
+                                <span class="tip-emoji">🚫</span>
+                                ZTL! — הימנעו מנהיגה במרכז ההיסטורי
+                            </div>
+                            <div class="tips-category deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tips-category'))">×</button>
+                                🍕 אוכל עם ילדים
+                            </div>
+                            <div class="tip-item deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button>
+                                <span class="tip-emoji">🍕</span>
+                                פיצה אל טאגליו — זולה ומהירה. ילדים אוהבים!
+                            </div>
+                            <div class="tip-item deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button>
+                                <span class="tip-emoji">🍦</span>
+                                חפשו שלט "artigianale" על הגלידריה
+                            </div>
+                            <div class="tips-category deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tips-category'))">×</button>
+                                💰 חיסכון כספי
+                            </div>
+                            <div class="tip-item deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button>
+                                <span class="tip-emoji">🏦</span>
+                                שלמו בכרטיס אשראי ללא עמלות — Revolut
+                            </div>
+                            <div class="tip-item deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button>
+                                <span class="tip-emoji">🛒</span>
+                                קנו מים ואוכל בסופרמרקט (CONAD, COOP)
+                            </div>
+                            <div class="tips-category deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tips-category'))">×</button>
+                                ✏️ כללי
+                            </div>
+                            <div class="tip-item deletable">
+                                <button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button>
+                                <span class="tip-emoji">🏗</span>
+                                לבקש חופש מהעבודה
+                            </div>
+                        </div>
+                    </div>
+                    <div id="panel-budget" class="panel">
+                        <div style="font-size:12px;color:#8b949e;margin-bottom:12px;">הערכת תקציב ל-5 נפשות — 10 ימים</div>
+                        <table class="cost-table" id="budget-table">
+                            <tbody>
+                                <tr class="deletable">
+                                    <td>🏨 לינה (9 לילות × ~€150)</td>
+                                    <td>€1,350</td>
+                                    <td style="width:20px">
+                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
+                                    </td>
+                                </tr>
+                                <tr class="deletable">
+                                    <td>🚗 השכרת רכב (10 ימים)</td>
+                                    <td>€1000</td>
+                                    <td>
+                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
+                                    </td>
+                                </tr>
+                                <tr class="deletable">
+                                    <td>⛽ דלק + טולים</td>
+                                    <td>€300</td>
+                                    <td>
+                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
+                                    </td>
+                                </tr>
+                                <tr class="deletable">
+                                    <td>🎫 אטרקציות (5 נפשות)</td>
+                                    <td>€500</td>
+                                    <td>
+                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
+                                    </td>
+                                </tr>
+                                <tr class="deletable">
+                                    <td>🎢 פארק שעשועים גרדלנד (5 כרטיסים)</td>
+                                    <td>€250</td>
+                                    <td>
+                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
+                                    </td>
+                                </tr>
+                                <tr class="deletable">
+                                    <td>🍕 אוכל (€100/יום × 10)</td>
+                                    <td>€1000</td>
+                                    <td>
+                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
+                                    </td>
+                                </tr>
+                                <tr class="deletable">
+                                    <td>🚤 גונדולה + תחבורה</td>
+                                    <td>€100</td>
+                                    <td>
+                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
+                                    </td>
+                                </tr>
+                                <tr class="deletable">
+                                    <td>🛍️ קניות</td>
+                                    <td>€600</td>
+                                    <td>
+                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
+                                    </td>
+                                </tr>
+                                <tr class="deletable">
+                                    <td>✈️ טיסות</td>
+                                    <td>€900</td>
+                                    <td>
+                                        <button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button>
+                                    </td>
+                                </tr>
+                                <tr style="background:rgba(255,255,255,0.04)">
+                                    <td>
+                                        <strong>💶 סה"כ משוער</strong>
+                                    </td>
+                                    <td>
+                                        <strong>€6,000</strong>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="tip-box" style="margin-top:12px;">
+                            ✈️ טיסות מתל אביב לרומא Wizz Air (5 נוסעים)<br>
+                            1 מזוודה לבטן המטוס - עד 20 ק"ג<br>
+                            1 טרולי עד 10 ק"ג<br>5 תיק אישי קטן לכל נוסע
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="map"></div>
+            <div class="route-legend" style="display:none">
+                <div class="legend-title">🗺️ מסלול הטיול</div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:#c0392b"></div>
+                    רומא (ימים 1-3, 9-10)
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:#e67e22"></div>
+                    פיזה + פירנצה (ימים 4-5)
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:#2980b9"></div>
+                    וונציה (יום 6)
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:#27ae60"></div>
+                    אגם גארדה (ימים 7-8)
+                </div>
+            </div>
+        </div>
+        <div class="toast" id="toast"></div>
+        <div class="edit-bar" id="edit-bar">
+            <span class="edit-bar-label"></span>
+            <button class="btn btn-edit" id="btn-edit" onclick="toggleEditMode()">✏️ ערוך</button>
+            <div id="edit-tools" style="display:none;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center">
+                <div class="edit-sep"></div>
+                <button class="btn btn-add-activity" onclick="openAddActivity(getActiveBodyId())">＋ פעילות</button>
+                <button class="btn btn-add-day" onclick="openAddDay()">＋ יום</button>
+                <button class="btn btn-add-tip" onclick="openAddTip()">＋ טיפ</button>
+                <button class="btn btn-add-hotel" onclick="openAddHotel()">＋ מלון</button>
+                <button class="btn btn-add-loc" onclick="openAddLocation()">＋ אטרקציה</button>
+                <button class="btn btn-add-activity" style="background:rgba(255,193,7,0.15);color:#d4a017;border-color:rgba(255,193,7,0.3)" onclick="openAddBudgetRow()">＋ תקציב</button>
+                <div class="edit-sep"></div>
+                <button class="btn btn-save" id="btn-save" onclick="saveToGitHub()">💾 שמור</button>
+                <button class="btn btn-cancel" id="btn-cancel" onclick="toggleEditMode()">ביטול</button>
+            </div>
+        </div>
+        <div class="modal-overlay" id="modal">
+            <div class="modal">
+                <h3 id="modal-title">הוסף פריט</h3>
+                <div id="modal-body"></div>
+                <div class="modal-btns">
+                    <button class="modal-cancel" onclick="closeModal()">ביטול</button>
+                    <button class="modal-ok" id="modal-ok" onclick="modalOk()">הוסף</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            const map = L.map('map', {
+                zoomControl: true,
+                attributionControl: false
+            }).setView([43.5, 12.5], 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19
+            }).addTo(map);
+            const locs = [{
+                id: 'colosseum',
+                lat: 41.8902,
+                lng: 12.4922,
+                name: 'הקולוסיאום',
+                region: 'רומא',
+                icon: '🏟️',
+                color: '#c0392b',
+                desc: 'אמפיתאטרון עתיק.',
+                tags: ['חובה', '18€']
+            }, {
+                id: 'vatican',
+                lat: 41.9065,
+                lng: 12.4536,
+                name: 'מוזיאוני הוותיקן',
+                region: 'הוותיקן',
+                icon: '🎨',
+                color: '#c0392b',
+                desc: 'הקפלה הסיסטינית.',
+                tags: ['חובה', '17€']
+            }, {
+                id: 'trevi',
+                lat: 41.9009,
+                lng: 12.4833,
+                name: 'מזרקת טרווי',
+                region: 'רומא',
+                icon: '⛲',
+                color: '#c0392b',
+                desc: 'המזרקה היפה בעולם.',
+                tags: ['חובה', 'חינם']
+            }, {
+                id: 'pisa',
+                lat: 43.7229,
+                lng: 10.3966,
+                name: 'מגדל פיזה',
+                region: 'פיזה',
+                icon: '🗼',
+                color: '#e67e22',
+                desc: 'המגדל הנטוי.',
+                tags: ['חובה', '20€']
+            }, {
+                id: 'uffizi',
+                lat: 43.7678,
+                lng: 11.2553,
+                name: 'גלריית אופיצי',
+                region: 'פירנצה',
+                icon: '🖼️',
+                color: '#e67e22',
+                desc: "ונוס של בוטיצ'לי.",
+                tags: ['12€']
+            }, {
+                id: 'venice',
+                lat: 45.4342,
+                lng: 12.3385,
+                name: 'פיאצה סן מרקו',
+                region: 'וונציה',
+                icon: '🚤',
+                color: '#2980b9',
+                desc: 'לב וונציה.',
+                tags: ['חובה']
+            }, {
+                id: 'gardaland',
+                lat: 45.4563,
+                lng: 10.7133,
+                name: 'גרדלנד',
+                region: 'אגם גארדה',
+                icon: '🎢',
+                color: '#27ae60',
+                desc: 'הפארק הגדול.',
+                tags: ['חובה', '~40€']
+            }, {
+                id: 'sirmione',
+                lat: 45.465,
+                lng: 10.607,
+                name: 'סירמיונה',
+                region: 'אגם גארדה',
+                icon: '🏰',
+                color: '#27ae60',
+                desc: 'כפר הלשונית.',
+                tags: ['שחייה']
+            }, {
+                id: 'como',
+                lat: 46.016,
+                lng: 9.257,
+                name: 'אגם קומו',
+                region: 'לומברדיה',
+                icon: '⛰️',
+                color: '#8e44ad',
+                desc: 'האגם היפה.',
+                tags: ['נוף']
+            }];
+            function mkIcon(emoji, color) {
+                return L.divIcon({
+                    className: '',
+                    html: `<div style="background:${color};width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">${emoji}</div></div>`,
+                    iconSize: [38, 38],
+                    iconAnchor: [19, 38],
+                    popupAnchor: [0, -40]
+                });
+            }
+            locs.forEach(l => {
+                const m = L.marker([l.lat, l.lng], {
+                    icon: mkIcon(l.icon, l.color)
+                }).addTo(map).bindPopup(`<div class="popup-content"><div class="popup-icon">${l.icon}</div><div class="popup-name">${l.name}</div><div class="popup-region">${l.region}</div><div class="popup-desc">${l.desc}</div><div class="popup-tags">${l.tags.map( (t, i) => `<span class="popup-tag ${i === 0 ? 'highlight' : ''}">${t}</span>`).join('')}</div></div>`, {
+                    maxWidth: 260
+                });
+                l.marker = m;
+            }
+            );
+            const rc = [[41.8902, 12.4922], [43.7229, 10.3966], [43.7678, 11.2553], [45.4342, 12.3385], [45.4563, 10.7133], [45.465, 10.607], [41.8902, 12.4922]];
+            L.polyline(rc, {
+                color: '#1a3a6b',
+                weight: 10,
+                opacity: 0.6
+            }).addTo(map);
+            L.polyline(rc, {
+                color: '#3b82f6',
+                weight: 5,
+                opacity: 1
+            }).addTo(map);
+            L.polyline(rc, {
+                color: '#ffffff',
+                weight: 1.5,
+                opacity: 0.6,
+                dashArray: '12,8'
+            }).addTo(map);
+            function drawArrow(a, b) {
+                const ml = (a[0] + b[0]) / 2
+                  , mn = (a[1] + b[1]) / 2
+                  , ag = Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI;
+                L.marker([ml, mn], {
+                    icon: L.divIcon({
+                        className: '',
+                        html: `<div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(${ag}deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div>`,
+                        iconSize: [20, 20],
+                        iconAnchor: [10, 10]
+                    }),
+                    interactive: false,
+                    zIndexOffset: 500
+                }).addTo(map);
+            }
+            for (let i = 0; i < rc.length - 1; i++)
+                drawArrow(rc[i], rc[i + 1]);
+            function focusMap(lat, lng, id, e) {
+                map.flyTo([lat, lng], 13, {
+                    duration: 1.5
+                });
+                const l = locs.find(x => x.id === id);
+                if (l && l.marker)
+                    setTimeout( () => l.marker.openPopup(), 1500);
+                document.querySelectorAll('.location-card').forEach(c => c.classList.remove('active'));
+                if (e && e.currentTarget)
+                    e.currentTarget.classList.add('active');
+            }
+            function switchTab(id, el) {
+                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.getElementById('panel-' + id).classList.add('active');
+                el.classList.add('active');
+            }
+            function toggleDay(card, n) {
+                const b = card.querySelector('.day-body');
+                const o = b.classList.contains('open');
+                document.querySelectorAll('.day-body').forEach(x => x.classList.remove('open'));
+                document.querySelectorAll('.day-card').forEach(x => x.classList.remove('active'));
+                if (!o) {
+                    b.classList.add('open');
+                    card.classList.add('active');
+                    // use stored geo if available, otherwise fall back to hardcoded table
+                    if (card.dataset.lat && card.dataset.lng) {
+                        map.flyTo([parseFloat(card.dataset.lat), parseFloat(card.dataset.lng)], parseInt(card.dataset.zoom) || 13, {
+                            duration: 1.5
+                        });
+                    } else {
+                        const dl = {
+                            1: [41.8902, 12.4922, 6],
+                            2: [41.8902, 12.4922, 13],
+                            3: [41.9065, 12.4536, 13],
+                            4: [43.72, 10.65, 9],
+                            5: [43.7678, 11.2553, 13],
+                            6: [45.4342, 12.3385, 13],
+                            7: [45.4563, 10.7133, 13],
+                            8: [45.465, 10.607, 12],
+                            9: [43.5, 12.2, 7],
+                            10: [41.8, 12.25, 11]
+                        };
+                        if (dl[n])
+                            map.flyTo([dl[n][0], dl[n][1]], dl[n][2], {
+                                duration: 1.5
+                            });
+                    }
+                }
+            }
+
+            let editMode = false;
+            function showToast(msg, err=false) {
+                const t = document.getElementById('toast');
+                t.textContent = msg;
+                t.className = 'toast' + (err ? ' error' : '') + ' show';
+                setTimeout( () => t.classList.remove('show'), 3500);
+            }
+            function resetToast() {
+                const t = document.getElementById('toast');
+                t.textContent = '';
+                t.classList.remove('show');
+            }
+            const EDITABLES = '.day-title,.day-sub,.activity-name,.activity-detail,.activity-time,.tip-box,.loc-name,.loc-desc,.hotel-name,.hotel-detail,.hotel-city,.tip-item,.title-text h1,.title-text p,.hotel-price,.loc-region,.cost-table td';
+            function toggleEditMode() {
+                editMode = !editMode;
+                document.querySelectorAll(EDITABLES).forEach(el => editMode ? el.setAttribute('contenteditable', 'true') : el.removeAttribute('contenteditable'));
+                document.body.classList.toggle('edit-mode', editMode);
+                document.getElementById('btn-edit').style.display = editMode ? 'none' : 'flex';
+                const tools = document.getElementById('edit-tools');
+                tools.style.display = editMode ? 'flex' : 'none';
+                if (editMode)
+                    showToast('✏️ מצב עריכה — לחצו על טקסט לשינוי | ✕ למחיקה | ＋ להוספה');
+                else
+                    resetToast();
+            }
+            function deleteEl(elOrId) {
+                const el = typeof elOrId === 'string' ? document.getElementById(elOrId) : elOrId;
+                if (!el)
+                    return;
+                el.style.transition = 'opacity 0.25s';
+                el.style.opacity = '0';
+                setTimeout( () => el.remove(), 250);
+            }
+            function getActiveBodyId() {
+                const open = document.querySelector('.day-body.open');
+                return open ? open.id : 'day-body-1';
+            }
+
+            let modalCallback = null;
+            function openModal(title, fields, cb, onRendered) {
+                document.getElementById('modal-title').textContent = title;
+                document.getElementById('modal-body').innerHTML = fields;
+                modalCallback = cb;
+                document.getElementById('modal').classList.add('show');
+                if (onRendered)
+                    setTimeout(onRendered, 0);
+            }
+            function closeModal() {
+                document.getElementById('modal').classList.remove('show');
+                modalCallback = null;
+            }
+            function modalOk() {
+                if (modalCallback)
+                    modalCallback();
+                closeModal();
+            }
+
+            // ===== GEOCODING + AUTOCOMPLETE =====
+            let userPinCounter = 0;
+            const userPins = [];
+            const geoCache = {};
+
+            async function geocodeAddress(address) {
+                if (!address || !address.trim())
+                    return null;
+                if (geoCache[address])
+                    return geoCache[address];
+                try {
+                    const enc = encodeURIComponent(address);
+                    const res = await fetch(`https://photon.komoot.io/api/?q=${enc}&limit=1&lang=en&lat=42.5&lon=12.5`);
+                    const data = await res.json();
+                    const f = data.features && data.features[0];
+                    if (f) {
+                        const r = {
+                            lat: f.geometry.coordinates[1],
+                            lng: f.geometry.coordinates[0],
+                            display: [f.properties.name, f.properties.city, f.properties.country].filter(Boolean).join(', ')
+                        };
+                        geoCache[address] = r;
+                        return r;
+                    }
+                } catch (e) {}
+                return null;
+            }
+
+            // Autocomplete: attach to input by id, onSelect called with geo object
+            let acTimer = null;
+            function attachAutocomplete(inputId, onSelect) {
+                const inp = document.getElementById(inputId);
+                if (!inp)
+                    return;
+                const parent = inp.parentNode;
+                const wrap = document.createElement('div');
+                wrap.className = 'ac-wrap';
+                parent.insertBefore(wrap, inp);
+                wrap.appendChild(inp);
+                let dropdown = null;
+
+                function closeDropdown() {
+                    if (dropdown) {
+                        dropdown.remove();
+                        dropdown = null;
+                    }
+                }
+
+                function showDropdown(items) {
+                    closeDropdown();
+                    if (!items || !items.length)
+                        return;
+                    dropdown = document.createElement('div');
+                    dropdown.className = 'ac-dropdown';
+                    items.forEach(item => {
+                        const d = document.createElement('div');
+                        d.className = 'ac-item';
+                        const parts = item.display_name.split(', ');
+                        const main = parts[0];
+                        const sub = parts.slice(1, 3).join(', ');
+                        d.innerHTML = `<span>📍</span><div><div class="ac-item-main">${main}</div><div class="ac-item-sub">${sub}</div></div>`;
+                        d.onmousedown = (e) => {
+                            e.preventDefault();
+                            inp.value = item.display_name;
+                            const geo = {
+                                lat: parseFloat(item.lat),
+                                lng: parseFloat(item.lon),
+                                display: item.display_name,
+                                short: main
+                            };
+                            geoCache[item.display_name] = geo;
+                            closeDropdown();
+                            if (onSelect)
+                                onSelect(geo);
+                        }
+                        ;
+                        dropdown.appendChild(d);
+                    }
+                    );
+                    wrap.appendChild(dropdown);
+                }
+
+                inp.addEventListener('input', () => {
+                    clearTimeout(acTimer);
+                    const q = inp.value.trim();
+                    if (q.length < 3) {
+                        closeDropdown();
+                        return;
+                    }
+                    closeDropdown();
+                    dropdown = document.createElement('div');
+                    dropdown.className = 'ac-dropdown';
+                    dropdown.innerHTML = `<div class="ac-spinner">🔍 מחפש...</div>`;
+                    wrap.appendChild(dropdown);
+                    acTimer = setTimeout(async () => {
+                        try {
+                            // Photon — search without bbox so Hebrew queries work too
+                            // bias results toward Italy center but don't restrict
+                            const enc = encodeURIComponent(q);
+                            const res = await fetch(`https://photon.komoot.io/api/?q=${enc}&limit=6&lang=en&lat=42.5&lon=12.5`);
+                            const data = await res.json();
+                            const items = (data.features || []).map(f => ({
+                                lat: f.geometry.coordinates[1],
+                                lon: f.geometry.coordinates[0],
+                                display_name: [f.properties.name, f.properties.street, f.properties.city, f.properties.state, f.properties.country].filter(Boolean).join(', ')
+                            }));
+                            showDropdown(items);
+                        } catch (e) {
+                            closeDropdown();
+                        }
+                    }
+                    , 350);
+                }
+                );
+
+                inp.addEventListener('blur', () => setTimeout(closeDropdown, 150));
+                inp.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape')
+                        closeDropdown();
+                }
+                );
+            }
+
+            function addUserPin(lat, lng, label, emoji, color, popupHtml) {
+                const id = 'upin-' + (++userPinCounter);
+                const icon = L.divIcon({
+                    className: '',
+                    html: `<div style="background:${color};width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid white;box-shadow:0 3px 10px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:14px;line-height:1">${emoji}</div></div>`,
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                    popupAnchor: [0, -34]
+                });
+                const m = L.marker([lat, lng], {
+                    icon
+                }).addTo(map);
+                if (popupHtml)
+                    m.bindPopup(popupHtml, {
+                        maxWidth: 240
+                    });
+                userPins.push({
+                    id,
+                    marker: m,
+                    lat,
+                    lng
+                });
+                return {
+                    id,
+                    marker: m
+                };
+            }
+
+            function removeUserPin(pinId) {
+                const idx = userPins.findIndex(p => p.id === pinId);
+                if (idx >= 0) {
+                    map.removeLayer(userPins[idx].marker);
+                    userPins.splice(idx, 1);
+                }
+            }
+
+            // location-link style for clickable map links inside cards
+            const geoLinkStyle = 'display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#58a6ff;cursor:pointer;margin-top:4px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);border-radius:8px;padding:2px 7px;';
+
+            // ===== ADD ACTIVITY =====
+            function openAddActivity(bodyId) {
+                if (!bodyId)
+                    bodyId = 'day-body-1';
+                let selectedGeo = null;
+                openModal('➕ הוסף פעילות', `
+<label>שעה</label><input id="m-time" placeholder="09:00">
+<label>כותרת הפעילות</label><input id="m-name" placeholder="ביקור במוזיאון...">
+<label>פרטים</label><textarea id="m-detail" placeholder="מידע נוסף, מחיר, טיפים..."></textarea>
+<label>צבע נקודה</label><select id="m-color"><option value="#58a6ff">כחול</option><option value="#3fb950">ירוק</option><option value="#f97583">אדום</option><option value="#e3b341">צהוב</option><option value="#d2a8ff">סגול</option></select>
+<label>📍 מיקום / כתובת (אופציונלי)</label><input id="m-addr" placeholder="Piazza Navona, Rome" autocomplete="off">`, async () => {
+                    const time = document.getElementById('m-time').value || '';
+                    const name = document.getElementById('m-name').value || 'פעילות חדשה';
+                    const detail = document.getElementById('m-detail').value || '';
+                    const addr = document.getElementById('m-addr').value || '';
+                    const color = document.getElementById('m-color').value;
+                    const body = document.getElementById(bodyId);
+                    if (!body)
+                        return;
+                    const btn = body.querySelector('.add-row-btn');
+                    const el = document.createElement('div');
+                    el.className = 'activity-item deletable';
+                    let pinId = ''
+                      , mapLinkHtml = '';
+                    const geo = selectedGeo || (addr.trim() ? await geocodeAddress(addr) : null);
+                    if (geo) {
+                        const shortAddr = addr || geo.display;
+                        const pin = addUserPin(geo.lat, geo.lng, name, '📍', color, `<div class="popup-content"><div class="popup-icon">📍</div><div class="popup-name">${name}</div><div class="popup-desc">${shortAddr}</div></div>`);
+                        pinId = pin.id;
+                        map.flyTo([geo.lat, geo.lng], 15, {
+                            duration: 1.2
+                        });
+                        mapLinkHtml = `<span style="${geoLinkStyle}" onclick="const p=userPins.find(x=>x.id==='${pinId}');if(p){map.flyTo([p.lat,p.lng],16,{duration:1});setTimeout(()=>p.marker.openPopup(),1100);}">📍 ${shortAddr}</span>`;
+                    }
+                    el.innerHTML = `<button class="del-btn" onclick="removeUserPin('${pinId}');deleteEl(this.closest('.activity-item'))">×</button><div class="activity-time">${time}</div><div class="activity-dot" style="background:${color}"></div><div class="activity-text"><div class="activity-name">${name}</div><div class="activity-detail">${detail}</div>${mapLinkHtml}</div>`;
+                    if (editMode) {
+                        el.querySelector('.activity-name').setAttribute('contenteditable', 'true');
+                        el.querySelector('.activity-detail').setAttribute('contenteditable', 'true');
+                        el.querySelector('.activity-time').setAttribute('contenteditable', 'true');
+                    }
+                    body.insertBefore(el, btn);
+                    showToast('✅ פעילות נוספה!');
+                }
+                , () => attachAutocomplete('m-addr', geo => {
+                    selectedGeo = geo;
+                    map.flyTo([geo.lat, geo.lng], 15, {
+                        duration: 1
+                    });
+                }
+                ));
+            }
+
+            let dayCounter = 11;
+            function openAddDay() {
+                let selectedGeo = null;
+                openModal('➕ הוסף יום', `
+<label>כותרת היום</label><input id="m-dtitle" placeholder="יום חופשי בנאפולי">
+<label>תאריך / יום בשבוע</label><input id="m-dsub" placeholder="שני, 13 יולי">
+<label>אייקון (אמוג'י)</label><input id="m-dicon" placeholder="🌴" maxlength="4" value="🌴">
+<label>📍 מיקום (אופציונלי)</label><input id="m-dloc" placeholder="Naples, Italy" autocomplete="off">`, () => {
+                    const title = document.getElementById('m-dtitle').value || 'יום חדש';
+                    const sub = document.getElementById('m-dsub').value || '';
+                    const icon = document.getElementById('m-dicon').value || '📅';
+                    const n = dayCounter++;
+                    // store geo on the card as data attributes
+                    const lat = selectedGeo ? selectedGeo.lat : '';
+                    const lng = selectedGeo ? selectedGeo.lng : '';
+                    const zoom = selectedGeo ? 13 : 7;
+                    const card = document.createElement('div');
+                    card.className = 'day-card deletable';
+                    card.id = `day-${n}`;
+                    if (lat)
+                        card.dataset.lat = lat;
+                    if (lng)
+                        card.dataset.lng = lng;
+                    card.dataset.zoom = zoom;
+                    card.innerHTML = `<button class="del-btn" onclick="deleteEl('day-${n}')">×</button>
+<div class="day-header" onclick="toggleDay(this.closest('.day-card'),${n})">
+  <div class="day-num">${n}</div>
+  <div class="day-info"><div class="day-title">${title}</div><div class="day-sub">${sub}</div></div>
+  <div class="day-icon">${icon}</div>
+</div>
+<div class="day-body" id="day-body-${n}">
+  <button class="add-row-btn" onclick="openAddActivity('day-body-${n}')">+ הוסף פעילות</button>
+</div>`;
+                    if (editMode) {
+                        card.querySelector('.day-title').setAttribute('contenteditable', 'true');
+                        card.querySelector('.day-sub').setAttribute('contenteditable', 'true');
+                    }
+                    document.getElementById('panel-itinerary').appendChild(card);
+                    showToast('✅ יום חדש נוסף!');
+                }
+                , () => attachAutocomplete('m-dloc', geo => {
+                    selectedGeo = geo;
+                    map.flyTo([geo.lat, geo.lng], 13, {
+                        duration: 1
+                    });
+                }
+                ));
+            }
+
+            function openAddTip() {
+                openModal('➕ הוסף טיפ', `<label>אמוג'י</label><input id="m-temoji" placeholder="💡" maxlength="4" value="💡"><label>טקסט הטיפ</label><textarea id="m-ttext" placeholder="טיפ שימושי למשפחה..."></textarea>`, () => {
+                    const emoji = document.getElementById('m-temoji').value || '💡';
+                    const text = document.getElementById('m-ttext').value || 'טיפ חדש';
+                    const el = document.createElement('div');
+                    el.className = 'tip-item deletable';
+                    el.innerHTML = `<button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button><span class="tip-emoji">${emoji}</span>${text}`;
+                    if (editMode)
+                        el.setAttribute('contenteditable', 'true');
+                    document.getElementById('tips-list').appendChild(el);
+                    showToast('✅ טיפ נוסף!');
+                }
+                );
+            }
+
+            // ===== ADD HOTEL =====
+            function openAddHotel() {
+                let selectedGeo = null;
+                openModal('➕ הוסף מלון', `
+<label>שם המלון</label><input id="m-hname" placeholder="Hotel Roma">
+<label>עיר + לילות</label><input id="m-hcity" placeholder="רומא — 2 לילות">
+<label>מחיר</label><input id="m-hprice" placeholder="€80-120">
+<label>פרטים</label><textarea id="m-hdetail" placeholder="מידע, מיקום, יתרונות..."></textarea>
+<label>📍 כתובת המלון (אופציונלי)</label><input id="m-haddr" placeholder="Via Nazionale 7, Rome" autocomplete="off">`, async () => {
+                    const name = document.getElementById('m-hname').value || 'מלון חדש';
+                    const city = document.getElementById('m-hcity').value || '';
+                    const price = document.getElementById('m-hprice').value || '';
+                    const detail = document.getElementById('m-hdetail').value || '';
+                    const addr = document.getElementById('m-haddr').value || '';
+                    const el = document.createElement('div');
+                    el.className = 'hotel-card deletable';
+                    let pinId = ''
+                      , mapLinkHtml = '';
+                    const geo = selectedGeo || (addr.trim() ? await geocodeAddress(addr) : null);
+                    if (geo) {
+                        const shortAddr = addr || geo.display;
+                        const pin = addUserPin(geo.lat, geo.lng, name, '🏨', '#a78bfa', `<div class="popup-content"><div class="popup-icon">🏨</div><div class="popup-name">${name}</div><div class="popup-region">${city}</div><div class="popup-desc">${shortAddr}</div></div>`);
+                        pinId = pin.id;
+                        map.flyTo([geo.lat, geo.lng], 16, {
+                            duration: 1.2
+                        });
+                        mapLinkHtml = `<span style="${geoLinkStyle}" onclick="const p=userPins.find(x=>x.id==='${pinId}');if(p){map.flyTo([p.lat,p.lng],16,{duration:1});setTimeout(()=>p.marker.openPopup(),1100);}">📍 ${shortAddr}</span>`;
+                    }
+                    el.innerHTML = `<button class="del-btn" onclick="removeUserPin('${pinId}');deleteEl(this.closest('.hotel-card'))">×</button><div class="hotel-header"><div><div class="hotel-name">🏨 ${name}</div><div class="hotel-city">${city}</div></div><div class="hotel-price">${price}</div></div><div class="hotel-detail">${detail}</div>${mapLinkHtml}`;
+                    if (editMode) {
+                        el.querySelector('.hotel-name').setAttribute('contenteditable', 'true');
+                        el.querySelector('.hotel-city').setAttribute('contenteditable', 'true');
+                        el.querySelector('.hotel-detail').setAttribute('contenteditable', 'true');
+                    }
+                    document.getElementById('hotels-list').appendChild(el);
+                    showToast('✅ מלון נוסף!');
+                }
+                , () => attachAutocomplete('m-haddr', geo => {
+                    selectedGeo = geo;
+                    map.flyTo([geo.lat, geo.lng], 16, {
+                        duration: 1
+                    });
+                }
+                ));
+            }
+
+            // ===== ADD LOCATION =====
+            function openAddLocation() {
+                let selectedGeo = null;
+                openModal('➕ הוסף אטרקציה', `
+<label>שם האטרקציה</label><input id="m-lname" placeholder="פיאצה נבונה">
+<label>אזור / עיר</label><input id="m-lregion" placeholder="רומא">
+<label>אמוג'י</label><input id="m-licon" placeholder="🏛️" maxlength="4" value="🏛️">
+<label>תיאור</label><textarea id="m-ldesc" placeholder="תיאור קצר של המקום..."></textarea>
+<label>תגיות (מופרדות בפסיק)</label><input id="m-ltags" placeholder="חובה, לילדים, חינם">
+<label>📍 כתובת / שם מקום (אופציונלי)</label><input id="m-laddr" placeholder="Piazza Navona, Rome" autocomplete="off">`, async () => {
+                    const name = document.getElementById('m-lname').value || 'אטרקציה חדשה';
+                    const region = document.getElementById('m-lregion').value || '';
+                    const icon = document.getElementById('m-licon').value || '🏛️';
+                    const desc = document.getElementById('m-ldesc').value || '';
+                    const tags = (document.getElementById('m-ltags').value || '').split(',').filter(t => t.trim());
+                    const addr = document.getElementById('m-laddr').value || '';
+                    const el = document.createElement('div');
+                    el.className = 'location-card deletable';
+                    let pinId = ''
+                      , mapLinkHtml = '';
+                    const geo = selectedGeo || (addr.trim() ? await geocodeAddress(addr) : null);
+                    if (geo) {
+                        const shortAddr = addr || geo.display;
+                        const pin = addUserPin(geo.lat, geo.lng, name, icon, '#fb923c', `<div class="popup-content"><div class="popup-icon">${icon}</div><div class="popup-name">${name}</div><div class="popup-region">${region}</div><div class="popup-desc">${desc || shortAddr}</div><div class="popup-tags">${tags.map( (t, i) => `<span class="popup-tag ${i === 0 ? 'highlight' : ''}">${t}</span>`).join('')}</div></div>`);
+                        pinId = pin.id;
+                        map.flyTo([geo.lat, geo.lng], 15, {
+                            duration: 1.2
+                        });
+                        mapLinkHtml = `<span style="${geoLinkStyle}" onclick="const p=userPins.find(x=>x.id==='${pinId}');if(p){map.flyTo([p.lat,p.lng],16,{duration:1});setTimeout(()=>p.marker.openPopup(),1100);}">📍 ${shortAddr}</span>`;
+                    }
+                    el.innerHTML = `<button class="del-btn" onclick="event.stopPropagation();removeUserPin('${pinId}');deleteEl(this.closest('.location-card'))">×</button><div class="loc-header"><span class="loc-icon">${icon}</span><div><div class="loc-name">${name}</div><div class="loc-region">${region}</div></div></div><div class="loc-desc">${desc}</div>${mapLinkHtml}<div class="loc-tags">${tags.map(t => `<span class="loc-tag">${t.trim()}</span>`).join('')}</div>`;
+                    el.onclick = (e) => {
+                        if (e.target.closest('.del-btn') || e.target.closest('span[onclick]'))
+                            return;
+                        if (pinId) {
+                            const p = userPins.find(x => x.id === pinId);
+                            if (p) {
+                                map.flyTo([p.lat, p.lng], 16, {
+                                    duration: 1
+                                });
+                                setTimeout( () => p.marker.openPopup(), 1100);
+                            }
+                        }
+                        document.querySelectorAll('.location-card').forEach(c => c.classList.remove('active'));
+                        el.classList.add('active');
+                    }
+                    ;
+                    if (editMode) {
+                        el.querySelector('.loc-name').setAttribute('contenteditable', 'true');
+                        el.querySelector('.loc-desc').setAttribute('contenteditable', 'true');
+                    }
+                    document.getElementById('locations-list').appendChild(el);
+                    showToast('✅ אטרקציה נוספה!');
+                }
+                , () => attachAutocomplete('m-laddr', geo => {
+                    selectedGeo = geo;
+                    map.flyTo([geo.lat, geo.lng], 15, {
+                        duration: 1
+                    });
+                }
+                ));
+            }
+
+            function openAddBudgetRow() {
+                openModal('➕ הוסף שורת תקציב', `<label>תיאור הוצאה</label><input id="m-bitem" placeholder="🎭 כרטיסי תיאטרון"><label>עלות</label><input id="m-bcost" placeholder="€50-80">`, () => {
+                    const item = document.getElementById('m-bitem').value || 'הוצאה חדשה';
+                    const cost = document.getElementById('m-bcost').value || '€0';
+                    const table = document.getElementById('budget-table');
+                    const tbody = table.tBodies[0];
+                    const insertIndex = tbody.rows.length - 1;
+                    const tr = tbody.insertRow(insertIndex);
+                    tr.className = 'deletable';
+                    tr.innerHTML = `<td>${item}</td><td>${cost}</td><td><button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button></td>`;
+                    if (editMode) {
+                        tr.querySelectorAll('td').forEach(td => td.setAttribute('contenteditable', 'true'));
+                    }
+                    showToast('✅ שורה נוספה!');
+                }
+                );
+            }
+
+            const GITHUB_TOKEN = '11B2LOLXA0QUSyBVPYrfPm_mCnhrR87EuROkeSWMDq5Xu0QwTnjGwNtF1cYaTKLLYtNMOLOBD5IuEaJwM2';
+            const GITHUB_REPO = 'yanivmor515-blip/yanivmor515-blip.github.io';
+            const GITHUB_FILE = 'italy-family-trip.html';
+            const GITHUB_API = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+            let fileSha = null;
+
+            async function saveToGitHub() {
+                const btn = document.getElementById('btn-save');
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner"></span> שומר...';
+                try {
+                    const shaRes = await fetch(GITHUB_API, {
+                        headers: {
+                            'Authorization': `Bearer github_pat_${GITHUB_TOKEN}`,
+                            'Accept': 'application/vnd.github+json'
+                        }
+                    });
+                    if (shaRes.ok) {
+                        const d = await shaRes.json();
+                        fileSha = d.sha;
+                    }
+                    // צא ממצב עריכה לפני צילום ה-HTML
+                    toggleEditMode();
+                    btn.disabled = false;
+                    btn.innerHTML = '💾 שמור';
+                    const html = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+                    const encoded = btoa(unescape(encodeURIComponent(html)));
+                    const putRes = await fetch(GITHUB_API, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer github_pat_${GITHUB_TOKEN}`,
+                            'Accept': 'application/vnd.github+json',
+                            'X-GitHub-Api-Version': '2022-11-28',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: '✏️ עדכון טיול ' + new Date().toLocaleString('he-IL'),
+                            content: encoded,
+                            ...(fileSha && {
+                                sha: fileSha
+                            })
+                        })
+                    });
+                    if (putRes.ok) {
+                        showToast('✅ נשמר! יופיע באתר תוך דקה');
+                    } else {
+                        const err = await putRes.json();
+                        showToast('❌ שגיאה: ' + (err.message || 'נסו שוב'), true);
+                    }
+                } catch (e) {
+                    showToast('❌ שגיאת רשת: ' + e.message, true);
+                }
+            }
+        </script>
+    </body>
+</html>
