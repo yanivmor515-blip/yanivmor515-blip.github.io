@@ -3,16 +3,5 @@
     "name": "התינוק",
     "dob": ""
   },
-  "entries": [
-    {
-      "id": "mmdbq13btxtdp7n3o1",
-      "type": "feed",
-      "date": "2026-02-19",
-      "startTime": "12:29",
-      "notes": "",
-      "endTime": "12:35",
-      "amount": "50",
-      "feedType": "בקבוק"
-    }
-  ]
+  "entries": []
 }
