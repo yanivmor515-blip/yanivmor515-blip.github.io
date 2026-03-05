@@ -53,6 +53,14 @@
       "endTime": "23:15",
       "amount": "30",
       "feedType": "בקבוק"
+    },
+    {
+      "id": "mmdcv6gapwqh0r6ewd",
+      "type": "spit",
+      "date": "2026-03-04",
+      "startTime": "23:00",
+      "notes": "",
+      "amount": "קצת"
     }
   ]
 }
