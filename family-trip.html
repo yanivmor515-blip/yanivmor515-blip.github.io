@@ -1065,7 +1065,9 @@
         </div>
         <script>
 			const defaultZoom = 6;
+			let userPinCounter = 0;
 			let userLocations = [];
+            let userPins = [];			
 			let defaultLocation = userLocations[0];
 			if (!defaultLocation){
 				defaultLocation = {lat: 41.8902, lng: 12.4922};
@@ -1198,8 +1200,6 @@
             }
 
             // ===== GEOCODING + AUTOCOMPLETE =====
-            let userPinCounter = 0;
-            const userPins = [];
             const geoCache = {};
 
             async function geocodeAddress(address) {
