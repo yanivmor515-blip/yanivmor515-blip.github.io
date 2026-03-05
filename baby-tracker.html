@@ -367,8 +367,8 @@ const LS_DATA = 'bt-local-data';
 let localPrefs = JSON.parse(localStorage.getItem(LS_CFG)||'null') || {
   storageMode:  'local',  // 'github' | 'local'
   syncInterval: 30,
-  ghToken:      '11B2LOLXA0QUSyBVPYrfPm_mCnhrR87EuROkeSWMDq5Xu0QwTnjGwNtF1cYaTKLLYtNMOLOBD5IuEaJwM2',// GitHub Personal Access Token
-  ghRepo:       'yanivmor515-blip/yanivmor515-blip.github.io',       // e.g. user/repo
+  ghToken:      '',// GitHub Personal Access Token 11B2LOLXA0QUSyBVPYrfPm_mCnhrR87EuROkeSWMDq5Xu0QwTnjGwNtF1cYaTKLLYtNMOLOBD5IuEaJwM2
+  ghRepo:       '',       // e.g. user/repo yanivmor515-blip/yanivmor515-blip.github.io
   ghFile:       'baby-data.json'
 };
 function saveLocalPrefs(){ localStorage.setItem(LS_CFG, JSON.stringify(localPrefs)); }
