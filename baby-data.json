@@ -194,6 +194,14 @@
       "startTime": "13:00",
       "notes": "פלטה קצת ",
       "amount": "קצת"
+    },
+    {
+      "id": "mmdo7ox363n8y98wo6s",
+      "type": "sleep",
+      "date": "2026-03-05",
+      "startTime": "14:00",
+      "notes": "",
+      "endTime": "15:30"
     }
   ]
 }
