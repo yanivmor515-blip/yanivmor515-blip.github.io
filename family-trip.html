@@ -1632,7 +1632,7 @@
                     btn.disabled = false;
                     btn.innerHTML = '💾 שמור';
                     const html = '<!DOCTYPE html>' + document.documentElement.outerHTML;
-					const newHtml = html.replace('let userLocations = [];', `let userLocations = ${JSON.stringify(userLocations);}`);
+					const newHtml = html.replace('let userLocations = [];', `let userLocations = ${JSON.stringify(userLocations)}`);
                     const encoded = btoa(unescape(encodeURIComponent(newHtml)));
                     const putRes = await fetch(GITHUB_API, {
                         method: 'PUT',
