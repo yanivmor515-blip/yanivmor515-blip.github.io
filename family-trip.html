@@ -1006,16 +1006,16 @@
         <div class="main">
             <div class="sidebar">
                 <div class="sidebar-tabs">
-                    <div class="tab" onclick="switchTab('itinerary',this)">📅 מסלול</div>
-                    <div class="tab active" onclick="switchTab('locations',this)">📍 אטרקציות</div>
+                    <div class="tab active" onclick="switchTab('itinerary',this)">📅 מסלול</div>
+                    <div class="tab" onclick="switchTab('locations',this)">📍 אטרקציות</div>
                     <div class="tab" onclick="switchTab('hotels',this)">🏨 לינה</div>
                     <div class="tab" onclick="switchTab('tips',this)">💡 טיפים</div>
                     <div class="tab" onclick="switchTab('budget',this)">💶 תקציב</div>
                 </div>
                 <div class="sidebar-content">
-                    <div id="panel-itinerary" class="panel"></div>
-                    <div id="panel-locations" class="panel active">
-                        <div id="locations-list"><div class="location-card deletable"><button class="del-btn" onclick="event.stopPropagation();removeUserPin('upin-1');deleteEl(this.closest('.location-card'))">×</button><div class="loc-header"><span class="loc-icon">🏛️</span><div><div class="loc-name">הקולוסיאום</div><div class="loc-region">רומא</div></div></div><div class="loc-desc">אמפיתאטרון עתיק — אחת מ-7 פלאי העולם החדש.</div><span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#58a6ff;cursor:pointer;margin-top:4px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);border-radius:8px;padding:2px 7px;" onclick="const p=userPins.find(x=&gt;x.id==='upin-1');if(p){map.flyTo([p.lat,p.lng],16,{duration:1});setTimeout(()=&gt;p.marker.openPopup(),1100);}">📍 Colosseum, Piazza del Colosseo, Rome, Lazio, Italy</span><div class="loc-tags"><span class="loc-tag">חובה</span><span class="loc-tag">לילדים</span></div></div></div>
+                    <div id="panel-itinerary" class="panel active"></div>
+                    <div id="panel-locations" class="panel">
+                        <div id="locations-list"></div>
                     </div>
                     <div id="panel-hotels" class="panel">
                         <div style="font-size:11px;color:#58a6ff;margin-bottom:10px;padding:6px 8px;background:rgba(88,166,255,0.07);border-radius:6px;">💡 כל ההמלצות לחדרים משפחתיים ל-5 אנשים — בדקו ב-Booking.com</div>
@@ -1035,7 +1035,7 @@
                 </div>
             </div>
             <div id="map" class="leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;">	
-        <div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(-288px, -219px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 19; transform: translate3d(-223px, -121px, 0px) scale(1);"><img alt="" src="https://a.tile.openstreetmap.org/15/17520/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(535px, 338px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17521/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(791px, 338px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17520/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(535px, 82px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17521/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(791px, 82px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17520/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(535px, 594px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17521/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(791px, 594px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17519/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(279px, 338px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17522/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1047px, 338px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17519/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(279px, 82px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17522/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1047px, 82px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17519/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(279px, 594px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17522/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1047px, 594px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17520/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(535px, -174px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17521/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(791px, -174px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17520/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(535px, 850px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17521/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(791px, 850px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17519/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(279px, -174px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17522/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1047px, -174px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17518/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(23px, 338px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17523/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1303px, 338px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17519/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(279px, 850px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17522/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1047px, 850px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17518/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(23px, 82px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17523/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1303px, 82px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17518/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(23px, 594px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17523/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1303px, 594px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17518/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(23px, -174px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17523/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1303px, -174px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17518/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(23px, 850px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17523/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1303px, 850px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17517/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-233px, 338px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17524/12177.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1559px, 338px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17517/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-233px, 82px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17524/12176.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1559px, 82px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17517/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-233px, 594px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17524/12178.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1559px, 594px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/15/17517/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-233px, -174px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17524/12175.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1559px, -174px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/15/17517/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-233px, 850px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/15/17524/12179.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1559px, 850px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-shadow-pane"></div><div class="leaflet-pane leaflet-marker-pane"><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(578px, 316px, 0px); z-index: 316;"><div style="background:#fb923c;width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid white;box-shadow:0 3px 10px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:14px;line-height:1">🏛️</div></div></div></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(4.48539e+06px, 3.11741e+06px, 0px) scale(16384);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in" aria-disabled="false"><span aria-hidden="true">+</span></a><a class="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out" aria-disabled="false"><span aria-hidden="true">−</span></a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"></div></div></div>
+        </div>
         <div class="toast" id="toast"></div>
         <div class="edit-bar" id="edit-bar">
             <span class="edit-bar-label"></span>
@@ -1055,14 +1055,8 @@
         </div>
         <div class="modal-overlay" id="modal">
             <div class="modal">
-                <h3 id="modal-title">➕ הוסף אטרקציה</h3>
-                <div id="modal-body">
-<label>שם האטרקציה</label><input id="m-lname" placeholder="פיאצה נבונה">
-<label>אזור / עיר</label><input id="m-lregion" placeholder="רומא">
-<label>אמוג'י</label><input id="m-licon" placeholder="🏛️" maxlength="4" value="🏛️">
-<label>תיאור</label><textarea id="m-ldesc" placeholder="תיאור קצר של המקום..."></textarea>
-<label>תגיות (מופרדות בפסיק)</label><input id="m-ltags" placeholder="חובה, לילדים, חינם">
-<label>📍 כתובת / שם מקום (אופציונלי)</label><div class="ac-wrap"><input id="m-laddr" placeholder="Piazza Navona, Rome" autocomplete="off"></div></div>
+                <h3 id="modal-title">הוסף פריט</h3>
+                <div id="modal-body"></div>
                 <div class="modal-btns">
                     <button class="modal-cancel" onclick="closeModal()">ביטול</button>
                     <button class="modal-ok" id="modal-ok" onclick="modalOk()">הוסף</button>
@@ -1099,7 +1093,6 @@
                 }).addTo(map).bindPopup(`<div class="popup-content"><div class="popup-icon">${l.icon}</div><div class="popup-name">${l.name}</div><div class="popup-region">${l.region}</div><div class="popup-desc">${l.desc}</div><div class="popup-tags">${l.tags.map( (t, i) => `<span class="popup-tag ${i === 0 ? 'highlight' : ''}">${t}</span>`).join('')}</div></div>`, {
                     maxWidth: 260
                 });
-                l.marker = m;
             }
             );
 
@@ -1279,7 +1272,395 @@
                     wrap.appendChild(dropdown);
                 }
 
-     …</script>
+                inp.addEventListener('input', () => {
+                    clearTimeout(acTimer);
+                    const q = inp.value.trim();
+                    if (q.length < 3) {
+                        closeDropdown();
+                        return;
+                    }
+                    closeDropdown();
+                    dropdown = document.createElement('div');
+                    dropdown.className = 'ac-dropdown';
+                    dropdown.innerHTML = `<div class="ac-spinner">🔍 מחפש...</div>`;
+                    wrap.appendChild(dropdown);
+                    acTimer = setTimeout(async () => {
+                        try {
+                            // Photon — search without bbox so Hebrew queries work too
+                            // bias results toward Italy center but don't restrict
+                            const enc = encodeURIComponent(q);
+                            const res = await fetch(`https://photon.komoot.io/api/?q=${enc}&limit=6&lang=en&lat=42.5&lon=12.5`);
+                            const data = await res.json();
+                            const items = (data.features || []).map(f => ({
+                                lat: f.geometry.coordinates[1],
+                                lon: f.geometry.coordinates[0],
+                                display_name: [f.properties.name, f.properties.street, f.properties.city, f.properties.state, f.properties.country].filter(Boolean).join(', ')
+                            }));
+                            showDropdown(items);
+                        } catch (e) {
+                            closeDropdown();
+                        }
+                    }
+                    , 350);
+                }
+                );
+
+                inp.addEventListener('blur', () => setTimeout(closeDropdown, 150));
+                inp.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape')
+                        closeDropdown();
+                }
+                );
+            }
+
+            function addUserPin(lat, lng, label, region, desc, tags, emoji, color, popupHtml) {
+                const id = 'upin-' + (++userPinCounter);
+                const icon = L.divIcon({
+                    className: '',
+                    html: `<div style="background:${color};width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid white;box-shadow:0 3px 10px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:14px;line-height:1">${emoji}</div></div>`,
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                    popupAnchor: [0, -34]
+                });
+                const m = L.marker([lat, lng], {
+                    icon
+                }).addTo(map);
+                if (popupHtml)
+                    m.bindPopup(popupHtml, {
+                        maxWidth: 240
+                    });
+                userPins.push({
+                    id,
+                    marker: m,
+                    lat,
+                    lng
+                });
+                userLocations.push({
+                    id,
+					lat,
+					lng,
+					name: label,
+					region,
+					icon: emoji,
+					color,
+					desc,
+					tags
+                });				
+                return {
+                    id,
+                    marker: m
+                };
+            }
+
+            function removeUserPin(pinId) {
+                const idx = userPins.findIndex(p => p.id === pinId);
+                if (idx >= 0) {
+                    map.removeLayer(userPins[idx].marker);
+                    userPins.splice(idx, 1);
+                }
+            }
+
+            // location-link style for clickable map links inside cards
+            const geoLinkStyle = 'display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#58a6ff;cursor:pointer;margin-top:4px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);border-radius:8px;padding:2px 7px;';
+
+            // ===== ADD ACTIVITY =====
+            function openAddActivity(bodyId) {
+                if (!bodyId)
+                    bodyId = 'day-body-1';
+                let selectedGeo = null;
+                openModal('➕ הוסף פעילות', `
+<label>שעה</label><input id="m-time" placeholder="09:00">
+<label>כותרת הפעילות</label><input id="m-name" placeholder="ביקור במוזיאון...">
+<label>פרטים</label><textarea id="m-detail" placeholder="מידע נוסף, מחיר, טיפים..."></textarea>
+<label>צבע נקודה</label><select id="m-color"><option value="#58a6ff">כחול</option><option value="#3fb950">ירוק</option><option value="#f97583">אדום</option><option value="#e3b341">צהוב</option><option value="#d2a8ff">סגול</option></select>
+<label>📍 מיקום / כתובת (אופציונלי)</label><input id="m-addr" placeholder="Piazza Navona, Rome" autocomplete="off">`, async () => {
+                    const time = document.getElementById('m-time').value || '';
+                    const name = document.getElementById('m-name').value || 'פעילות חדשה';
+                    const detail = document.getElementById('m-detail').value || '';
+                    const addr = document.getElementById('m-addr').value || '';
+                    const color = document.getElementById('m-color').value;
+                    const body = document.getElementById(bodyId);
+                    if (!body)
+                        return;
+                    const btn = body.querySelector('.add-row-btn');
+                    const el = document.createElement('div');
+                    el.className = 'activity-item deletable';
+                    let pinId = ''
+                      , mapLinkHtml = '';
+                    const geo = selectedGeo || (addr.trim() ? await geocodeAddress(addr) : null);
+                    if (geo) {
+                        const shortAddr = addr || geo.display;
+                        const pin = addUserPin(geo.lat, geo.lng, name, shortAddr, detail, [], '📍', color, `<div class="popup-content"><div class="popup-icon">📍</div><div class="popup-name">${name}</div><div class="popup-desc">${shortAddr}</div></div>`);
+                        pinId = pin.id;
+                        map.flyTo([geo.lat, geo.lng], 15, {
+                            duration: 1.2
+                        });
+                        mapLinkHtml = `<span style="${geoLinkStyle}" onclick="const p=userPins.find(x=>x.id==='${pinId}');if(p){map.flyTo([p.lat,p.lng],16,{duration:1});setTimeout(()=>p.marker.openPopup(),1100);}">📍 ${shortAddr}</span>`;
+                    }
+                    el.innerHTML = `<button class="del-btn" onclick="removeUserPin('${pinId}');deleteEl(this.closest('.activity-item'))">×</button><div class="activity-time">${time}</div><div class="activity-dot" style="background:${color}"></div><div class="activity-text"><div class="activity-name">${name}</div><div class="activity-detail">${detail}</div>${mapLinkHtml}</div>`;
+                    if (editMode) {
+                        el.querySelector('.activity-name').setAttribute('contenteditable', 'true');
+                        el.querySelector('.activity-detail').setAttribute('contenteditable', 'true');
+                        el.querySelector('.activity-time').setAttribute('contenteditable', 'true');
+                    }
+                    body.insertBefore(el, btn);
+                    showToast('✅ פעילות נוספה!');
+                }
+                , () => attachAutocomplete('m-addr', geo => {
+                    selectedGeo = geo;
+                    map.flyTo([geo.lat, geo.lng], 15, {
+                        duration: 1
+                    });
+                }
+                ));
+            }
+
+            let dayCounter = 1;
+            function openAddDay() {
+                let selectedGeo = null;
+                openModal('➕ הוסף יום', `
+<label>כותרת היום</label><input id="m-dtitle" placeholder="יום חופשי בנאפולי">
+<label>תאריך / יום בשבוע</label><input id="m-dsub" placeholder="שני, 13 יולי">
+<label>אייקון (אמוג'י)</label><input id="m-dicon" placeholder="🌴" maxlength="4" value="🌴">
+<label>📍 מיקום (אופציונלי)</label><input id="m-dloc" placeholder="Naples, Italy" autocomplete="off">`, () => {
+                    const title = document.getElementById('m-dtitle').value || 'יום חדש';
+                    const sub = document.getElementById('m-dsub').value || '';
+                    const icon = document.getElementById('m-dicon').value || '📅';
+                    const n = dayCounter++;
+                    // store geo on the card as data attributes
+                    const lat = selectedGeo ? selectedGeo.lat : '';
+                    const lng = selectedGeo ? selectedGeo.lng : '';
+                    const zoom = selectedGeo ? 13 : 7;
+                    const card = document.createElement('div');
+                    card.className = 'day-card deletable';
+                    card.id = `day-${n}`;
+                    if (lat)
+                        card.dataset.lat = lat;
+                    if (lng)
+                        card.dataset.lng = lng;
+                    card.dataset.zoom = zoom;
+                    card.innerHTML = `<button class="del-btn" onclick="deleteEl('day-${n}')">×</button>
+<div class="day-header" onclick="toggleDay(this.closest('.day-card'))">
+  <div class="day-num">${n}</div>
+  <div class="day-info"><div class="day-title">${title}</div><div class="day-sub">${sub}</div></div>
+  <div class="day-icon">${icon}</div>
+</div>
+<div class="day-body" id="day-body-${n}">
+  <button class="add-row-btn" onclick="openAddActivity('day-body-${n}')">+ הוסף פעילות</button>
+</div>`;
+                    if (editMode) {
+                        card.querySelector('.day-title').setAttribute('contenteditable', 'true');
+                        card.querySelector('.day-sub').setAttribute('contenteditable', 'true');
+                    }
+                    document.getElementById('panel-itinerary').appendChild(card);
+                    showToast('✅ יום חדש נוסף!');
+                }
+                , () => attachAutocomplete('m-dloc', geo => {
+                    selectedGeo = geo;
+                    map.flyTo([geo.lat, geo.lng], 13, {
+                        duration: 1
+                    });
+                }
+                ));
+            }
+
+            function openAddTip() {
+                openModal('➕ הוסף טיפ', `<label>אמוג'י</label><input id="m-temoji" placeholder="💡" maxlength="4" value="💡"><label>טקסט הטיפ</label><textarea id="m-ttext" placeholder="טיפ שימושי למשפחה..."></textarea>`, () => {
+                    const emoji = document.getElementById('m-temoji').value || '💡';
+                    const text = document.getElementById('m-ttext').value || 'טיפ חדש';
+                    const el = document.createElement('div');
+                    el.className = 'tip-item deletable';
+                    el.innerHTML = `<button class="del-btn" onclick="deleteEl(this.closest('.tip-item'))">×</button><span class="tip-emoji">${emoji}</span>${text}`;
+                    if (editMode)
+                        el.setAttribute('contenteditable', 'true');
+                    document.getElementById('tips-list').appendChild(el);
+                    showToast('✅ טיפ נוסף!');
+                }
+                );
+            }
+
+            // ===== ADD HOTEL =====
+            function openAddHotel() {
+                let selectedGeo = null;
+                openModal('➕ הוסף מלון', `
+<label>שם המלון</label><input id="m-hname" placeholder="Hotel Roma">
+<label>עיר + לילות</label><input id="m-hcity" placeholder="רומא — 2 לילות">
+<label>מחיר</label><input id="m-hprice" placeholder="€80-120">
+<label>פרטים</label><textarea id="m-hdetail" placeholder="מידע, מיקום, יתרונות..."></textarea>
+<label>📍 כתובת המלון (אופציונלי)</label><input id="m-haddr" placeholder="Via Nazionale 7, Rome" autocomplete="off">`, async () => {
+                    const name = document.getElementById('m-hname').value || 'מלון חדש';
+                    const city = document.getElementById('m-hcity').value || '';
+                    const price = document.getElementById('m-hprice').value || '';
+                    const detail = document.getElementById('m-hdetail').value || '';
+                    const addr = document.getElementById('m-haddr').value || '';
+                    const el = document.createElement('div');
+                    el.className = 'hotel-card deletable';
+                    let pinId = ''
+                      , mapLinkHtml = '';
+                    const geo = selectedGeo || (addr.trim() ? await geocodeAddress(addr) : null);
+                    if (geo) {
+                        const shortAddr = addr || geo.display;
+                        const pin = addUserPin(geo.lat, geo.lng, name, city, detail, [], '🏨', '#a78bfa', `<div class="popup-content"><div class="popup-icon">🏨</div><div class="popup-name">${name}</div><div class="popup-region">${city}</div><div class="popup-desc">${shortAddr}</div></div>`);
+                        pinId = pin.id;
+                        map.flyTo([geo.lat, geo.lng], 16, {
+                            duration: 1.2
+                        });
+                        mapLinkHtml = `<span style="${geoLinkStyle}" onclick="const p=userPins.find(x=>x.id==='${pinId}');if(p){map.flyTo([p.lat,p.lng],16,{duration:1});setTimeout(()=>p.marker.openPopup(),1100);}">📍 ${shortAddr}</span>`;
+                    }
+                    el.innerHTML = `<button class="del-btn" onclick="removeUserPin('${pinId}');deleteEl(this.closest('.hotel-card'))">×</button><div class="hotel-header"><div><div class="hotel-name">🏨 ${name}</div><div class="hotel-city">${city}</div></div><div class="hotel-price">${price}</div></div><div class="hotel-detail">${detail}</div>${mapLinkHtml}`;
+                    if (editMode) {
+                        el.querySelector('.hotel-name').setAttribute('contenteditable', 'true');
+                        el.querySelector('.hotel-city').setAttribute('contenteditable', 'true');
+                        el.querySelector('.hotel-detail').setAttribute('contenteditable', 'true');
+                    }
+                    document.getElementById('hotels-list').appendChild(el);
+                    showToast('✅ מלון נוסף!');
+                }
+                , () => attachAutocomplete('m-haddr', geo => {
+                    selectedGeo = geo;
+                    map.flyTo([geo.lat, geo.lng], 16, {
+                        duration: 1
+                    });
+                }
+                ));
+            }
+
+            // ===== ADD LOCATION =====
+            function openAddLocation() {
+                let selectedGeo = null;
+                openModal('➕ הוסף אטרקציה', `
+<label>שם האטרקציה</label><input id="m-lname" placeholder="פיאצה נבונה">
+<label>אזור / עיר</label><input id="m-lregion" placeholder="רומא">
+<label>אמוג'י</label><input id="m-licon" placeholder="🏛️" maxlength="4" value="🏛️">
+<label>תיאור</label><textarea id="m-ldesc" placeholder="תיאור קצר של המקום..."></textarea>
+<label>תגיות (מופרדות בפסיק)</label><input id="m-ltags" placeholder="חובה, לילדים, חינם">
+<label>📍 כתובת / שם מקום (אופציונלי)</label><input id="m-laddr" placeholder="Piazza Navona, Rome" autocomplete="off">`, async () => {
+                    const name = document.getElementById('m-lname').value || 'אטרקציה חדשה';
+                    const region = document.getElementById('m-lregion').value || '';
+                    const icon = document.getElementById('m-licon').value || '🏛️';
+                    const desc = document.getElementById('m-ldesc').value || '';
+                    const tags = (document.getElementById('m-ltags').value || '').split(',').filter(t => t.trim());
+                    const addr = document.getElementById('m-laddr').value || '';
+                    const el = document.createElement('div');
+                    el.className = 'location-card deletable';
+                    let pinId = ''
+                      , mapLinkHtml = '';
+                    const geo = selectedGeo || (addr.trim() ? await geocodeAddress(addr) : null);
+                    if (geo) {
+                        const shortAddr = addr || geo.display;
+                        const pin = addUserPin(geo.lat, geo.lng, name, region, desc, tags, icon, '#fb923c', `<div class="popup-content"><div class="popup-icon">${icon}</div><div class="popup-name">${name}</div><div class="popup-region">${region}</div><div class="popup-desc">${desc || shortAddr}</div><div class="popup-tags">${tags.map( (t, i) => `<span class="popup-tag ${i === 0 ? 'highlight' : ''}">${t}</span>`).join('')}</div></div>`);
+                        pinId = pin.id;
+                        map.flyTo([geo.lat, geo.lng], 15, {
+                            duration: 1.2
+                        });
+                        mapLinkHtml = `<span style="${geoLinkStyle}" onclick="const p=userPins.find(x=>x.id==='${pinId}');if(p){map.flyTo([p.lat,p.lng],16,{duration:1});setTimeout(()=>p.marker.openPopup(),1100);}">📍 ${shortAddr}</span>`;
+                    }
+                    el.innerHTML = `<button class="del-btn" onclick="event.stopPropagation();removeUserPin('${pinId}');deleteEl(this.closest('.location-card'))">×</button><div class="loc-header"><span class="loc-icon">${icon}</span><div><div class="loc-name">${name}</div><div class="loc-region">${region}</div></div></div><div class="loc-desc">${desc}</div>${mapLinkHtml}<div class="loc-tags">${tags.map(t => `<span class="loc-tag">${t.trim()}</span>`).join('')}</div>`;
+                    el.onclick = (e) => {
+                        if (e.target.closest('.del-btn') || e.target.closest('span[onclick]'))
+                            return;
+                        if (pinId) {
+                            const p = userPins.find(x => x.id === pinId);
+                            if (p) {
+                                map.flyTo([p.lat, p.lng], 16, {
+                                    duration: 1
+                                });
+                                setTimeout( () => p.marker.openPopup(), 1100);
+                            }
+                        }
+                        document.querySelectorAll('.location-card').forEach(c => c.classList.remove('active'));
+                        el.classList.add('active');
+                    }
+                    ;
+                    if (editMode) {
+                        el.querySelector('.loc-name').setAttribute('contenteditable', 'true');
+                        el.querySelector('.loc-desc').setAttribute('contenteditable', 'true');
+                    }
+                    document.getElementById('locations-list').appendChild(el);
+                    showToast('✅ אטרקציה נוספה!');
+                }
+                , () => attachAutocomplete('m-laddr', geo => {
+                    selectedGeo = geo;
+                    map.flyTo([geo.lat, geo.lng], 15, {
+                        duration: 1
+                    });
+                }
+                ));
+            }
+
+            function openAddBudgetRow() {
+                openModal('➕ הוסף שורת תקציב', `<label>תיאור הוצאה</label><input id="m-bitem" placeholder="🎭 כרטיסי תיאטרון"><label>עלות</label><input id="m-bcost" placeholder="€50-80">`, () => {
+                    const item = document.getElementById('m-bitem').value || 'הוצאה חדשה';
+                    const cost = document.getElementById('m-bcost').value || '€0';
+                    const table = document.getElementById('budget-table');
+                    const tbody = table.tBodies[0];
+                    const insertIndex = tbody.rows.length - 1;
+                    const tr = tbody.insertRow(insertIndex);
+                    tr.className = 'deletable';
+                    tr.innerHTML = `<td>${item}</td><td>${cost}</td><td><button class="del-btn" style="position:relative;opacity:0.6;top:0;left:0;width:16px;height:16px;font-size:10px" onclick="deleteEl(this.closest('tr'))">×</button></td>`;
+                    if (editMode) {
+                        tr.querySelectorAll('td').forEach(td => td.setAttribute('contenteditable', 'true'));
+                    }
+                    showToast('✅ שורה נוספה!');
+                }
+                );
+            }
+
+            const GITHUB_TOKEN = '11B2LOLXA0QUSyBVPYrfPm_mCnhrR87EuROkeSWMDq5Xu0QwTnjGwNtF1cYaTKLLYtNMOLOBD5IuEaJwM2';
+            const GITHUB_REPO = 'yanivmor515-blip/yanivmor515-blip.github.io';
+            const GITHUB_FILE = 'family-trip.html';
+            const GITHUB_API = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+            let fileSha = null;
+
+            async function saveToGitHub() {
+                const btn = document.getElementById('btn-save');
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner"></span> שומר...';
+                try {
+                    const shaRes = await fetch(GITHUB_API, {
+                        headers: {
+                            'Authorization': `Bearer github_pat_${GITHUB_TOKEN}`,
+                            'Accept': 'application/vnd.github+json'
+                        }
+                    });
+                    if (shaRes.ok) {
+                        const d = await shaRes.json();
+                        fileSha = d.sha;
+                    }
+                    // צא ממצב עריכה לפני צילום ה-HTML
+                    toggleEditMode();
+                    btn.disabled = false;
+                    btn.innerHTML = '💾 שמור';
+                    const html = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+					const newHtml = html.replace('let userLocations = [];', JSON.stringify(userLocations));
+                    const encoded = btoa(unescape(encodeURIComponent(newHtml)));
+                    const putRes = await fetch(GITHUB_API, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer github_pat_${GITHUB_TOKEN}`,
+                            'Accept': 'application/vnd.github+json',
+                            'X-GitHub-Api-Version': '2022-11-28',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: '✏️ עדכון טיול ' + new Date().toLocaleString('he-IL'),
+                            content: encoded,
+                            ...(fileSha && {
+                                sha: fileSha
+                            })
+                        })
+                    });
+                    if (putRes.ok) {
+                        showToast('✅ נשמר! יופיע באתר תוך דקה');
+                    } else {
+                        const err = await putRes.json();
+                        showToast('❌ שגיאה: ' + (err.message || 'נסו שוב'), true);
+                    }
+                } catch (e) {
+                    showToast('❌ שגיאת רשת: ' + e.message, true);
+                }
+            }
+        </script>
     
 
-</div></body></html>
+</body></html>
