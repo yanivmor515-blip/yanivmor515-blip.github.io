@@ -124,6 +124,13 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
 .itxt .ititle{font-size:12px;font-weight:800;color:var(--text);margin-bottom:2px;}
 .itxt .idesc{font-size:11px;color:var(--text2);line-height:1.5;}
 
+
+/* WEEK NAV */
+.week-nav{display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:9px 14px;margin-bottom:12px;}
+.week-nav-title{text-align:center;}
+.week-nav-title .wnt-main{font-size:13px;font-weight:700;color:var(--text);}
+.week-nav-title .wnt-sub{font-size:10px;color:var(--text3);margin-top:1px;}
+
 /* WEEK */
 .wdays{display:flex;gap:5px;overflow-x:auto;margin-bottom:12px;padding-bottom:2px;scrollbar-width:none;}
 .wdays::-webkit-scrollbar{display:none;}
@@ -344,6 +351,7 @@ function setSyncUI(state){
 // ── STATE ────────────────────────────────────────────────────────
 let tab = 'day';
 let curDate = today();
+let curWeekOffset = 0; // 0=this week, -1=last week, etc.
 let editId = null, modType = null;
 
 function localStr(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
@@ -554,12 +562,39 @@ function genDayIns(feeds,sleeps,poops,pees,spits,meds,totMl,totSlp){
 }
 
 // ── WEEK TAB ─────────────────────────────────────────────────────
-function renderWeek(){
-  const sun=new Date(); sun.setDate(sun.getDate()-sun.getDay());
+function getWeekDays(offset){
+  const sun=new Date(); sun.setDate(sun.getDate()-sun.getDay()+(offset*7));
   const days=[]; for(let i=0;i<7;i++){const d=new Date(sun);d.setDate(sun.getDate()+i);days.push(localStr(d));}
+  return days;
+}
+
+function weekLabel(offset){
+  if(offset===0) return {main:'השבוע הנוכחי', sub:''};
+  if(offset===-1) return {main:'השבוע שעבר', sub:''};
+  const days=getWeekDays(offset);
+  const s=new Date(days[0]+'T12:00:00'), e=new Date(days[6]+'T12:00:00');
+  const mons=['ינו','פבר','מרץ','אפר','מאי','יוני','יולי','אוג','ספט','אוק','נוב','דצמ'];
+  return {main:`${s.getDate()} ${mons[s.getMonth()]} – ${e.getDate()} ${mons[e.getMonth()]}`, sub:`${Math.abs(offset)} שבועות אחורה`};
+}
+
+function renderWeek(){
+  const days=getWeekDays(curWeekOffset);
+  const lbl=weekLabel(curWeekOffset);
   const dn=['א','ב','ג','ד','ה','ו','ש'];
 
-  let h=`<div class="sec-title">ימי השבוע</div><div class="wdays">`;
+  let h=`<div class="week-nav">
+    <div style="display:flex;gap:5px">
+      <button class="arr" onclick="shiftWeek(-1)" title="שבוע קודם">‹</button>
+      <button class="arr" onclick="shiftWeek(1)" title="שבוע הבא" ${curWeekOffset>=0?'disabled style="opacity:.3;cursor:default"':''}>›</button>
+    </div>
+    <div class="week-nav-title">
+      <div class="wnt-main">${lbl.main}</div>
+      <div class="wnt-sub">${lbl.sub}</div>
+    </div>
+    <button class="today-btn" onclick="shiftWeek(-curWeekOffset)" ${curWeekOffset===0?'disabled style="opacity:.3"':''}>השבוע</button>
+  </div>`;
+
+  h+=`<div class="sec-title">ימי השבוע</div><div class="wdays">`;
   for(let i=0;i<7;i++){
     const ds=days[i],es=forDate(ds),on=ds===curDate;
     const nd=new Date(ds+'T00:00:00');
@@ -983,6 +1018,7 @@ function closeSett(){document.getElementById('smodal').classList.remove('on');}
 async function saveSett(){db.cfg.name=document.getElementById('s-name').value||'התינוק';db.cfg.dob=document.getElementById('s-dob').value||'';closeSett();render();showToast('✅ הגדרות נשמרו');await save();}
 
 // ── NAV ───────────────────────────────────────────────────────────
+function shiftWeek(d){curWeekOffset=Math.min(0,curWeekOffset+d);render();}
 function shiftDate(d){const x=new Date(curDate+'T12:00:00');x.setDate(x.getDate()+d);curDate=localStr(x);render();}
 function goToday(){curDate=today();render();}
 function switchTab(el){tab=el.dataset.tab;document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));el.classList.add('on');render();}
