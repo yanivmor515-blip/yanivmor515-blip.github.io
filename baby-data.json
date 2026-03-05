@@ -110,6 +110,16 @@
       "date": "2026-03-05",
       "startTime": "05:00",
       "notes": ""
+    },
+    {
+      "id": "mmdlu0cntms0b0bbua",
+      "type": "feed",
+      "date": "2026-03-05",
+      "startTime": "05:00",
+      "notes": "",
+      "endTime": "05:30",
+      "amount": "100",
+      "feedType": "בקבוק"
     }
   ]
 }
