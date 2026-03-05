@@ -1000,7 +1000,6 @@
             <div class="header-badges">
                 <span class="badge blue">✈️ נחיתה והמראה: רומא FCO</span>
                 <span class="badge green">🚗 השכרת רכב כלולה</span>
-                <span class="badge orange">🎢 Gardaland</span>
                 <span class="badge">🌡️ יולי · שמש מובטחת</span>
             </div>
         </div>
@@ -1017,7 +1016,7 @@
                     <div id="panel-itinerary" class="panel active">
                         <div class="day-card deletable" id="day-1">
                             <button class="del-btn" onclick="deleteEl('day-1')">×</button>
-                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),1)">
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'))">
                                 <div class="day-num">1</div>
                                 <div class="day-info">
                                     <div class="day-title">הגעה לרומא</div>
@@ -1062,7 +1061,7 @@
                         </div>
                         <div class="day-card deletable" id="day-2">
                             <button class="del-btn" onclick="deleteEl('day-2')">×</button>
-                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),2)">
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'))">
                                 <div class="day-num">2</div>
                                 <div class="day-info">
                                     <div class="day-title">רומא העתיקה</div>
@@ -1116,7 +1115,7 @@
                         </div>
                         <div class="day-card deletable" id="day-3">
                             <button class="del-btn" onclick="deleteEl('day-3')">×</button>
-                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),3)">
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'))">
                                 <div class="day-num">3</div>
                                 <div class="day-info">
                                     <div class="day-title">הוותיקן</div>
@@ -1155,23 +1154,17 @@
                                 <button class="add-row-btn" onclick="openAddActivity('day-body-3')">+ הוסף פעילות</button>
                             </div>
                         </div>
-                        
-                        
-                        
-                        
-                        
-                        
-                        <div class="day-card deletable active" id="day-10">
-                            <button class="del-btn" onclick="deleteEl('day-10')">×</button>
-                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'),10)">
-                                <div class="day-num">10</div>
+                        <div class="day-card deletable" id="day-4">
+                            <button class="del-btn" onclick="deleteEl('day-4')">×</button>
+                            <div class="day-header" onclick="toggleDay(this.closest('.day-card'))">
+                                <div class="day-num">4</div>
                                 <div class="day-info">
                                     <div class="day-title">יום אחרון + טיסה</div>
                                     <div class="day-sub">שני, 20 יולי</div>
                                 </div>
                                 <div class="day-icon">👋</div>
                             </div>
-                            <div class="day-body open" id="day-body-10">
+                            <div class="day-body" id="day-body-4">
                                 <div class="activity-item deletable">
                                     <button class="del-btn" onclick="deleteEl(this.closest('.activity-item'))">×</button>
                                     <div class="activity-time">בוקר</div>
@@ -1243,12 +1236,6 @@
                                     <span class="loc-tag">🆓 חינם</span>
                                 </div>
                             </div>
-                            
-                            
-                            
-                            
-                            
-                            
                         </div>
                     </div>
                     <div id="panel-hotels" class="panel">
@@ -1269,9 +1256,6 @@
                                     <span class="hotel-feat">🛏️ חדר משפחתי</span>
                                 </div>
                             </div>
-                            
-                            
-                            
                         </div>
                     </div>
                     <div id="panel-tips" class="panel">
@@ -1420,31 +1404,19 @@
                             </tbody>
                         </table>
                         <div class="tip-box" style="margin-top:12px;">
-                            ✈️ טיסות מתל אביב לרומא Wizz Air (5 נוסעים)<br>
+                            ✈️ טיסות מתל אביב לרומא Wizz Air (4 נוסעים)<br>
                             1 מזוודה לבטן המטוס - עד 20 ק"ג<br>
-                            1 טרולי עד 10 ק"ג<br>5 תיק אישי קטן לכל נוסע
+                            1 טרולי עד 10 ק"ג<br>4 תיק אישי קטן לכל נוסע
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="map" class="leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(0px, 0px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 19; transform: translate3d(0px, 0px, 0px) scale(1);"><img alt="" src="https://c.tile.openstreetmap.org/6/33/23.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(265px, 214px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/6/34/23.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(521px, 214px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/6/33/22.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(265px, -42px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/6/34/22.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(521px, -42px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/6/33/24.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(265px, 470px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/6/34/24.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(521px, 470px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/6/32/23.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(9px, 214px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/6/35/23.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(777px, 214px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/6/32/22.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(9px, -42px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/6/35/22.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(777px, -42px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/6/32/24.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(9px, 470px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/6/35/24.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(777px, 470px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/6/31/23.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-247px, 214px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/6/36/23.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1033px, 214px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/6/31/22.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-247px, -42px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/6/36/22.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1033px, -42px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/6/31/24.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-247px, 470px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/6/36/24.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1033px, 470px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-overlay-pane"><svg pointer-events="none" class="leaflet-zoom-animated" width="1387" height="757" viewBox="-116 -63 1387 757" style="transform: translate3d(-116px, -63px, 0px);"><g><path class="leaflet-interactive" stroke="#1a3a6b" stroke-opacity="0.6" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M578 415L482 301L521 298L571 192L492 190L578 415"></path><path class="leaflet-interactive" stroke="#3b82f6" stroke-opacity="1" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M578 415L482 301L521 298L571 192L492 190L578 415"></path><path class="leaflet-interactive" stroke="#ffffff" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="12,8" fill="none" d="M578 415L482 301L521 298L571 192L492 190L578 415"></path></g></svg></div><div class="leaflet-pane leaflet-shadow-pane"></div><div class="leaflet-pane leaflet-marker-pane"><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(578px, 415px, 0px); z-index: 415;"><div style="background:#c0392b;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🏟️</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(576px, 414px, 0px); z-index: 414;"><div style="background:#c0392b;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🎨</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(577px, 414px, 0px); z-index: 414;"><div style="background:#c0392b;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">⛲</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(482px, 301px, 0px); z-index: 301;"><div style="background:#e67e22;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🗼</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(521px, 298px, 0px); z-index: 298;"><div style="background:#e67e22;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🖼️</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(571px, 192px, 0px); z-index: 192;"><div style="background:#2980b9;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🚤</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(497px, 190px, 0px); z-index: 190;"><div style="background:#27ae60;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🎢</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(492px, 190px, 0px); z-index: 190;"><div style="background:#27ae60;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🏰</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(430px, 154px, 0px); z-index: 154;"><div style="background:#8e44ad;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">⛰️</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated" tabindex="0" role="button" style="margin-left: -10px; margin-top: -10px; width: 20px; height: 20px; transform: translate3d(530px, 358px, 0px); z-index: 858;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(-48.82878904423117deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div></div><div class="leaflet-marker-icon leaflet-zoom-animated" tabindex="0" role="button" style="margin-left: -10px; margin-top: -10px; width: 20px; height: 20px; transform: translate3d(502px, 300px, 0px); z-index: 800;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(87.00682450256132deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div></div><div class="leaflet-marker-icon leaflet-zoom-animated" tabindex="0" role="button" style="margin-left: -10px; margin-top: -10px; width: 20px; height: 20px; transform: translate3d(546px, 245px, 0px); z-index: 745;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(33.0248343773604deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div></div><div class="leaflet-marker-icon leaflet-zoom-animated" tabindex="0" role="button" style="margin-left: -10px; margin-top: -10px; width: 20px; height: 20px; transform: translate3d(534px, 191px, 0px); z-index: 691;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(-89.22092130974923deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div></div><div class="leaflet-marker-icon leaflet-zoom-animated" tabindex="0" role="button" style="margin-left: -10px; margin-top: -10px; width: 20px; height: 20px; transform: translate3d(494px, 190px, 0px); z-index: 690;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(-85.32112191719408deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div></div><div class="leaflet-marker-icon leaflet-zoom-animated" tabindex="0" role="button" style="margin-left: -10px; margin-top: -10px; width: 20px; height: 20px; transform: translate3d(535px, 304px, 0px); z-index: 804;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(152.19471062985752deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div></div></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(8760.89px, 5989.05px, 0px) scale(32);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in" aria-disabled="false"><span aria-hidden="true">+</span></a><a class="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out" aria-disabled="false"><span aria-hidden="true">−</span></a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"></div></div><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(0px, 0px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 19; transform: translate3d(-239px, -134px, 0px) scale(1);"><img alt="" src="https://a.tile.openstreetmap.org/11/1093/761.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(641px, 250px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/11/1093/762.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(641px, 506px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/11/1092/761.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(385px, 250px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/11/1094/761.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(897px, 250px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/11/1092/762.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(385px, 506px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/11/1094/762.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(897px, 506px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/11/1093/760.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(641px, -6px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/11/1093/763.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(641px, 762px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/11/1092/760.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(385px, -6px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/11/1094/760.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(897px, -6px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/11/1092/763.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(385px, 762px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/11/1094/763.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(897px, 762px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/11/1091/761.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(129px, 250px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/11/1095/761.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1153px, 250px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/11/1091/762.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(129px, 506px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/11/1095/762.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1153px, 506px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/11/1091/760.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(129px, -6px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/11/1095/760.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1153px, -6px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/11/1091/763.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(129px, 762px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/11/1095/763.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1153px, 762px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/11/1090/761.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-127px, 250px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/11/1096/761.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1409px, 250px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/11/1090/762.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-127px, 506px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/11/1096/762.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1409px, 506px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/11/1090/760.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-127px, -6px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/11/1096/760.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1409px, -6px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/11/1090/763.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-127px, 762px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/11/1096/763.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1409px, 762px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-overlay-pane"><svg pointer-events="none" class="leaflet-zoom-animated" width="1387" height="757" viewBox="-116 -63 1387 757" style="transform: translate3d(-116px, -63px, 0px);"><g><path class="leaflet-interactive" stroke="#1a3a6b" stroke-opacity="0.6" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M931 140L761 -63M854 -63L931 140"></path><path class="leaflet-interactive" stroke="#3b82f6" stroke-opacity="1" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" d="M931 140L761 -63M854 -63L931 140"></path><path class="leaflet-interactive" stroke="#ffffff" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="12,8" fill="none" d="M931 140L761 -63M854 -63L931 140"></path></g></svg></div><div class="leaflet-pane leaflet-shadow-pane"></div><div class="leaflet-pane leaflet-marker-pane"><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(931px, 140px, 0px); z-index: 140;"><div style="background:#c0392b;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🏟️</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(875px, 108px, 0px); z-index: 108;"><div style="background:#c0392b;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🎨</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(918px, 119px, 0px); z-index: 119;"><div style="background:#c0392b;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">⛲</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(-2121px, -3499px, 0px); z-index: -3499;"><div style="background:#e67e22;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🗼</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(-870px, -3589px, 0px); z-index: -3589;"><div style="background:#e67e22;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🖼️</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(707px, -6998px, 0px); z-index: -6998;"><div style="background:#2980b9;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🚤</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(-1660px, -7044px, 0px); z-index: -7044;"><div style="background:#27ae60;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🎢</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(-1814px, -7062px, 0px); z-index: -7062;"><div style="background:#27ae60;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">🏰</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -19px; margin-top: -38px; width: 38px; height: 38px; transform: translate3d(-3781px, -8212px, 0px); z-index: -8212;"><div style="background:#8e44ad;width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:16px;line-height:1">⛰️</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated" tabindex="0" role="button" style="margin-left: -10px; margin-top: -10px; width: 20px; height: 20px; transform: translate3d(-595px, -1666px, 0px); z-index: -1166;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(-48.82878904423117deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div></div><div class="leaflet-marker-icon leaflet-zoom-animated" tabindex="0" role="button" style="margin-left: -10px; margin-top: -10px; width: 20px; height: 20px; transform: translate3d(-1496px, -3544px, 0px); z-index: -3044;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(87.00682450256132deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div></div><div class="leaflet-marker-icon leaflet-zoom-animated" tabindex="0" role="button" style="margin-left: -10px; margin-top: -10px; width: 20px; height: 20px; transform: translate3d(-82px, -5282px, 0px); z-index: -4782;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(33.0248343773604deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div></div><div class="leaflet-marker-icon leaflet-zoom-animated" tabindex="0" role="button" style="margin-left: -10px; margin-top: -10px; width: 20px; height: 20px; transform: translate3d(-476px, -7021px, 0px); z-index: -6521;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(-89.22092130974923deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div></div><div class="leaflet-marker-icon leaflet-zoom-animated" tabindex="0" role="button" style="margin-left: -10px; margin-top: -10px; width: 20px; height: 20px; transform: translate3d(-1737px, -7053px, 0px); z-index: -6553;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(-85.32112191719408deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div></div><div class="leaflet-marker-icon leaflet-zoom-animated" tabindex="0" role="button" style="margin-left: -10px; margin-top: -10px; width: 20px; height: 20px; transform: translate3d(-442px, -3408px, 0px); z-index: -2908;"><div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(152.19471062985752deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div></div></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(279984px, 195016px, 0px) scale(1024);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in" aria-disabled="false"><span aria-hidden="true">+</span></a><a class="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out" aria-disabled="false"><span aria-hidden="true">−</span></a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"></div></div></div>
+            <div id="map" class="leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;">	
             <div class="route-legend" style="display:none">
                 <div class="legend-title">🗺️ מסלול הטיול</div>
                 <div class="legend-item">
                     <div class="legend-dot" style="background:#c0392b"></div>
-                    רומא (ימים 1-3, 9-10)
-                </div>
-                <div class="legend-item">
-                    <div class="legend-dot" style="background:#e67e22"></div>
-                    פיזה + פירנצה (ימים 4-5)
-                </div>
-                <div class="legend-item">
-                    <div class="legend-dot" style="background:#2980b9"></div>
-                    וונציה (יום 6)
-                </div>
-                <div class="legend-item">
-                    <div class="legend-dot" style="background:#27ae60"></div>
-                    אגם גארדה (ימים 7-8)
+                    רומא (ימים 1-4)
                 </div>
             </div>
         </div>
@@ -1513,66 +1485,6 @@
                 color: '#c0392b',
                 desc: 'המזרקה היפה בעולם.',
                 tags: ['חובה', 'חינם']
-            }, {
-                id: 'pisa',
-                lat: 43.7229,
-                lng: 10.3966,
-                name: 'מגדל פיזה',
-                region: 'פיזה',
-                icon: '🗼',
-                color: '#e67e22',
-                desc: 'המגדל הנטוי.',
-                tags: ['חובה', '20€']
-            }, {
-                id: 'uffizi',
-                lat: 43.7678,
-                lng: 11.2553,
-                name: 'גלריית אופיצי',
-                region: 'פירנצה',
-                icon: '🖼️',
-                color: '#e67e22',
-                desc: "ונוס של בוטיצ'לי.",
-                tags: ['12€']
-            }, {
-                id: 'venice',
-                lat: 45.4342,
-                lng: 12.3385,
-                name: 'פיאצה סן מרקו',
-                region: 'וונציה',
-                icon: '🚤',
-                color: '#2980b9',
-                desc: 'לב וונציה.',
-                tags: ['חובה']
-            }, {
-                id: 'gardaland',
-                lat: 45.4563,
-                lng: 10.7133,
-                name: 'גרדלנד',
-                region: 'אגם גארדה',
-                icon: '🎢',
-                color: '#27ae60',
-                desc: 'הפארק הגדול.',
-                tags: ['חובה', '~40€']
-            }, {
-                id: 'sirmione',
-                lat: 45.465,
-                lng: 10.607,
-                name: 'סירמיונה',
-                region: 'אגם גארדה',
-                icon: '🏰',
-                color: '#27ae60',
-                desc: 'כפר הלשונית.',
-                tags: ['שחייה']
-            }, {
-                id: 'como',
-                lat: 46.016,
-                lng: 9.257,
-                name: 'אגם קומו',
-                region: 'לומברדיה',
-                icon: '⛰️',
-                color: '#8e44ad',
-                desc: 'האגם היפה.',
-                tags: ['נוף']
             }];
             function mkIcon(emoji, color) {
                 return L.divIcon({
@@ -1592,40 +1504,7 @@
                 l.marker = m;
             }
             );
-            const rc = [[41.8902, 12.4922], [43.7229, 10.3966], [43.7678, 11.2553], [45.4342, 12.3385], [45.4563, 10.7133], [45.465, 10.607], [41.8902, 12.4922]];
-            L.polyline(rc, {
-                color: '#1a3a6b',
-                weight: 10,
-                opacity: 0.6
-            }).addTo(map);
-            L.polyline(rc, {
-                color: '#3b82f6',
-                weight: 5,
-                opacity: 1
-            }).addTo(map);
-            L.polyline(rc, {
-                color: '#ffffff',
-                weight: 1.5,
-                opacity: 0.6,
-                dashArray: '12,8'
-            }).addTo(map);
-            function drawArrow(a, b) {
-                const ml = (a[0] + b[0]) / 2
-                  , mn = (a[1] + b[1]) / 2
-                  , ag = Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI;
-                L.marker([ml, mn], {
-                    icon: L.divIcon({
-                        className: '',
-                        html: `<div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:20px solid #f97316;transform:rotate(${ag}deg);filter:drop-shadow(0 0 5px rgba(249,115,22,0.9))"></div>`,
-                        iconSize: [20, 20],
-                        iconAnchor: [10, 10]
-                    }),
-                    interactive: false,
-                    zIndexOffset: 500
-                }).addTo(map);
-            }
-            for (let i = 0; i < rc.length - 1; i++)
-                drawArrow(rc[i], rc[i + 1]);
+
             function focusMap(lat, lng, id, e) {
                 map.flyTo([lat, lng], 13, {
                     duration: 1.5
@@ -1643,7 +1522,7 @@
                 document.getElementById('panel-' + id).classList.add('active');
                 el.classList.add('active');
             }
-            function toggleDay(card, n) {
+            function toggleDay(card) {
                 const b = card.querySelector('.day-body');
                 const o = b.classList.contains('open');
                 document.querySelectorAll('.day-body').forEach(x => x.classList.remove('open'));
@@ -1656,23 +1535,6 @@
                         map.flyTo([parseFloat(card.dataset.lat), parseFloat(card.dataset.lng)], parseInt(card.dataset.zoom) || 13, {
                             duration: 1.5
                         });
-                    } else {
-                        const dl = {
-                            1: [41.8902, 12.4922, 6],
-                            2: [41.8902, 12.4922, 13],
-                            3: [41.9065, 12.4536, 13],
-                            4: [43.72, 10.65, 9],
-                            5: [43.7678, 11.2553, 13],
-                            6: [45.4342, 12.3385, 13],
-                            7: [45.4563, 10.7133, 13],
-                            8: [45.465, 10.607, 12],
-                            9: [43.5, 12.2, 7],
-                            10: [41.8, 12.25, 11]
-                        };
-                        if (dl[n])
-                            map.flyTo([dl[n][0], dl[n][1]], dl[n][2], {
-                                duration: 1.5
-                            });
                     }
                 }
             }
@@ -1973,7 +1835,7 @@
                         card.dataset.lng = lng;
                     card.dataset.zoom = zoom;
                     card.innerHTML = `<button class="del-btn" onclick="deleteEl('day-${n}')">×</button>
-<div class="day-header" onclick="toggleDay(this.closest('.day-card'),${n})">
+<div class="day-header" onclick="toggleDay(this.closest('.day-card'))">
   <div class="day-num">${n}</div>
   <div class="day-info"><div class="day-title">${title}</div><div class="day-sub">${sub}</div></div>
   <div class="day-icon">${icon}</div>
