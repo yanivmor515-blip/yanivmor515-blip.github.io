@@ -112,16 +112,6 @@
       "notes": ""
     },
     {
-      "id": "mmdlu0cntms0b0bbua",
-      "type": "feed",
-      "date": "2026-03-05",
-      "startTime": "05:00",
-      "notes": "",
-      "endTime": "05:13",
-      "amount": "100",
-      "feedType": "בקבוק"
-    },
-    {
       "id": "mmdlv2fv2y69fouhorb",
       "type": "sleep",
       "date": "2026-03-05",
