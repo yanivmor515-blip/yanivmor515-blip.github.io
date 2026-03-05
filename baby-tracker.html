@@ -114,7 +114,7 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
 .empty .ei{font-size:38px;margin-bottom:8px;}
 
 /* INSIGHTS */
-.ilist{display:flex;flex-direction:column;gap:7px;margin-bottom:24px;}
+.ilist{display:flex;flex-direction:column;gap:7px;margin-bottom:12px;}
 .iitem{display:flex;gap:9px;align-items:flex-start;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rsm);padding:11px 13px;}
 .iitem.warn{border-color:rgba(240,112,69,.35);background:var(--warn-bg);}
 .iitem.ok{border-color:rgba(91,201,138,.3);background:var(--ok-bg);}
@@ -143,16 +143,16 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
 .cblbl{font-size:9px;color:var(--text3);font-weight:700;}
 
 /* MODAL */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9000;display:none;align-items:center;justify-content:center;padding:14px;}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9000;display:none;align-items:flex-start;justify-content:center;padding:14px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .overlay.on{display:flex;}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:18px;width:100%;max-width:390px;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:su .2s ease;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:18px;width:100%;max-width:390px;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:su .2s ease;margin:auto;}
 @keyframes su{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
 .mhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .mtitle{font-size:15px;font-weight:900;}
 .mclose{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:2px 6px;border-radius:5px;}
 .mclose:hover{color:var(--text);background:var(--bg3);}
 .fg{margin-bottom:10px;}
-.fl{font-size:10px;font-weight:800;color:var(--text2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
+.fg{min-width:0;overflow:hidden;} .fl{font-size:10px;font-weight:800;color:var(--text2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
 .fi,.fs,.fta{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:var(--rsm);padding:8px 11px;color:var(--text);font-family:'Heebo',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
 .fi:focus,.fs:focus{border-color:var(--tip);}
 .fs option{background:var(--bg2);}
@@ -162,6 +162,40 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
 .btn{font-family:'Heebo',sans-serif;padding:8px 16px;border-radius:var(--rsm);font-size:13px;font-weight:800;cursor:pointer;border:none;transition:all .2s;}
 .btn-p{background:#4466cc;color:#fff;}.btn-p:hover{background:#5577dd;}
 .btn-s{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);}.btn-s:hover{background:var(--bg4);color:var(--text);}
+
+
+/* TIME PICKER — 24h wheel + manual */
+.tpick{position:relative;width:100%;box-sizing:border-box;}
+.tpick-field{display:flex;align-items:center;width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border2);border-radius:var(--rsm);overflow:hidden;transition:border-color .2s;}
+.tpick-field:focus-within{border-color:var(--tip);}
+.tpick-inp{flex:1;background:transparent;border:none;padding:9px 11px;color:var(--text);font-family:'Heebo',sans-serif;font-size:16px;font-weight:700;letter-spacing:3px;outline:none;-webkit-appearance:none;appearance:none;min-width:0;box-sizing:border-box;width:0;}
+.tpick-inp::placeholder{color:var(--text3);letter-spacing:1px;font-weight:400;font-size:13px;}
+.tpick-clock{background:none;border:none;border-right:1px solid var(--border2);padding:0 10px;height:38px;cursor:pointer;font-size:16px;color:var(--text3);transition:background .15s;flex-shrink:0;}
+.tpick-clock:hover{background:var(--bg3);}
+.tpick-err{font-size:10px;color:var(--warn);margin-top:2px;display:none;}
+.tpick-err.show{display:block;}
+
+/* WHEEL OVERLAY */
+.wheel-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99998;display:none;align-items:flex-end;justify-content:center;}
+.wheel-overlay.on{display:flex;}
+.wheel-sheet{background:#1a2035;border-radius:20px 20px 0 0;width:100%;max-width:420px;padding-bottom:env(safe-area-inset-bottom,0);}
+.wheel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;border-bottom:1px solid rgba(255,255,255,.07);}
+.wheel-header .wh-time{font-size:28px;font-weight:900;letter-spacing:4px;color:var(--text);}
+.wheel-header .wh-label{font-size:11px;color:var(--text3);margin-top:2px;}
+.wheel-done{background:#4466cc;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-family:'Heebo',sans-serif;font-weight:800;font-size:13px;cursor:pointer;}
+.wheel-cols{display:flex;align-items:center;justify-content:center;gap:0;padding:10px 0 6px;}
+.wheel-sep{font-size:28px;font-weight:900;color:var(--text2);padding:0 4px;margin-bottom:2px;}
+.wheel-col{width:90px;height:210px;overflow:hidden;position:relative;cursor:grab;}
+.wheel-col:active{cursor:grabbing;}
+.wheel-col-inner{display:flex;flex-direction:column;transition:transform .15s cubic-bezier(.25,.46,.45,.94);}
+.wheel-item{height:42px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--text3);flex-shrink:0;user-select:none;transition:color .1s,transform .1s;}
+.wheel-item.sel{color:var(--text);font-size:28px;}
+.wheel-fade-top{position:absolute;top:0;left:0;right:0;height:84px;background:linear-gradient(to bottom,#1a2035 0%,transparent 100%);pointer-events:none;z-index:1;}
+.wheel-fade-bot{position:absolute;bottom:0;left:0;right:0;height:84px;background:linear-gradient(to top,#1a2035 0%,transparent 100%);pointer-events:none;z-index:1;}
+.wheel-sel-bar{position:absolute;top:50%;left:10px;right:10px;height:42px;transform:translateY(-50%);border-top:2px solid rgba(111,157,232,.5);border-bottom:2px solid rgba(111,157,232,.5);border-radius:8px;pointer-events:none;z-index:0;}
+.wheel-quick{display:flex;gap:7px;padding:0 14px 14px;flex-wrap:wrap;}
+.wheel-quick button{flex:1;min-width:60px;padding:7px 4px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-family:'Heebo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
+.wheel-quick button:hover{background:var(--bg4);color:var(--text);}
 
 /* TOAST */
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1d2336;border:1px solid var(--border2);color:var(--text);padding:9px 18px;border-radius:20px;font-size:12px;font-weight:700;z-index:99999;box-shadow:0 6px 20px rgba(0,0,0,.4);opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;}
@@ -656,6 +690,191 @@ function renderInsights(){
   return h;
 }
 
+
+// ── TIME INPUT — 24h wheel picker + keyboard ─────────────────────
+let wheelTargetId = null;
+let wheelH = 0, wheelM = 0;
+
+function timeInputHtml(id, val){
+  return `<div class="tpick">
+    <div class="tpick-field">
+      <button class="tpick-clock" type="button" onclick="openWheel('${id}')" tabindex="-1">🕐</button>
+      <input class="tpick-inp" id="${id}" type="text" inputmode="numeric"
+        placeholder="08:30" maxlength="5" value="${val||''}"
+        oninput="onTimeInput('${id}')"
+        onblur="onTimeBlur('${id}')"
+        onfocus="this.select()">
+    </div>
+    <div class="tpick-err" id="err-${id}">שעה לא תקינה</div>
+  </div>`;
+}
+
+function getTimeVal(id){
+  return document.getElementById(id)?.value||'';
+}
+
+function onTimeInput(id){
+  const el=document.getElementById(id);
+  let v=el.value.replace(/[^0-9]/g,'');
+  if(v.length>2) v=v.slice(0,2)+':'+v.slice(2,4);
+  el.value=v;
+  hideErr(id);
+}
+
+function onTimeBlur(id){
+  const el=document.getElementById(id);
+  let v=el.value.trim();
+  if(!v) return;
+  const digits=v.replace(/:/g,'');
+  if(/^\d{1,2}$/.test(v))           v=v.padStart(2,'0')+':00';
+  else if(/^\d{3,4}$/.test(digits)) v=digits.slice(0,-2).padStart(2,'0')+':'+digits.slice(-2);
+  if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ el.value=v; hideErr(id); }
+  else if(v.length>0) showErr(id);
+}
+
+function showErr(id){ document.getElementById('err-'+id)?.classList.add('show'); }
+function hideErr(id){ document.getElementById('err-'+id)?.classList.remove('show'); }
+
+// ── WHEEL PICKER ──────────────────────────────────────────────────
+function openWheel(id){
+  wheelTargetId = id;
+  const cur = document.getElementById(id)?.value||'';
+  const m = cur.match(/^(\d{2}):(\d{2})$/);
+  wheelH = m ? parseInt(m[1]) : new Date().getHours();
+  wheelM = m ? parseInt(m[2]) : Math.round(new Date().getMinutes()/5)*5 % 60;
+  buildWheelDOM();
+  document.getElementById('wheel-overlay').classList.add('on');
+  setTimeout(()=>{ scrollWheelTo('wh', wheelH, false); scrollWheelTo('wm', wheelM, false); }, 30);
+}
+
+function buildWheelDOM(){
+  const ov = document.getElementById('wheel-overlay');
+  if(ov.dataset.built==='1') { updateWheelPreview(); return; }
+  ov.dataset.built='1';
+
+  const hInner = document.getElementById('wh-inner');
+  const mInner = document.getElementById('wm-inner');
+
+  // hours 0-23 with padding items for centering
+  for(let i=-2;i<=25;i++){
+    const h=((i%24)+24)%24;
+    const d=document.createElement('div');
+    d.className='wheel-item'; d.dataset.val=h;
+    d.textContent=String(h).padStart(2,'0');
+    hInner.appendChild(d);
+  }
+  // minutes 0-59
+  for(let i=-2;i<=61;i++){
+    const m=((i%60)+60)%60;
+    const d=document.createElement('div');
+    d.className='wheel-item'; d.dataset.val=m;
+    d.textContent=String(m).padStart(2,'0');
+    mInner.appendChild(d);
+  }
+
+  // Wire touch/mouse scroll for each column
+  wireWheel('wh', 24, v=>{ wheelH=v; updateWheelPreview(); });
+  wireWheel('wm', 60, v=>{ wheelM=v; updateWheelPreview(); });
+}
+
+function wireWheel(colId, max, onChange){
+  const col = document.getElementById(colId);
+  const inner = document.getElementById(colId+'-inner');
+  const itemH = 42;
+  let startY=0, startScroll=0, isDragging=false, velocity=0, lastY=0, lastT=0, rafId=null;
+
+  function getScroll(){ return -parseFloat(inner.style.transform?.match(/-?[\d.]+/)?.[0]||0); }
+  function setScroll(y, animate=true){
+    inner.style.transition = animate ? 'transform .15s cubic-bezier(.25,.46,.45,.94)' : 'none';
+    inner.style.transform = `translateY(${-y}px)`;
+    highlightCenter(y);
+  }
+  function snapTo(val, animate=true){
+    // val index in the items array (offset by 2 padding items)
+    const idx = val + 2;
+    setScroll(idx * itemH - 84, animate); // 84 = 2*itemH to center
+  }
+  function highlightCenter(y){
+    const centerIdx = Math.round((y + 84) / itemH);
+    inner.querySelectorAll('.wheel-item').forEach((el,i)=>{
+      el.classList.toggle('sel', i===centerIdx);
+    });
+    const raw = centerIdx - 2;
+    if(raw>=0 && raw<max) onChange(raw);
+  }
+
+  col.addEventListener('mousedown', e=>{ startDrag(e.clientY); e.preventDefault(); });
+  col.addEventListener('touchstart', e=>{ startDrag(e.touches[0].clientY); }, {passive:true});
+  col.addEventListener('mousemove',  e=>{ if(isDragging) moveDrag(e.clientY); });
+  col.addEventListener('touchmove',  e=>{ if(isDragging) moveDrag(e.touches[0].clientY); e.preventDefault(); }, {passive:false});
+  col.addEventListener('mouseup',   ()=> endDrag());
+  col.addEventListener('touchend',  ()=> endDrag());
+  col.addEventListener('mouseleave',()=>{ if(isDragging) endDrag(); });
+
+  // click to select item directly
+  col.addEventListener('click', e=>{
+    const item = e.target.closest('.wheel-item');
+    if(!item) return;
+    const val = parseInt(item.dataset.val);
+    snapTo(val);
+    onChange(val);
+  });
+
+  function startDrag(y){
+    isDragging=true; startY=y; startScroll=getScroll();
+    velocity=0; lastY=y; lastT=Date.now();
+    inner.style.transition='none';
+    if(rafId) cancelAnimationFrame(rafId);
+  }
+  function moveDrag(y){
+    const dy=startY-y; setScroll(startScroll+dy, false);
+    const now=Date.now(); const dt=now-lastT;
+    if(dt>0) velocity=(lastY-y)/dt;
+    lastY=y; lastT=now;
+  }
+  function endDrag(){
+    isDragging=false;
+    let s=getScroll(); s+=velocity*120;
+    const idx=Math.round((s+84)/itemH); const val=Math.max(0,Math.min(max-1,idx-2));
+    snapTo(val); onChange(val);
+  }
+
+  // expose snapTo for external calls
+  col._snapTo = snapTo;
+}
+
+function scrollWheelTo(colId, val, animate=true){
+  const col = document.getElementById(colId);
+  if(col._snapTo) col._snapTo(val, animate);
+}
+
+function updateWheelPreview(){
+  const hStr=String(wheelH).padStart(2,'0'), mStr=String(wheelM).padStart(2,'0');
+  const el=document.getElementById('wheel-preview');
+  if(el) el.textContent=hStr+':'+mStr;
+}
+
+function confirmWheel(){
+  const hStr=String(wheelH).padStart(2,'0'), mStr=String(wheelM).padStart(2,'0');
+  const val=hStr+':'+mStr;
+  if(wheelTargetId){
+    const inp=document.getElementById(wheelTargetId);
+    if(inp){ inp.value=val; hideErr(wheelTargetId); }
+  }
+  closeWheel();
+}
+
+function closeWheel(){
+  document.getElementById('wheel-overlay').classList.remove('on');
+}
+
+function wheelQuick(hh,mm){
+  wheelH=hh; wheelM=mm;
+  scrollWheelTo('wh',hh,true);
+  scrollWheelTo('wm',mm,true);
+  updateWheelPreview();
+}
+
 // ── MODAL ────────────────────────────────────────────────────────
 function openAdd(type){
   editId=null; modType=type;
@@ -678,12 +897,12 @@ function buildFields(type,d){
   d=d||{};
   let h=`<div class="frow">
     <div class="fg"><label class="fl">תאריך</label><input class="fi" id="f-date" type="date" value="${d.date||curDate}"></div>
-    <div class="fg"><label class="fl">שעת התחלה</label><input class="fi" id="f-st" type="time" value="${d.startTime||''}"></div>
+    <div class="fg"><label class="fl">שעת התחלה</label>${timeInputHtml('f-st',d.startTime||'')}</div>
   </div>`;
 
   if(type==='feed'){
     h+=`<div class="frow">
-      <div class="fg"><label class="fl">שעת סיום</label><input class="fi" id="f-et" type="time" value="${d.endTime||''}"></div>
+      <div class="fg"><label class="fl">שעת סיום</label>${timeInputHtml('f-et',d.endTime||'')}</div>
       <div class="fg"><label class="fl">כמות (מ"ל)</label><input class="fi" id="f-amt" type="number" min="0" placeholder="120" value="${d.amount||''}"></div>
     </div>
     <div class="fg"><label class="fl">סוג האכלה</label>
@@ -694,7 +913,7 @@ function buildFields(type,d){
     </div>`;
   }
   if(type==='sleep'){
-    h+=`<div class="fg"><label class="fl">שעת התעוררות</label><input class="fi" id="f-et" type="time" value="${d.endTime||''}"></div>`;
+    h+=`<div class="fg"><label class="fl">שעת התעוררות</label>${timeInputHtml('f-et',d.endTime||'')}</div>`;
   }
   if(type==='med'){
     h+=`<div class="fg"><label class="fl">שם התרופה</label><input class="fi" id="f-mname" placeholder="אקמול, איבופרופן..." value="${d.medName||''}"></div>
@@ -722,9 +941,9 @@ function buildFields(type,d){
 
 async function saveEntry(){
   const date=document.getElementById('f-date')?.value||curDate;
-  const st=document.getElementById('f-st')?.value||'';
+  const st=getTimeVal('f-st');
   if(!st){showToast('⚠️ חובה להזין שעת התחלה');return;}
-  const et=document.getElementById('f-et')?.value||'';
+  const et=getTimeVal('f-et');
   const notes=document.getElementById('f-notes')?.value||'';
   const entry={id:editId||genId(),type:modType,date,startTime:st,notes};
   if(et) entry.endTime=et;
@@ -773,5 +992,45 @@ function showToast(m){const t=document.getElementById('toast');t.textContent=m;t
 // ── INIT ──────────────────────────────────────────────────────────
 loadFromGitHub();
 </script>
+
+<!-- WHEEL TIME PICKER -->
+<div class="wheel-overlay" id="wheel-overlay" onclick="if(event.target===this)closeWheel()">
+  <div class="wheel-sheet">
+    <div class="wheel-header">
+      <div>
+        <div class="wh-time" id="wheel-preview">--:--</div>
+        <div class="wh-label">בחר שעה (24 שעות)</div>
+      </div>
+      <button class="wheel-done" onclick="confirmWheel()">אישור</button>
+    </div>
+    <div class="wheel-cols">
+      <div class="wheel-col" id="wm">
+        <div class="wheel-fade-top"></div>
+        <div class="wheel-sel-bar"></div>
+        <div class="wheel-col-inner" id="wm-inner"></div>
+        <div class="wheel-fade-bot"></div>
+      </div>
+      <div class="wheel-sep">:</div>
+      <div class="wheel-col" id="wh">
+        <div class="wheel-fade-top"></div>
+        <div class="wheel-sel-bar"></div>
+        <div class="wheel-col-inner" id="wh-inner"></div>
+        <div class="wheel-fade-bot"></div>
+      </div>
+    </div>
+    <div class="wheel-quick">
+      <button onclick="wheelQuick(6,0)">06:00</button>
+      <button onclick="wheelQuick(8,0)">08:00</button>
+      <button onclick="wheelQuick(10,0)">10:00</button>
+      <button onclick="wheelQuick(12,0)">12:00</button>
+      <button onclick="wheelQuick(14,0)">14:00</button>
+      <button onclick="wheelQuick(16,0)">16:00</button>
+      <button onclick="wheelQuick(18,0)">18:00</button>
+      <button onclick="wheelQuick(20,0)">20:00</button>
+      <button onclick="wheelQuick(22,0)">22:00</button>
+      <button onclick="wheelQuick(0,0)">00:00</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
