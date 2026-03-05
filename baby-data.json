@@ -229,6 +229,14 @@
       "endTime": "16:30",
       "amount": "80",
       "feedType": "בקבוק"
+    },
+    {
+      "id": "mmdof4jgh2f0rsebqfm",
+      "type": "sleep",
+      "date": "2026-03-05",
+      "startTime": "16:30",
+      "notes": "",
+      "endTime": "18:00"
     }
   ]
 }
