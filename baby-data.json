@@ -61,6 +61,14 @@
       "startTime": "23:00",
       "notes": "",
       "amount": "קצת"
+    },
+    {
+      "id": "mmdcvyi42w0asmsw2vi",
+      "type": "spit",
+      "date": "2026-03-05",
+      "startTime": "01:06",
+      "notes": "התעוררה מפליטה",
+      "amount": "קצת"
     }
   ]
 }
