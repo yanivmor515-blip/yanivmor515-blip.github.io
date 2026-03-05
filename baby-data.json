@@ -237,6 +237,15 @@
       "startTime": "16:30",
       "notes": "מרדימה אותה מחזיקה אותה עד 19:00",
       "endTime": "18:00"
+    },
+    {
+      "id": "mmdshm83gl50kqqnah",
+      "type": "feed",
+      "date": "2026-03-05",
+      "startTime": "19:10",
+      "notes": "",
+      "endTime": "19:40",
+      "amount": "110"
     }
   ]
 }
