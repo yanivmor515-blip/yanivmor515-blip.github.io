@@ -219,6 +219,16 @@
       "medName": "סימיקול ",
       "medDose": "0.35",
       "medRoute": "פומי"
+    },
+    {
+      "id": "mmdoei466lyv0evpb2r",
+      "type": "feed",
+      "date": "2026-03-05",
+      "startTime": "15:30",
+      "notes": "",
+      "endTime": "16:30",
+      "amount": "80",
+      "feedType": "בקבוק"
     }
   ]
 }
