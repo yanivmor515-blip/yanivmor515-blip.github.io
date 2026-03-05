@@ -43,6 +43,16 @@
       "startTime": "22:10",
       "notes": "משה - התעוררה פלטה בכתה אכלה עוד 30 צרחה לא נרגע הייתי חייב",
       "endTime": "23:10"
+    },
+    {
+      "id": "mmdcuqqwbvr68977flw",
+      "type": "feed",
+      "date": "2026-03-04",
+      "startTime": "23:00",
+      "notes": "",
+      "endTime": "23:15",
+      "amount": "30",
+      "feedType": "בקבוק"
     }
   ]
 }
