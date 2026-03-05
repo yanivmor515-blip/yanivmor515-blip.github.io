@@ -205,6 +205,26 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
 .wheel-quick button{flex:1;min-width:60px;padding:7px 4px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-family:'Heebo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
 .wheel-quick button:hover{background:var(--bg4);color:var(--text);}
 
+
+/* SETTINGS */
+.sett-section{margin-bottom:16px;}
+.sett-section-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;}
+.toggle-label{font-size:13px;font-weight:600;color:var(--text);}
+.toggle-sub{font-size:10px;color:var(--text3);margin-top:2px;}
+.toggle-switch{position:relative;width:44px;height:24px;flex-shrink:0;}
+.toggle-switch input{opacity:0;width:0;height:0;}
+.toggle-track{position:absolute;inset:0;background:var(--bg4);border-radius:12px;cursor:pointer;transition:background .2s;}
+.toggle-switch input:checked+.toggle-track{background:#4466cc;}
+.toggle-track::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;right:3px;transition:transform .2s;}
+.toggle-switch input:checked+.toggle-track::after{transform:translateX(-20px);}
+.storage-mode-btns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:6px;}
+.mode-btn{padding:10px 8px;border-radius:var(--rsm);border:1px solid var(--border2);background:var(--bg3);color:var(--text2);font-family:'Heebo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;text-align:center;transition:all .2s;}
+.mode-btn.active{border-color:#4466cc;background:rgba(68,102,204,.15);color:#7a9de8;}
+.mode-btn .mb-icon{font-size:20px;display:block;margin-bottom:4px;}
+.sync-interval-row{display:flex;align-items:center;gap:8px;margin-top:6px;}
+.sync-interval-row select{flex:1;}
+
 /* TOAST */
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1d2336;border:1px solid var(--border2);color:var(--text);padding:9px 18px;border-radius:20px;font-size:12px;font-weight:700;z-index:99999;box-shadow:0 6px 20px rgba(0,0,0,.4);opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;}
 .toast.on{opacity:1;}
@@ -263,8 +283,56 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
       <div class="mtitle">⚙️ הגדרות</div>
       <button class="mclose" onclick="closeSett()">×</button>
     </div>
-    <div class="fg"><label class="fl">שם התינוק/ת</label><input class="fi" id="s-name" placeholder="שם"></div>
-    <div class="fg"><label class="fl">תאריך לידה</label><input class="fi" id="s-dob" type="date"></div>
+
+    <!-- פרטי תינוק -->
+    <div class="sett-section">
+      <div class="sett-section-title">👶 פרטי תינוק</div>
+      <div class="fg"><label class="fl">שם</label><input class="fi" id="s-name" placeholder="שם התינוק/ת"></div>
+      <div class="fg" style="margin-top:8px">
+        <label class="fl">מין</label>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <label style="flex:1;display:flex;align-items:center;gap:7px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rsm);padding:9px 12px;cursor:pointer;transition:all .2s" id="gender-boy-lbl">
+            <input type="radio" name="s-gender" id="s-gender-boy" value="boy" style="accent-color:#6f9de8;width:16px;height:16px" onchange="updateGenderLabels()">
+            <span style="font-size:13px;font-weight:700">👦 תינוק</span>
+          </label>
+          <label style="flex:1;display:flex;align-items:center;gap:7px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rsm);padding:9px 12px;cursor:pointer;transition:all .2s" id="gender-girl-lbl">
+            <input type="radio" name="s-gender" id="s-gender-girl" value="girl" style="accent-color:#e87aaa;width:16px;height:16px" onchange="updateGenderLabels()">
+            <span style="font-size:13px;font-weight:700">👧 תינוקת</span>
+          </label>
+        </div>
+      </div>
+      <div class="fg" style="margin-top:8px"><label class="fl">תאריך לידה</label><input class="fi" id="s-dob" type="date"></div>
+    </div>
+
+    <!-- אחסון נתונים -->
+    <div class="sett-section">
+      <div class="sett-section-title">💾 אחסון נתונים</div>
+      <div class="storage-mode-btns">
+        <button class="mode-btn" id="mode-btn-github" onclick="setStorageMode('github')">
+          <span class="mb-icon">☁️</span>
+          משותף<br><span style="font-size:10px;font-weight:400">GitHub · לכל המשתמשים</span>
+        </button>
+        <button class="mode-btn" id="mode-btn-local" onclick="setStorageMode('local')">
+          <span class="mb-icon">📱</span>
+          פרטי<br><span style="font-size:10px;font-weight:400">דפדפן · רק במכשיר זה</span>
+        </button>
+      </div>
+      <div id="sync-interval-wrap" style="margin-top:10px">
+        <label class="fl">תדירות סנכרון אוטומטי</label>
+        <div class="sync-interval-row">
+          <select class="fs" id="s-interval">
+            <option value="0">כבוי</option>
+            <option value="10">כל 10 שניות</option>
+            <option value="30">כל 30 שניות</option>
+            <option value="60">כל דקה</option>
+            <option value="300">כל 5 דקות</option>
+            <option value="600">כל 10 דקות</option>
+          </select>
+          <button class="btn btn-s" style="font-size:11px;padding:6px 10px;white-space:nowrap" onclick="syncNow()">🔄 סנכרן עכשיו</button>
+        </div>
+      </div>
+    </div>
+
     <div class="mftr">
       <button class="btn btn-s" onclick="closeSett()">ביטול</button>
       <button class="btn btn-p" onclick="saveSett()">שמור</button>
@@ -282,8 +350,44 @@ const GH_HEADS = {'Authorization':`Bearer github_pat_${GH_TOKEN}`,'Accept':'appl
 let ghSha = null;
 
 // ── DB (in-memory, synced with GitHub) ──────────────────────────
-let db = {cfg:{name:'התינוק',dob:''},entries:[]};
+let db = {cfg:{name:'התינוק',dob:'',gender:'boy'},entries:[]};
 
+// ── LOCAL SETTINGS (always in localStorage) ─────────────────────
+const LS_CFG = 'bt-local-cfg'; // local prefs: storageMode, syncInterval
+const LS_DATA = 'bt-local-data'; // local data when in local mode
+
+let localPrefs = JSON.parse(localStorage.getItem(LS_CFG)||'null') || {
+  storageMode: 'github', // 'github' | 'local'
+  syncInterval: 30       // seconds, 0=off
+};
+function saveLocalPrefs(){ localStorage.setItem(LS_CFG, JSON.stringify(localPrefs)); }
+
+// ── INIT STORAGE ─────────────────────────────────────────────────
+let pollTimer = null;
+
+async function initStorage(){
+  if(localPrefs.storageMode === 'local'){
+    loadFromLocal();
+  } else {
+    await loadFromGitHub();
+  }
+  startPollTimer();
+}
+
+// ── LOCAL MODE ───────────────────────────────────────────────────
+function loadFromLocal(){
+  setSyncUI('local');
+  const raw = localStorage.getItem(LS_DATA);
+  if(raw){ try{ db = JSON.parse(raw); }catch(e){} }
+  render();
+}
+
+function saveLocal(){
+  localStorage.setItem(LS_DATA, JSON.stringify(db));
+  setSyncUI('local');
+}
+
+// ── GITHUB MODE ──────────────────────────────────────────────────
 async function loadFromGitHub(){
   setSyncUI('loading');
   try {
@@ -295,14 +399,13 @@ async function loadFromGitHub(){
       const txt = decodeURIComponent(Array.from(raw).map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''));
       db = JSON.parse(txt);
     }
-    // 404 = first time, keep defaults
   } catch(e){ showToast('⚠️ שגיאה בטעינה'); }
   setSyncUI('idle');
   render();
-  setInterval(pollGitHub, 12000);
 }
 
 async function pollGitHub(){
+  if(localPrefs.storageMode !== 'github') return;
   try {
     const res = await fetch(GH_API, {headers:GH_HEADS});
     if(res.ok){
@@ -319,7 +422,7 @@ async function pollGitHub(){
   } catch(e){}
 }
 
-async function save(){
+async function saveGitHub(){
   setSyncUI('saving');
   try {
     const getRes = await fetch(GH_API, {headers:GH_HEADS});
@@ -340,10 +443,38 @@ async function save(){
   } catch(e){ setSyncUI('error'); showToast('❌ שגיאת רשת'); }
 }
 
+// ── UNIFIED SAVE ─────────────────────────────────────────────────
+async function save(){
+  if(localPrefs.storageMode === 'local'){ saveLocal(); }
+  else { await saveGitHub(); }
+}
+
+async function syncNow(){
+  if(localPrefs.storageMode === 'github'){ await pollGitHub(); showToast('🔄 מסונכרן'); }
+  else { showToast('📱 מצב פרטי — אין סנכרון'); }
+}
+
+// ── POLL TIMER ───────────────────────────────────────────────────
+function startPollTimer(){
+  if(pollTimer) clearInterval(pollTimer);
+  const secs = localPrefs.syncInterval;
+  if(secs > 0 && localPrefs.storageMode === 'github'){
+    pollTimer = setInterval(pollGitHub, secs * 1000);
+  }
+}
+
+// ── SYNC UI ──────────────────────────────────────────────────────
 function setSyncUI(state){
   const el = document.getElementById('sync-status');
   if(!el) return;
-  const map = {loading:{txt:'⏳ טוען...',c:'#8a95ae'}, saving:{txt:'💾 שומר...',c:'#e3b341'}, saved:{txt:'✅ נשמר',c:'#5bc98a'}, error:{txt:'❌ שגיאה',c:'#f07045'}, idle:{txt:'☁️ מסונכרן',c:'#4a5568'}};
+  const map = {
+    loading:{txt:'⏳ טוען...',c:'#8a95ae'},
+    saving: {txt:'💾 שומר...',c:'#e3b341'},
+    saved:  {txt:'✅ נשמר',   c:'#5bc98a'},
+    error:  {txt:'❌ שגיאה',  c:'#f07045'},
+    idle:   {txt:'☁️ מסונכרן',c:'#4a5568'},
+    local:  {txt:'📱 פרטי',   c:'#8a95ae'},
+  };
   const s = map[state]||map.idle;
   el.textContent=s.txt; el.style.color=s.c;
 }
@@ -384,6 +515,8 @@ function dateLabel(ds){
 }
 
 // ── AGE ──────────────────────────────────────────────────────────
+
+function babyWord(){ return db.cfg.gender==='girl' ? 'תינוקת' : 'תינוק'; }
 function ageStr(){
   if(!db.cfg.dob) return 'הגדר תאריך לידה';
   const d=Math.floor((Date.now()-new Date(db.cfg.dob))/86400000);
@@ -393,7 +526,7 @@ function ageStr(){
   return m<24?`${m} חודשים`:`${Math.floor(m/12)} שנים ו-${m%12} חודשים`;
 }
 function updateAge(){
-  document.getElementById('age-lbl').textContent=`${db.cfg.name} · גיל: ${ageStr()}`;
+  document.getElementById('age-lbl').textContent=`${db.cfg.name} (${babyWord()}) · גיל: ${ageStr()}`;
 }
 
 // ── ABNORMAL ─────────────────────────────────────────────────────
@@ -675,8 +808,8 @@ function genWeekIns(wf,ws,wp,wpe,days,active){
   // trend first vs second half
   const h1=days.slice(0,3).flatMap(ds=>forDate(ds)).filter(e=>e.type==='feed').length;
   const h2=days.slice(4,7).flatMap(ds=>forDate(ds)).filter(e=>e.type==='feed').length;
-  if(h1>0&&h2>h1*1.3) ins.push({t:'tip',ic:'📈',tt:'מגמת עלייה בהאכלות',dc:'יתכן שהתינוק עובר גדילה מואצת — זה תקין לחלוטין!'});
-  else if(h1>0&&h2<h1*0.7) ins.push({t:'warn',ic:'📉',tt:'ירידה בהאכלות בסוף השבוע',dc:'וודא שהתינוק אוכל מספיק. שוחח עם רופא אם ממשיך.'});
+  if(h1>0&&h2>h1*1.3) ins.push({t:'tip',ic:'📈',tt:'מגמת עלייה בהאכלות',dc:`יתכן שה${babyWord()} עובר${db.cfg.gender==='girl'?'ת':''} גדילה מואצת — זה תקין לחלוטין!`});
+  else if(h1>0&&h2<h1*0.7) ins.push({t:'warn',ic:'📉',tt:'ירידה בהאכלות בסוף השבוע',dc:`וודא שה${babyWord()} אוכל${db.cfg.gender==='girl'?'ת':''} מספיק. שוחח עם רופא אם ממשיך.`});
 
   ins.push({t:'tip',ic:'🎯',tt:'המלצה לשבוע הבא',dc:`יעד: ${Math.max(8,Math.ceil(avgF))} האכלות/יום, ${minStr(Math.round(Math.max(840,avgS)))} שינה/יום.`});
   return ins;
@@ -1013,9 +1146,68 @@ async function delEntry(id){
 function closeModal(){document.getElementById('emodal').classList.remove('on');editId=null;modType=null;}
 
 // ── SETTINGS ─────────────────────────────────────────────────────
-function openSettings(){document.getElementById('s-name').value=db.cfg.name||'';document.getElementById('s-dob').value=db.cfg.dob||'';document.getElementById('smodal').classList.add('on');}
-function closeSett(){document.getElementById('smodal').classList.remove('on');}
-async function saveSett(){db.cfg.name=document.getElementById('s-name').value||'התינוק';db.cfg.dob=document.getElementById('s-dob').value||'';closeSett();render();showToast('✅ הגדרות נשמרו');await save();}
+
+function updateGenderLabels(){
+  const isBoy = document.getElementById('s-gender-boy')?.checked;
+  const bl = document.getElementById('gender-boy-lbl');
+  const gl = document.getElementById('gender-girl-lbl');
+  if(bl) { bl.style.borderColor = isBoy ? '#6f9de8' : 'rgba(255,255,255,0.12)'; bl.style.background = isBoy ? 'rgba(111,157,232,0.12)' : ''; }
+  if(gl) { gl.style.borderColor = !isBoy ? '#e87aaa' : 'rgba(255,255,255,0.12)'; gl.style.background = !isBoy ? 'rgba(232,122,170,0.12)' : ''; }
+}
+
+function setStorageMode(mode){
+  document.getElementById('mode-btn-github').classList.toggle('active', mode==='github');
+  document.getElementById('mode-btn-local').classList.toggle('active',  mode==='local');
+  document.getElementById('sync-interval-wrap').style.opacity = mode==='local'?'0.35':'1';
+  document.getElementById('sync-interval-wrap').style.pointerEvents = mode==='local'?'none':'';
+}
+
+function openSettings(){
+  document.getElementById('s-name').value = db.cfg.name||'';
+  document.getElementById('s-dob').value  = db.cfg.dob||'';
+  const g = db.cfg.gender||'boy';
+  document.getElementById('s-gender-boy').checked  = g==='boy';
+  document.getElementById('s-gender-girl').checked = g==='girl';
+  updateGenderLabels();
+  // set storage mode UI
+  setStorageMode(localPrefs.storageMode);
+  // set interval select
+  const sel = document.getElementById('s-interval');
+  const opts = Array.from(sel.options).map(o=>parseInt(o.value));
+  const best = opts.reduce((a,b)=>Math.abs(b-localPrefs.syncInterval)<Math.abs(a-localPrefs.syncInterval)?b:a);
+  sel.value = best;
+  document.getElementById('smodal').classList.add('on');
+}
+
+function closeSett(){ document.getElementById('smodal').classList.remove('on'); }
+
+async function saveSett(){
+  // baby info → saved to GitHub/local with db
+  db.cfg.name   = document.getElementById('s-name').value||(db.cfg.gender==='girl'?'התינוקת':'התינוק');
+  db.cfg.dob    = document.getElementById('s-dob').value||'';
+  db.cfg.gender = document.querySelector('input[name="s-gender"]:checked')?.value||'boy';
+
+  // local prefs → always localStorage
+  const newMode = document.getElementById('mode-btn-local').classList.contains('active') ? 'local' : 'github';
+  const newInterval = parseInt(document.getElementById('s-interval').value)||0;
+  const modeChanged = newMode !== localPrefs.storageMode;
+  localPrefs.storageMode  = newMode;
+  localPrefs.syncInterval = newInterval;
+  saveLocalPrefs();
+  startPollTimer();
+
+  closeSett();
+  showToast('✅ הגדרות נשמרו');
+
+  if(modeChanged){
+    // reload data from new source
+    if(newMode==='local') loadFromLocal();
+    else await loadFromGitHub();
+  } else {
+    render();
+    await save();
+  }
+}
 
 // ── NAV ───────────────────────────────────────────────────────────
 function shiftWeek(d){curWeekOffset=Math.min(0,curWeekOffset+d);render();}
@@ -1027,7 +1219,7 @@ function switchTab(el){tab=el.dataset.tab;document.querySelectorAll('.tab').forE
 function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2600);}
 
 // ── INIT ──────────────────────────────────────────────────────────
-loadFromGitHub();
+initStorage();
 </script>
 
 <!-- WHEEL TIME PICKER -->
