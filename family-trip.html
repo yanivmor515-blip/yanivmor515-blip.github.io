@@ -1013,9 +1013,17 @@
                     <div class="tab" onclick="switchTab('budget',this)">💶 תקציב</div>
                 </div>
                 <div class="sidebar-content">
-                    <div id="panel-itinerary" class="panel active"></div>
+                    <div id="panel-itinerary" class="panel active"><div class="day-card deletable active" id="day-1" data-lat="41.8933203" data-lng="12.4829321" data-zoom="13"><button class="del-btn" onclick="deleteEl('day-1')">×</button>
+<div class="day-header" onclick="toggleDay(this.closest('.day-card'))">
+  <div class="day-num">1</div>
+  <div class="day-info"><div class="day-title">הגעה לרומא</div><div class="day-sub">יום שישי, 17 יולי</div></div>
+  <div class="day-icon">✈️</div>
+</div>
+<div class="day-body open" id="day-body-1">
+  <div class="activity-item deletable"><button class="del-btn" onclick="removeUserPin('upin-2');deleteEl(this.closest('.activity-item'))">×</button><div class="activity-time">11:00</div><div class="activity-dot" style="background:#58a6ff"></div><div class="activity-text"><div class="activity-name">נחיתה בנמל תעופה פיומיצ'ינו (FCO)</div><div class="activity-detail">איסוף מכונית שכורה מיד עם הנחיתה — מומלץ להזמין מראש (Hertz/Enterprise)</div><span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#58a6ff;cursor:pointer;margin-top:4px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);border-radius:8px;padding:2px 7px;" onclick="const p=userPins.find(x=&gt;x.id==='upin-2');if(p){map.flyTo([p.lat,p.lng],16,{duration:1});setTimeout(()=&gt;p.marker.openPopup(),1100);}">📍 Fco Airport Parking, Via Portuense, Fiumicino, Lazio, Italy</span></div></div><button class="add-row-btn" onclick="openAddActivity('day-body-1')">+ הוסף פעילות</button>
+</div></div></div>
                     <div id="panel-locations" class="panel">
-                        <div id="locations-list"></div>
+                        <div id="locations-list"><div class="location-card deletable"><button class="del-btn" onclick="event.stopPropagation();removeUserPin('upin-1');deleteEl(this.closest('.location-card'))">×</button><div class="loc-header"><span class="loc-icon">🏟️</span><div><div class="loc-name">הקולוסיאום</div><div class="loc-region">רומא</div></div></div><div class="loc-desc">אמפיתאטרון עתיק — אחת מ-7 פלאי העולם החדש.</div><span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#58a6ff;cursor:pointer;margin-top:4px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);border-radius:8px;padding:2px 7px;" onclick="const p=userPins.find(x=&gt;x.id==='upin-1');if(p){map.flyTo([p.lat,p.lng],16,{duration:1});setTimeout(()=&gt;p.marker.openPopup(),1100);}">📍 Colosseum, Piazza del Colosseo, Rome, Lazio, Italy</span><div class="loc-tags"><span class="loc-tag">⭐ חובה</span><span class="loc-tag">👧 לילדים</span><span class="loc-tag">💶 18€</span></div></div></div>
                     </div>
                     <div id="panel-hotels" class="panel">
                         <div style="font-size:11px;color:#58a6ff;margin-bottom:10px;padding:6px 8px;background:rgba(88,166,255,0.07);border-radius:6px;">💡 כל ההמלצות לחדרים משפחתיים ל-5 אנשים — בדקו ב-Booking.com</div>
@@ -1035,7 +1043,7 @@
                 </div>
             </div>
             <div id="map" class="leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;">	
-        </div>
+        <div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(0px, 0px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(703px, 193px, 0px) scale(0.5);"></div><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 19; transform: translate3d(471px, 127px, 0px) scale(1);"><img alt="" src="https://a.tile.openstreetmap.org/9/272/190.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(36px, 18px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/9/272/191.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(36px, 274px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/9/271/190.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-220px, 18px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/9/273/190.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(292px, 18px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/9/271/191.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-220px, 274px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/9/273/191.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(292px, 274px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/9/272/189.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(36px, -238px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/9/271/189.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-220px, -238px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/9/273/189.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(292px, -238px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/9/270/190.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-476px, 18px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/9/274/190.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(548px, 18px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/9/270/189.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-476px, -238px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/9/274/189.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(548px, -238px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/9/270/191.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-476px, 274px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/9/274/191.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(548px, 274px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-shadow-pane"></div><div class="leaflet-pane leaflet-marker-pane"><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(959px, 215px, 0px); z-index: 215;"><div style="background:#fb923c;width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid white;box-shadow:0 3px 10px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:14px;line-height:1">🏟️</div></div></div><div class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -16px; margin-top: -32px; width: 32px; height: 32px; transform: translate3d(871px, 272px, 0px); z-index: 272;"><div style="background:#58a6ff;width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid white;box-shadow:0 3px 10px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:14px;line-height:1">📍</div></div></div></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(69702.5px, 48810.1px, 0px) scale(256);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in" aria-disabled="false"><span aria-hidden="true">+</span></a><a class="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out" aria-disabled="false"><span aria-hidden="true">−</span></a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"></div></div></div>
         <div class="toast" id="toast"></div>
         <div class="edit-bar" id="edit-bar">
             <span class="edit-bar-label"></span>
@@ -1055,8 +1063,13 @@
         </div>
         <div class="modal-overlay" id="modal">
             <div class="modal">
-                <h3 id="modal-title">הוסף פריט</h3>
-                <div id="modal-body"></div>
+                <h3 id="modal-title">➕ הוסף פעילות</h3>
+                <div id="modal-body">
+<label>שעה</label><input id="m-time" placeholder="09:00">
+<label>כותרת הפעילות</label><input id="m-name" placeholder="ביקור במוזיאון...">
+<label>פרטים</label><textarea id="m-detail" placeholder="מידע נוסף, מחיר, טיפים..."></textarea>
+<label>צבע נקודה</label><select id="m-color"><option value="#58a6ff">כחול</option><option value="#3fb950">ירוק</option><option value="#f97583">אדום</option><option value="#e3b341">צהוב</option><option value="#d2a8ff">סגול</option></select>
+<label>📍 מיקום / כתובת (אופציונלי)</label><div class="ac-wrap"><input id="m-addr" placeholder="Piazza Navona, Rome" autocomplete="off"></div></div>
                 <div class="modal-btns">
                     <button class="modal-cancel" onclick="closeModal()">ביטול</button>
                     <button class="modal-ok" id="modal-ok" onclick="modalOk()">הוסף</button>
@@ -1067,7 +1080,7 @@
 			const defaultZoom = 6;
 			let userPinCounter = 0;
 			let dayCounter = 0;
-			let userLocations = [];
+			let userLocations = [{"id":"upin-1","lat":41.8909421,"lng":12.491903,"name":"הקולוסיאום","region":"רומא","icon":"🏟️","color":"#fb923c","desc":"אמפיתאטרון עתיק — אחת מ-7 פלאי העולם החדש.","tags":["⭐ חובה","👧 לילדים","💶 18€"]},{"id":"upin-2","lat":41.7735764,"lng":12.2504852,"name":"נחיתה בנמל תעופה פיומיצ'ינו (FCO)","region":"Fco Airport Parking, Via Portuense, Fiumicino, Lazio, Italy","icon":"📍","color":"#58a6ff","desc":"איסוף מכונית שכורה מיד עם הנחיתה — מומלץ להזמין מראש (Hertz/Enterprise)","tags":[]}]
             let userPins = [];			
 			let defaultLocation = userLocations[0];
 			if (!defaultLocation){
@@ -1679,4 +1692,4 @@
         </script>
     
 
-</body></html>
+</div></body></html>
