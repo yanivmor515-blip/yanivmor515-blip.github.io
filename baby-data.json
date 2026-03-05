@@ -3,5 +3,16 @@
     "name": "התינוק",
     "dob": ""
   },
-  "entries": []
+  "entries": [
+    {
+      "id": "mmdcq0v0qp011enrmbb",
+      "type": "feed",
+      "date": "2026-03-04",
+      "startTime": "20:15",
+      "notes": "אכלה 120 הפסקה 20 עד 30 דקות ושוב אכלה 30",
+      "endTime": "21:15",
+      "amount": "120",
+      "feedType": "בקבוק"
+    }
+  ]
 }
