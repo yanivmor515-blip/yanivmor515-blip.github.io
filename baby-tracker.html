@@ -307,7 +307,8 @@ let tab = 'day';
 let curDate = today();
 let editId = null, modType = null;
 
-function today(){ return new Date().toISOString().slice(0,10); }
+function localStr(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function today(){ return localStr(new Date()); }
 function genId(){ return Date.now().toString(36)+Math.random().toString(36).slice(2); }
 
 // ── TYPES ────────────────────────────────────────────────────────
@@ -501,7 +502,7 @@ function genDayIns(feeds,sleeps,poops,pees,spits,totMl,totSlp){
 // ── WEEK TAB ─────────────────────────────────────────────────────
 function renderWeek(){
   const sun=new Date(); sun.setDate(sun.getDate()-sun.getDay());
-  const days=[]; for(let i=0;i<7;i++){const d=new Date(sun);d.setDate(sun.getDate()+i);days.push(d.toISOString().slice(0,10));}
+  const days=[]; for(let i=0;i<7;i++){const d=new Date(sun);d.setDate(sun.getDate()+i);days.push(localStr(d));}
   const dn=['א','ב','ג','ד','ה','ו','ש'];
 
   let h=`<div class="sec-title">ימי השבוע</div><div class="wdays">`;
@@ -594,7 +595,7 @@ function genWeekIns(wf,ws,wp,wpe,days,active){
 
 // ── INSIGHTS TAB ─────────────────────────────────────────────────
 function renderInsights(){
-  const last7=[]; for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);last7.push(d.toISOString().slice(0,10));}
+  const last7=[]; for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);last7.push(localStr(d));}
   const all=last7.flatMap(ds=>forDate(ds));
   const abns=all.filter(e=>abnormal(e));
 
@@ -723,7 +724,7 @@ function closeSett(){document.getElementById('smodal').classList.remove('on');}
 async function saveSett(){db.cfg.name=document.getElementById('s-name').value||'התינוק';db.cfg.dob=document.getElementById('s-dob').value||'';closeSett();render();showToast('✅ הגדרות נשמרו');await save();}
 
 // ── NAV ───────────────────────────────────────────────────────────
-function shiftDate(d){const x=new Date(curDate+'T00:00:00');x.setDate(x.getDate()+d);curDate=x.toISOString().slice(0,10);render();}
+function shiftDate(d){const x=new Date(curDate+'T12:00:00');x.setDate(x.getDate()+d);curDate=localStr(x);render();}
 function goToday(){curDate=today();render();}
 function switchTab(el){tab=el.dataset.tab;document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));el.classList.add('on');render();}
 
