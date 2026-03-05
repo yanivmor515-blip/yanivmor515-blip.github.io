@@ -267,7 +267,8 @@
       "type": "sleep",
       "date": "2026-03-05",
       "startTime": "20:19",
-      "notes": ""
+      "notes": "",
+      "endTime": "23:20"
     }
   ]
 }
