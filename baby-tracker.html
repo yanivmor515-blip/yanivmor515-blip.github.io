@@ -334,6 +334,22 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
           <button class="btn btn-s" style="font-size:11px;padding:6px 10px;white-space:nowrap" onclick="syncNow()">🔄 סנכרן עכשיו</button>
         </div>
       </div>
+      <div id="github-fields-wrap" style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.07)">
+        <div class="sett-section-title" style="margin-bottom:8px">🔑 פרטי חיבור GitHub</div>
+        <div class="fg">
+          <label class="fl">Personal Access Token</label>
+          <input class="fi" id="s-gh-token" type="password" placeholder="github_pat_..." autocomplete="off">
+          <div style="font-size:10px;color:var(--text3);margin-top:3px">נשמר רק בדפדפן זה, לא בקובץ</div>
+        </div>
+        <div class="fg" style="margin-top:8px">
+          <label class="fl">Repository</label>
+          <input class="fi" id="s-gh-repo" placeholder="username/repo" autocomplete="off">
+        </div>
+        <div class="fg" style="margin-top:8px">
+          <label class="fl">שם קובץ הנתונים</label>
+          <input class="fi" id="s-gh-file" placeholder="baby-data.json">
+        </div>
+      </div>
     </div>
 
     <div class="mftr">
@@ -344,31 +360,35 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
 </div>
 
 <script>
-// ── GITHUB CONFIG ───────────────────────────────────────────────
-const GH_TOKEN = '11B2LOLXA0QUSyBVPYrfPm_mCnhrR87EuROkeSWMDq5Xu0QwTnjGwNtF1cYaTKLLYtNMOLOBD5IuEaJwM2';
-const GH_REPO  = 'yanivmor515-blip/yanivmor515-blip.github.io';
-const GH_FILE  = 'baby-data.json';
-const GH_API   = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
-const GH_HEADS = {'Authorization':`Bearer github_pat_${GH_TOKEN}`,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','Content-Type':'application/json'};
-let ghSha = null;
-
-// ── DB (in-memory, synced with GitHub) ──────────────────────────
-let db = {cfg:{name:'התינוק',dob:'',gender:'boy'},entries:[]};
-
 // ── LOCAL SETTINGS (always in localStorage) ─────────────────────
-const LS_CFG = 'bt-local-cfg'; // local prefs: storageMode, syncInterval
-const LS_DATA = 'bt-local-data'; // local data when in local mode
+const LS_CFG  = 'bt-local-cfg';
+const LS_DATA = 'bt-local-data';
 
 let localPrefs = JSON.parse(localStorage.getItem(LS_CFG)||'null') || {
-  storageMode: 'github', // 'github' | 'local'
-  syncInterval: 30       // seconds, 0=off
+  storageMode:  'local',  // 'github' | 'local'
+  syncInterval: 30,
+  ghToken:      '',       // GitHub Personal Access Token
+  ghRepo:       '',       // e.g. user/repo
+  ghFile:       'baby-data.json'
 };
 function saveLocalPrefs(){ localStorage.setItem(LS_CFG, JSON.stringify(localPrefs)); }
+
+// ── GITHUB API HELPERS (built from localPrefs) ───────────────────
+let ghSha = null;
+function ghApi()   { return `https://api.github.com/repos/${localPrefs.ghRepo}/contents/${localPrefs.ghFile||'baby-data.json'}`; }
+function ghHeads() { return {'Authorization':`Bearer ${localPrefs.ghToken}`,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','Content-Type':'application/json'}; }
+function ghConfigured(){ return !!(localPrefs.ghToken && localPrefs.ghRepo); }
+
+// ── DB ───────────────────────────────────────────────────────────
+let db = {cfg:{name:'התינוק',dob:'',gender:'boy'},entries:[]};
 
 // ── INIT STORAGE ─────────────────────────────────────────────────
 let pollTimer = null;
 
 async function initStorage(){
+  if(localPrefs.storageMode === 'github' && !ghConfigured()){
+    localPrefs.storageMode = 'local';
+  }
   if(localPrefs.storageMode === 'local'){
     loadFromLocal();
   } else {
@@ -392,9 +412,10 @@ function saveLocal(){
 
 // ── GITHUB MODE ──────────────────────────────────────────────────
 async function loadFromGitHub(){
+  if(!ghConfigured()){ setSyncUI('error'); showToast('⚠️ הגדר פרטי GitHub בהגדרות'); return; }
   setSyncUI('loading');
   try {
-    const res = await fetch(GH_API, {headers:GH_HEADS});
+    const res = await fetch(ghApi(), {headers:ghHeads()});
     if(res.ok){
       const meta = await res.json();
       ghSha = meta.sha;
@@ -410,7 +431,7 @@ async function loadFromGitHub(){
 async function pollGitHub(){
   if(localPrefs.storageMode !== 'github') return;
   try {
-    const res = await fetch(GH_API, {headers:GH_HEADS});
+    const res = await fetch(ghApi(), {headers:ghHeads()});
     if(res.ok){
       const meta = await res.json();
       if(meta.sha !== ghSha){
@@ -420,23 +441,23 @@ async function pollGitHub(){
         db = JSON.parse(txt);
         render();
         showToast('🔄 נתונים עודכנו');
-        lastSyncTime = new Date(); tickSyncDetail();
+        lastSyncTime = new Date(); saveSyncState(); tickSyncDetail();
       }
     }
   } catch(e){}
   // even if no changes, record poll time
-  if(localPrefs.storageMode==='github'){ lastSyncTime=new Date(); tickSyncDetail(); }
+  if(localPrefs.storageMode==='github'){ lastSyncTime=new Date(); saveSyncState(); tickSyncDetail(); }
 }
 
 async function saveGitHub(){
   setSyncUI('saving');
   try {
-    const getRes = await fetch(GH_API, {headers:GH_HEADS});
+    const getRes = await fetch(ghApi(), {headers:ghHeads()});
     if(getRes.ok){ const m = await getRes.json(); ghSha = m.sha; }
     const json = JSON.stringify(db, null, 2);
     const encoded = btoa(unescape(encodeURIComponent(json)));
     const body = {message:'📱 עדכון מעקב תינוק '+new Date().toLocaleString('he-IL'), content:encoded, ...(ghSha&&{sha:ghSha})};
-    const putRes = await fetch(GH_API, {method:'PUT', headers:GH_HEADS, body:JSON.stringify(body)});
+    const putRes = await fetch(ghApi(), {method:'PUT', headers:ghHeads(), body:JSON.stringify(body)});
     if(putRes.ok){
       const d = await putRes.json();
       ghSha = d.content.sha;
@@ -460,11 +481,24 @@ async function syncNow(){
   else { showToast('📱 מצב פרטי — אין סנכרון'); }
 }
 
-// ── POLL TIMER ───────────────────────────────────────────────────
-// ── SYNC STATE ───────────────────────────────────────────────────
-let lastSyncTime = null;   // Date object of last successful sync
-let nextSyncAt   = null;   // Date object of next scheduled sync
-let countdownTimer = null; // setInterval for the countdown tick
+// ── SYNC STATE (persisted in localStorage) ───────────────────────
+const LS_SYNC = 'bt-sync-state';
+let countdownTimer = null;
+
+function loadSyncState(){
+  const raw = localStorage.getItem(LS_SYNC);
+  if(!raw) return { lastSyncTime: null, nextSyncAt: null };
+  try {
+    const s = JSON.parse(raw);
+    return {
+      lastSyncTime: s.lastSyncTime ? new Date(s.lastSyncTime) : null,
+      nextSyncAt:   s.nextSyncAt   ? new Date(s.nextSyncAt)   : null,
+    };
+  } catch(e){ return { lastSyncTime: null, nextSyncAt: null }; }
+}
+function saveSyncState(){ localStorage.setItem(LS_SYNC, JSON.stringify({ lastSyncTime, nextSyncAt })); }
+
+let { lastSyncTime, nextSyncAt } = loadSyncState();
 
 function startPollTimer(){
   if(pollTimer) clearInterval(pollTimer);
@@ -474,11 +508,14 @@ function startPollTimer(){
     pollTimer = setInterval(()=>{
       pollGitHub();
       nextSyncAt = new Date(Date.now() + secs*1000);
+      saveSyncState();
     }, secs * 1000);
     nextSyncAt = new Date(Date.now() + secs*1000);
+    saveSyncState();
     countdownTimer = setInterval(tickSyncDetail, 1000);
   } else {
     nextSyncAt = null;
+    saveSyncState();
     tickSyncDetail();
   }
 }
@@ -517,7 +554,7 @@ function setSyncUI(state){
   el.textContent=s.txt; el.style.color=s.c;
   // record sync time on successful states
   if(state==='saved'||state==='idle'){
-    if(state==='saved') lastSyncTime = new Date();
+    if(state==='saved'){ lastSyncTime = new Date(); saveSyncState(); }
     tickSyncDetail();
   }
   // update detail color
@@ -1206,6 +1243,8 @@ function setStorageMode(mode){
   document.getElementById('mode-btn-local').classList.toggle('active',  mode==='local');
   document.getElementById('sync-interval-wrap').style.opacity = mode==='local'?'0.35':'1';
   document.getElementById('sync-interval-wrap').style.pointerEvents = mode==='local'?'none':'';
+  document.getElementById('github-fields-wrap').style.opacity = mode==='local'?'0.35':'1';
+  document.getElementById('github-fields-wrap').style.pointerEvents = mode==='local'?'none':'';
 }
 
 function openSettings(){
@@ -1217,6 +1256,10 @@ function openSettings(){
   updateGenderLabels();
   // set storage mode UI
   setStorageMode(localPrefs.storageMode);
+  // populate GH fields
+  document.getElementById('s-gh-token').value = localPrefs.ghToken||'';
+  document.getElementById('s-gh-repo').value  = localPrefs.ghRepo||'';
+  document.getElementById('s-gh-file').value  = localPrefs.ghFile||'baby-data.json';
   // set interval select
   const sel = document.getElementById('s-interval');
   const opts = Array.from(sel.options).map(o=>parseInt(o.value));
@@ -1239,6 +1282,10 @@ async function saveSett(){
   const modeChanged = newMode !== localPrefs.storageMode;
   localPrefs.storageMode  = newMode;
   localPrefs.syncInterval = newInterval;
+  localPrefs.ghToken = document.getElementById('s-gh-token').value.trim();
+  localPrefs.ghRepo  = document.getElementById('s-gh-repo').value.trim();
+  localPrefs.ghFile  = document.getElementById('s-gh-file').value.trim()||'baby-data.json';
+  ghSha = null; // reset SHA so next load is fresh
   saveLocalPrefs();
   startPollTimer();
 
