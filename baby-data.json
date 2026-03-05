@@ -103,6 +103,14 @@
       "startTime": "23:05",
       "notes": "התעוררה מפליטה",
       "endTime": "01:06"
+    },
+    {
+      "id": "mmdlp0m8ad2nc24ohsc",
+      "type": "sleep",
+      "date": "2026-03-05",
+      "startTime": "02:17",
+      "notes": "",
+      "endTime": "04:00"
     }
   ]
 }
