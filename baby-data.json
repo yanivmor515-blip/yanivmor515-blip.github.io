@@ -13,16 +13,6 @@
       "endTime": "02:15",
       "amount": "120",
       "feedType": "בקבוק"
-    },
-    {
-      "id": "mmdckol37vd83ltqos5",
-      "type": "feed",
-      "date": "2026-03-05",
-      "startTime": "03:15",
-      "notes": "",
-      "endTime": "03:33",
-      "amount": "20",
-      "feedType": "בקבוק"
     }
   ]
 }
