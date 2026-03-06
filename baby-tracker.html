@@ -697,6 +697,7 @@ function render(){
 // ── DAY TAB ──────────────────────────────────────────────────────
 function renderDay(){
   const es=forDate(curDate), isToday=curDate===today();
+  const dayWord = isToday ? 'היום' : 'ביום זה';
   const feeds=es.filter(e=>e.type==='feed');
   const sleeps=es.filter(e=>e.type==='sleep');
   const poops=es.filter(e=>e.type==='poop');
@@ -723,37 +724,37 @@ function renderDay(){
   <div class="tgrid">
     <div class="tcard feed" onclick="openAdd('feed')">
       <div class="tcard-top"><span class="tcard-icon">🍼</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('feed')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו האכלה</span></button></div>
-      <div class="tcard-count"><div class="tcard-val">${feeds.length}</div><div class="tcard-lbl">${feeds.length===1?'האכלה תועדה היום':'האכלות תועדו היום'}</div></div>
+      <div class="tcard-count"><div class="tcard-val">${feeds.length}</div><div class="tcard-lbl">${feeds.length===1?`האכלה תועדה ${dayWord}`:`האכלות תועדו ${dayWord}`}</div></div>
       <div class="tcard-sub">${totMl ? totMl+' מ"ל' : feeds.length ? 'ללא כמות' : 'טפח להוספה'}</div>
     </div>
     <div class="tcard sleep" onclick="openAdd('sleep')">
       <div class="tcard-top"><span class="tcard-icon">😴</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('sleep')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו שינה</span></button></div>
-      <div class="tcard-count"><div class="tcard-val">${sleeps.length}</div><div class="tcard-lbl">${sleeps.length===1?'שינה תועדה היום':'שינות תועדו היום'}</div></div>
+      <div class="tcard-count"><div class="tcard-val">${sleeps.length}</div><div class="tcard-lbl">${sleeps.length===1?`שינה תועדה ${dayWord}`:`שינות תועדו ${dayWord}`}</div></div>
       <div class="tcard-sub">${totSlp ? minStr(totSlp) : sleeps.length ? '—' : 'טפח להוספה'}</div>
     </div>
     <div class="tcard poop" onclick="openAdd('poop')">
       <div class="tcard-top"><span class="tcard-icon">💩</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('poop')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו קקי</span></button></div>
-      <div class="tcard-count"><div class="tcard-val">${poops.length}</div><div class="tcard-lbl">קקי היום</div></div>
+      <div class="tcard-count"><div class="tcard-val">${poops.length}</div><div class="tcard-lbl">${`קקי ${dayWord}`}</div></div>
       <div class="tcard-sub">${poops.length ? poops.length+'× היום' : 'עדיין לא'}</div>
     </div>
     <div class="tcard pee" onclick="openAdd('pee')">
       <div class="tcard-top"><span class="tcard-icon">💧</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('pee')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו פיפי</span></button></div>
-      <div class="tcard-count"><div class="tcard-val">${pees.length}</div><div class="tcard-lbl">פיפי היום</div></div>
+      <div class="tcard-count"><div class="tcard-val">${pees.length}</div><div class="tcard-lbl">${`פיפי ${dayWord}`}</div></div>
       <div class="tcard-sub">${pees.length>=6 ? '✓ תקין' : pees.length>0 ? '⚠️ מעט' : 'טפח להוספה'}</div>
     </div>
     <div class="tcard spit" onclick="openAdd('spit')">
       <div class="tcard-top"><span class="tcard-icon">🤮</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('spit')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו פליטה</span></button></div>
-      <div class="tcard-count"><div class="tcard-val">${spits.length}</div><div class="tcard-lbl">${spits.length===1?'פליטה היום':'פליטות היום'}</div></div>
+      <div class="tcard-count"><div class="tcard-val">${spits.length}</div><div class="tcard-lbl">${spits.length===1?`פליטה ${dayWord}`:`פליטות ${dayWord}`}</div></div>
       <div class="tcard-sub">${spits.length>3 ? '⚠️ הרבה' : spits.length ? 'נרשמו' : '—'}</div>
     </div>
     <div class="tcard med" onclick="openAdd('med')">
       <div class="tcard-top"><span class="tcard-icon">💊</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('med')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו תרופה</span></button></div>
-      <div class="tcard-count"><div class="tcard-val">${meds.length}</div><div class="tcard-lbl">${meds.length===1?'מנת תרופה היום':'מנות תרופה היום'}</div></div>
+      <div class="tcard-count"><div class="tcard-val">${meds.length}</div><div class="tcard-lbl">${meds.length===1?`מנת תרופה ${dayWord}`:`מנות תרופה ${dayWord}`}</div></div>
       <div class="tcard-sub">${meds.length ? meds.map(e=>e.medName||'תרופה').filter((v,i,a)=>a.indexOf(v)===i).slice(0,2).join(', ') : '—'}</div>
     </div>
     <div class="tcard bath" onclick="openAdd('bath')">
       <div class="tcard-top"><span class="tcard-icon">🛁</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('bath')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו מקלחת</span></button></div>
-      <div class="tcard-count"><div class="tcard-val">${baths.length}</div><div class="tcard-lbl">${baths.length===1?'מקלחת היום':'מקלחות היום'}</div></div>
+      <div class="tcard-count"><div class="tcard-val">${baths.length}</div><div class="tcard-lbl">${baths.length===1?`מקלחת ${dayWord}`:`מקלחות ${dayWord}`}</div></div>
       <div class="tcard-sub">${baths.length ? baths[baths.length-1].startTime : '—'}</div>
     </div>
   </div>
