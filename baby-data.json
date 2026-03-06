@@ -461,16 +461,38 @@
       "date": "2026-03-06",
       "startTime": "19:13",
       "notes": ""
+    },
+    {
+      "id": "mmf6jaks7btqf099gks",
+      "type": "pee",
+      "date": "2026-03-06",
+      "startTime": "19:00",
+      "notes": ""
+    },
+    {
+      "id": "mmf6jkd30vjxyou2vmxg",
+      "type": "feed",
+      "date": "2026-03-06",
+      "startTime": "19:25",
+      "notes": ""
+    },
+    {
+      "id": "mmf6kj2i3s2pnnanbu9",
+      "type": "feed",
+      "date": "2026-03-06",
+      "startTime": "19:25",
+      "notes": ""
+    },
+    {
+      "id": "mmf6lj45vm120enzc7",
+      "type": "med",
+      "date": "2026-03-06",
+      "startTime": "12:00",
+      "notes": "",
+      "medName": "ויטמין d"
     }
   ],
   "measurements": [
-    {
-      "id": "mmf518zoup5mxuraffc",
-      "type": "weight",
-      "date": "2026-02-06",
-      "value": 2.4,
-      "notes": ""
-    },
     {
       "id": "mmf526l5762t8ot5ind",
       "type": "weight",
