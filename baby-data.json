@@ -336,6 +336,14 @@
       "endTime": "08:30",
       "amount": "110",
       "feedType": "בקבוק"
+    },
+    {
+      "id": "mmeitl7jqzzy3f9b0k",
+      "type": "spit",
+      "date": "2026-03-06",
+      "startTime": "08:15",
+      "notes": "פלטה בהאכלה עלה לה גם מהאף ",
+      "amount": "קצת"
     }
   ]
 }
