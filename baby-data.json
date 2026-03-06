@@ -318,6 +318,13 @@
       "startTime": "00:00",
       "notes": "",
       "endTime": "03:00"
+    },
+    {
+      "id": "mmeb2krhkgrma95nzro",
+      "type": "sleep",
+      "date": "2026-03-06",
+      "startTime": "04:40",
+      "notes": ""
     }
   ]
 }
