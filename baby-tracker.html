@@ -24,6 +24,7 @@
   --med:   #a78bfa; --med-bg:  rgba(167,139,250,0.09);  --med-b:  rgba(167,139,250,0.22);
   --weight:#34d399; --weight-bg:rgba(52,211,153,0.09);  --weight-b:rgba(52,211,153,0.22);
   --height:#60a5fa; --height-bg:rgba(96,165,250,0.09);  --height-b:rgba(96,165,250,0.22);
+  --bath:  #f472b6; --bath-bg:  rgba(244,114,182,0.09); --bath-b:  rgba(244,114,182,0.22);
   --warn:  #f07045; --warn-bg: rgba(240,112,69,0.10);
   --ok:    #5bc98a; --ok-bg:   rgba(91,201,138,0.09);
   --tip:   #6f9de8; --tip-bg:  rgba(111,157,232,0.09);
@@ -75,12 +76,13 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
 .qbtn.pee{border-color:var(--pee-b);}.qbtn.pee:hover{background:var(--pee-bg);}
 .qbtn.spit{border-color:var(--spit-b);}.qbtn.spit:hover{background:var(--spit-bg);}
 .qbtn.med{border-color:var(--med-b);}.qbtn.med:hover{background:var(--med-bg);}
+.qbtn.bath{border-color:var(--bath-b);}.qbtn.bath:hover{background:var(--bath-bg);}
 
 /* STATS GRID */
 .sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:12px;}
 .scard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rsm);padding:12px 14px;}
 .scard.feed{border-color:var(--feed-b);} .scard.sleep{border-color:var(--sleep-b);}
-.scard.poop{border-color:var(--poop-b);} .scard.pee{border-color:var(--pee-b);}  .scard.spit{border-color:var(--spit-b);} .scard.med{border-color:var(--med-b);}
+.scard.poop{border-color:var(--poop-b);} .scard.pee{border-color:var(--pee-b);}  .scard.spit{border-color:var(--spit-b);} .scard.med{border-color:var(--med-b);} .scard.bath{border-color:var(--bath-b);}
 .slbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:4px;}
 .sval{font-size:24px;font-weight:900;line-height:1;}
 .ssub{font-size:11px;color:var(--text2);margin-top:4px;}
@@ -97,11 +99,13 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
 .ecard.pee{border-right:3px solid var(--pee);}
 .ecard.spit{border-right:3px solid var(--spit);}
 .ecard.med{border-right:3px solid var(--med);}
+.ecard.bath{border-right:3px solid var(--bath);}
 .etype{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
 .ecard.feed .etype{background:var(--feed-bg);} .ecard.sleep .etype{background:var(--sleep-bg);}
 .ecard.poop .etype{background:var(--poop-bg);} .ecard.pee .etype{background:var(--pee-bg);}
 .ecard.spit .etype{background:var(--spit-bg);}
 .ecard.med .etype{background:var(--med-bg);}
+.ecard.bath .etype{background:var(--bath-bg);}
 .einfo{flex:1;}
 .emain{font-size:14px;font-weight:700;color:var(--text);}
 .edet{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.4;}
@@ -245,6 +249,7 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
 .growth-entry-date{font-size:12px;color:var(--text3);}
 .add-meas-btn{width:100%;padding:13px;background:var(--bg3);border:1px dashed var(--border2);border-radius:var(--rsm);color:var(--text3);font-family:'Heebo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-bottom:12px;}
 .add-meas-btn:hover{border-color:var(--tip);color:var(--tip);}
+
 
 @media(max-width:430px){
   .sgrid{grid-template-columns:1fr 1fr;}
@@ -605,6 +610,7 @@ const T = {
   pee:   {lbl:'פיפי',  icon:'💧', cv:'--pee'},
   spit:  {lbl:'פליטה', icon:'🤮', cv:'--spit'},
   med:   {lbl:'תרופה',  icon:'💊', cv:'--med'},
+  bath:  {lbl:'מקלחת', icon:'🛁', cv:'--bath'},
 };
 
 // ── HELPERS ──────────────────────────────────────────────────────
@@ -688,6 +694,7 @@ function renderDay(){
   const pees=es.filter(e=>e.type==='pee');
   const spits=es.filter(e=>e.type==='spit');
   const meds=es.filter(e=>e.type==='med');
+  const baths=es.filter(e=>e.type==='bath');
   const totMl=feeds.reduce((s,e)=>s+(parseFloat(e.amount)||0),0);
   const totSlp=sleeps.reduce((s,e)=>s+diffMin(e.startTime,e.endTime||''),0);
 
@@ -711,6 +718,7 @@ function renderDay(){
     <button class="qbtn pee"   onclick="openAdd('pee')"><span class="qi">💧</span><span class="ql">פיפי</span></button>
     <button class="qbtn spit"  onclick="openAdd('spit')"><span class="qi">🤮</span><span class="ql">פליטה</span></button>
     <button class="qbtn med"   onclick="openAdd('med')"><span class="qi">💊</span><span class="ql">תרופה</span></button>
+    <button class="qbtn bath"  onclick="openAdd('bath')"><span class="qi">🛁</span><span class="ql">מקלחת</span></button>
   </div>
 
   <div class="sgrid">
@@ -720,6 +728,7 @@ function renderDay(){
     <div class="scard pee"><div class="slbl">פיפי</div><div class="sval" style="color:var(--pee)">${pees.length}</div><div class="ssub">${pees.length>=6?'✓ תקין':pees.length>0?'⚠️ מעט':'—'}</div></div>
     <div class="scard spit"><div class="slbl">פליטות</div><div class="sval" style="color:var(--spit)">${spits.length}</div><div class="ssub">${spits.length>3?'⚠️ הרבה':spits.length?'נרשמו':'—'}</div></div>
     <div class="scard med"><div class="slbl">תרופות</div><div class="sval" style="color:var(--med)">${meds.length}</div><div class="ssub">${meds.map(e=>e.medName||'תרופה').filter((v,i,a)=>a.indexOf(v)===i).join(', ')||'—'}</div></div>
+    <div class="scard bath"><div class="slbl">מקלחות</div><div class="sval" style="color:var(--bath)">${baths.length}</div><div class="ssub">${baths.length?'נרשמו':'—'}</div></div>
   </div>
 
   <div class="sec-title">📋 ציר זמן</div>
@@ -755,6 +764,8 @@ function renderCard(e){
     det=e.endTime?`התעוררות: ${e.endTime} · ${minStr(diffMin(e.startTime,e.endTime))}`:'עדיין ישן...';
   } else if(e.type==='spit' && e.amount){
     det=`כמות: ${e.amount}`;
+  } else if(e.type==='bath'){
+    if(e.bathTemp) det=`🌡️ ${e.bathTemp}°C`;
   } else if(e.type==='med'){
     const pts=[];
     if(e.medName) pts.push(e.medName);
@@ -1221,6 +1232,9 @@ function buildFields(type,d){
       </div>
     </div>`;
   }
+  if(type==='bath'){
+    h+=`<div class="fg"><label class="fl">טמפרטורת מים (°C)</label><input class="fi" id="f-btemp" type="number" min="30" max="45" step="0.5" placeholder="37" value="${d.bathTemp||''}"></div>`;
+  }
   if(type==='spit'){
     h+=`<div class="fg"><label class="fl">כמות פליטה</label>
       <select class="fs" id="f-sa">
@@ -1256,6 +1270,7 @@ async function saveEntry(){
     if(mr) entry.medRoute=mr;
   }
   if(modType==='spit'){const sa=document.getElementById('f-sa')?.value;if(sa)entry.amount=sa;}
+  if(modType==='bath'){const bt=document.getElementById('f-btemp')?.value;if(bt)entry.bathTemp=bt;}
   if(editId){const i=db.entries.findIndex(x=>x.id===editId);if(i>=0)db.entries[i]=entry;}
   else db.entries.push(entry);
   closeModal(); render(); await save();
@@ -1468,6 +1483,7 @@ async function deleteMeas(id){
   db.measurements=(db.measurements||[]).filter(m=>m.id!==id);
   render(); await save(); showToast('🗑️ נמחק');
 }
+
 
 function switchTab(el){tab=el.dataset.tab;document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));el.classList.add('on');render();}
 
