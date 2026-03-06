@@ -474,7 +474,10 @@
       "type": "feed",
       "date": "2026-03-06",
       "startTime": "19:25",
-      "notes": ""
+      "notes": "",
+      "endTime": "20:00",
+      "amount": "95",
+      "feedType": "בקבוק"
     },
     {
       "id": "mmf6lj45vm120enzc7",
