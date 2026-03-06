@@ -22,6 +22,8 @@
   --pee:   #c5d668; --pee-bg:  rgba(197,214,104,0.09); --pee-b:  rgba(197,214,104,0.22);
   --spit:  #e87aaa; --spit-bg: rgba(232,122,170,0.09); --spit-b: rgba(232,122,170,0.22);
   --med:   #a78bfa; --med-bg:  rgba(167,139,250,0.09);  --med-b:  rgba(167,139,250,0.22);
+  --weight:#34d399; --weight-bg:rgba(52,211,153,0.09);  --weight-b:rgba(52,211,153,0.22);
+  --height:#60a5fa; --height-bg:rgba(96,165,250,0.09);  --height-b:rgba(96,165,250,0.22);
   --warn:  #f07045; --warn-bg: rgba(240,112,69,0.10);
   --ok:    #5bc98a; --ok-bg:   rgba(91,201,138,0.09);
   --tip:   #6f9de8; --tip-bg:  rgba(111,157,232,0.09);
@@ -233,6 +235,17 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
 .sbtn{font-family:'Heebo',sans-serif;font-size:11px;font-weight:700;padding:5px 11px;border-radius:var(--rsm);border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;transition:all .18s;}
 .sbtn:hover{background:var(--bg4);color:var(--text);}
 
+
+/* GROWTH */
+.growth-chart-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:12px;}
+.growth-chart-title{font-size:11px;font-weight:800;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.growth-entry{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rsm);padding:9px 12px;display:flex;align-items:center;gap:10px;margin-bottom:5px;}
+.growth-entry-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.growth-entry-val{font-size:15px;font-weight:800;flex:1;}
+.growth-entry-date{font-size:10px;color:var(--text3);}
+.add-meas-btn{width:100%;padding:10px;background:var(--bg3);border:1px dashed var(--border2);border-radius:var(--rsm);color:var(--text3);font-family:'Heebo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;margin-bottom:12px;}
+.add-meas-btn:hover{border-color:var(--tip);color:var(--tip);}
+
 @media(max-width:560px){.sgrid{grid-template-columns:1fr 1fr;}.qbtn .ql{font-size:10px;}}
 </style>
 </head>
@@ -259,6 +272,7 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
   <button class="tab on" data-tab="day"     onclick="switchTab(this)">📅 יומי</button>
   <button class="tab"    data-tab="week"    onclick="switchTab(this)">📊 שבועי</button>
   <button class="tab"    data-tab="insights" onclick="switchTab(this)">💡 תובנות</button>
+  <button class="tab"    data-tab="growth"   onclick="switchTab(this)">📈 גדילה</button>
 </div>
 
 <div class="body-outer"><div class="body" id="body"></div></div>
@@ -274,7 +288,7 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
     <div id="mbody"></div>
     <div class="mftr">
       <button class="btn btn-s" onclick="closeModal()">ביטול</button>
-      <button class="btn btn-p" onclick="saveEntry()">שמור</button>
+      <button class="btn btn-p" id="modal-save-btn" onclick="saveEntry()">שמור</button>
     </div>
   </div>
 </div>
@@ -380,7 +394,7 @@ function ghHeads() { return {'Authorization':`Bearer github_pat_${localPrefs.ghT
 function ghConfigured(){ return !!(localPrefs.ghToken && localPrefs.ghRepo); }
 
 // ── DB ───────────────────────────────────────────────────────────
-let db = {cfg:{name:'התינוק',dob:'',gender:'boy'},entries:[]};
+let db = {cfg:{name:'התינוק',dob:'',gender:'boy'},entries:[],measurements:[]};
 
 // ── INIT STORAGE ─────────────────────────────────────────────────
 let pollTimer = null;
@@ -634,9 +648,10 @@ function abnormal(e){
 function render(){
   updateAge();
   const body=document.getElementById('body');
-  if(tab==='day')      body.innerHTML=renderDay();
-  else if(tab==='week')body.innerHTML=renderWeek();
-  else                  body.innerHTML=renderInsights();
+  if(tab==='day')         body.innerHTML=renderDay();
+  else if(tab==='week')   body.innerHTML=renderWeek();
+  else if(tab==='growth') body.innerHTML=renderGrowth();
+  else                    body.innerHTML=renderInsights();
 }
 
 // ── DAY TAB ──────────────────────────────────────────────────────
@@ -1134,6 +1149,7 @@ function openAdd(type){
   const ts=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
   document.getElementById('mtitle').textContent=`➕ הוסף ${T[type].lbl}`;
   document.getElementById('mbody').innerHTML=buildFields(type,{startTime:ts,date:curDate});
+  document.getElementById('modal-save-btn').onclick=saveEntry;
   document.getElementById('emodal').classList.add('on');
 }
 
@@ -1142,6 +1158,7 @@ function openEdit(id){
   editId=id; modType=e.type;
   document.getElementById('mtitle').textContent=`✏️ ערוך ${T[e.type].lbl}`;
   document.getElementById('mbody').innerHTML=buildFields(e.type,e);
+  document.getElementById('modal-save-btn').onclick=saveEntry;
   document.getElementById('emodal').classList.add('on');
 }
 
@@ -1306,6 +1323,127 @@ async function saveSett(){
 function shiftWeek(d){curWeekOffset=Math.min(0,curWeekOffset+d);render();}
 function shiftDate(d){const x=new Date(curDate+'T12:00:00');x.setDate(x.getDate()+d);curDate=localStr(x);render();}
 function goToday(){curDate=today();render();}
+
+// ── GROWTH TAB ───────────────────────────────────────────────────
+function renderGrowth(){
+  const measurements = db.measurements||[];
+  const weights = measurements.filter(m=>m.type==='weight').sort((a,b)=>a.date.localeCompare(b.date));
+  const heights = measurements.filter(m=>m.type==='height').sort((a,b)=>a.date.localeCompare(b.date));
+
+  let h = '';
+
+  // ── Weight ──────────────────────────────────────────────────
+  h += `<div class="sec-title">⚖️ מעקב משקל</div>`;
+  if(weights.length>=2) h += renderLineChart(weights,'weight','var(--weight)','ק"ג');
+  h += `<button class="add-meas-btn" onclick="openMeasModal('weight')">+ הוסף שקילה</button>`;
+  const recentW=[...weights].reverse().slice(0,8);
+  if(!recentW.length){
+    h+=`<div style="text-align:center;padding:16px;color:var(--text3);font-size:12px">עדיין אין שקילות — הוסף את הראשונה!</div>`;
+  } else {
+    for(const m of recentW){
+      const nd=new Date(m.date+'T00:00:00');
+      h+=`<div class="growth-entry">
+        <div class="growth-entry-icon" style="background:var(--weight-bg)">⚖️</div>
+        <div class="growth-entry-val" style="color:var(--weight)">${m.value} ק"ג</div>
+        <div class="growth-entry-date">${nd.getDate()}/${nd.getMonth()+1}/${nd.getFullYear()}</div>
+        ${m.notes?`<div style="font-size:10px;color:var(--text2)">${m.notes}</div>`:''}
+        <button class="ibtn del" onclick="deleteMeas('${m.id}')">🗑️</button>
+      </div>`;
+    }
+  }
+
+  // ── Height ──────────────────────────────────────────────────
+  h += `<div class="sec-title" style="margin-top:16px">📏 מעקב גובה</div>`;
+  if(heights.length>=2) h += renderLineChart(heights,'height','var(--height)','ס"מ');
+  h += `<button class="add-meas-btn" onclick="openMeasModal('height')">+ הוסף מדידת גובה</button>`;
+  const recentH=[...heights].reverse().slice(0,8);
+  if(!recentH.length){
+    h+=`<div style="text-align:center;padding:16px;color:var(--text3);font-size:12px">עדיין אין מדידות — הוסף את הראשונה!</div>`;
+  } else {
+    for(const m of recentH){
+      const nd=new Date(m.date+'T00:00:00');
+      h+=`<div class="growth-entry">
+        <div class="growth-entry-icon" style="background:var(--height-bg)">📏</div>
+        <div class="growth-entry-val" style="color:var(--height)">${m.value} ס"מ</div>
+        <div class="growth-entry-date">${nd.getDate()}/${nd.getMonth()+1}/${nd.getFullYear()}</div>
+        ${m.notes?`<div style="font-size:10px;color:var(--text2)">${m.notes}</div>`:''}
+        <button class="ibtn del" onclick="deleteMeas('${m.id}')">🗑️</button>
+      </div>`;
+    }
+  }
+
+  return h;
+}
+
+function renderLineChart(data, type, color, unit){
+  if(data.length < 2) return '';
+  const vals = data.map(d=>parseFloat(d.value));
+  const min  = Math.min(...vals), max = Math.max(...vals);
+  const range = (max - min) || 1;
+  const W=300, H=100, PAD=12;
+  const pts = data.map((d,i)=>{
+    const x = PAD + (i/(data.length-1))*(W-PAD*2);
+    const y = H - PAD - ((parseFloat(d.value)-min)/range)*(H-PAD*2);
+    return [x,y,d.value];
+  });
+  const path = pts.map((p,i)=>(i===0?`M${p[0].toFixed(1)},${p[1].toFixed(1)}`:`L${p[0].toFixed(1)},${p[1].toFixed(1)}`)).join(' ');
+  const area = path + ` L${pts[pts.length-1][0].toFixed(1)},${H-PAD} L${pts[0][0].toFixed(1)},${H-PAD} Z`;
+  const last = data[data.length-1];
+  const prev = data[data.length-2];
+  const diff = (parseFloat(last.value)-parseFloat(prev.value)).toFixed(2);
+  const arrow = parseFloat(diff)>0?'▲':parseFloat(diff)<0?'▼':'–';
+  const sign  = parseFloat(diff)>0?'+':'';
+  return `<div class="growth-chart-wrap">
+    <div class="growth-chart-title">
+      <span style="color:${color}">${arrow} ${sign}${diff} ${unit}</span>
+      <span>אחרון: ${last.value} ${unit} · ${data.length} מדידות</span>
+    </div>
+    <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:90px;display:block">
+      <defs><linearGradient id="grad-${type}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${color}" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="${color}" stop-opacity="0.02"/>
+      </linearGradient></defs>
+      <path d="${area}" fill="url(#grad-${type})"/>
+      <path d="${path}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      ${pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3" fill="${color}"/>`).join('')}
+    </svg>
+  </div>`;
+}
+
+function openMeasModal(type){
+  const isWeight = type==='weight';
+  const lbl  = isWeight?'משקל (ק"ג)':'גובה (ס"מ)';
+  const ph   = isWeight?'3.500':'52.0';
+  const step = isWeight?'0.001':'0.1';
+  document.getElementById('mtitle').textContent = `➕ הוסף ${isWeight?'שקילה':'מדידת גובה'}`;
+  document.getElementById('mbody').innerHTML = `
+    <div class="frow">
+      <div class="fg"><label class="fl">תאריך</label><input class="fi" id="f-date" type="date" value="${today()}"></div>
+      <div class="fg"><label class="fl">${lbl}</label><input class="fi" id="f-mval" type="number" step="${step}" min="0" placeholder="${ph}" autofocus></div>
+    </div>
+    <div class="fg"><label class="fl">הערות</label><textarea class="fta" id="f-notes" placeholder="הערות..."></textarea></div>
+    <input type="hidden" id="f-mtype" value="${type}">`;
+  document.getElementById('modal-save-btn').onclick = saveMeas;
+  document.getElementById('emodal').classList.add('on');
+}
+
+async function saveMeas(){
+  const val   = parseFloat(document.getElementById('f-mval')?.value);
+  const date  = document.getElementById('f-date')?.value||today();
+  const type  = document.getElementById('f-mtype')?.value;
+  const notes = document.getElementById('f-notes')?.value||'';  if(!val||isNaN(val)){ showToast('⚠️ הזן ערך תקין'); return; }
+  if(!db.measurements) db.measurements=[];
+  db.measurements.push({id:genId(),type,date,value:val,notes});
+  closeModal(); render(); await save();
+  showToast('✅ נשמר');
+}
+
+async function deleteMeas(id){
+  if(!confirm('למחוק?')) return;
+  db.measurements=(db.measurements||[]).filter(m=>m.id!==id);
+  render(); await save(); showToast('🗑️ נמחק');
+}
+
 function switchTab(el){tab=el.dataset.tab;document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));el.classList.add('on');render();}
 
 // ── TOAST ─────────────────────────────────────────────────────────
