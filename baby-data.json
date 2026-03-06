@@ -454,5 +454,14 @@
       "startTime": "16:10",
       "notes": ""
     }
+  ],
+  "measurements": [
+    {
+      "id": "mmf518zoup5mxuraffc",
+      "type": "weight",
+      "date": "2026-02-06",
+      "value": 2.4,
+      "notes": ""
+    }
   ]
 }
