@@ -64,25 +64,34 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
 .today-btn{font-family:'Heebo',sans-serif;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;transition:all .2s;}
 .today-btn:hover{background:var(--tip);color:#fff;border-color:var(--tip);}
 
-/* QUICK ADD */
-.qadd{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
-.qbtn{flex:1;min-width:68px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:11px 4px;border-radius:var(--rsm);border:1px solid var(--border);background:var(--bg2);cursor:pointer;transition:all .18s;font-family:'Heebo',sans-serif;}
-.qbtn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.3);}
-.qbtn .qi{font-size:22px;}
-.qbtn .ql{font-size:12px;font-weight:700;color:var(--text2);}
-.qbtn.feed{border-color:var(--feed-b);}.qbtn.feed:hover{background:var(--feed-bg);}
-.qbtn.sleep{border-color:var(--sleep-b);}.qbtn.sleep:hover{background:var(--sleep-bg);}
-.qbtn.poop{border-color:var(--poop-b);}.qbtn.poop:hover{background:var(--poop-bg);}
-.qbtn.pee{border-color:var(--pee-b);}.qbtn.pee:hover{background:var(--pee-bg);}
-.qbtn.spit{border-color:var(--spit-b);}.qbtn.spit:hover{background:var(--spit-bg);}
-.qbtn.med{border-color:var(--med-b);}.qbtn.med:hover{background:var(--med-bg);}
-.qbtn.bath{border-color:var(--bath-b);}.qbtn.bath:hover{background:var(--bath-bg);}
+/* TRACK CARDS GRID */
+.tgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px;}
+.tcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:13px 14px;cursor:pointer;transition:all .2s;position:relative;display:flex;flex-direction:column;gap:4px;-webkit-tap-highlight-color:transparent;}
+.tcard:active{transform:scale(0.97);}
+.tcard-top{display:flex;align-items:center;justify-content:space-between;flex-direction:row-reverse;}
+.tcard-icon{font-size:22px;line-height:1;}
+.tcard-add-wrap{display:flex;align-items:center;gap:5px;opacity:0.55;transition:opacity .15s;cursor:pointer;background:none;border:none;padding:0;font-family:'Heebo',sans-serif;color:inherit;}
+.tcard:hover .tcard-add-wrap{opacity:1;}
+.tcard-add{width:24px;height:24px;border-radius:50%;border:1.5px solid currentColor;background:transparent;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:300;flex-shrink:0;}
+.tcard-add-lbl{font-size:11px;font-weight:700;}
 
-/* STATS GRID */
+.tcard-count{display:flex;align-items:baseline;gap:6px;margin-top:6px;}
+.tcard-val{font-size:28px;font-weight:900;line-height:1;}
+.tcard-lbl{font-size:13px;font-weight:700;color:var(--text2);}
+
+.tcard-sub{font-size:11px;color:var(--text2);margin-top:1px;min-height:15px;}
+.tcard.feed{border-color:var(--feed-b);} .tcard.feed .tcard-val{color:var(--feed);} .tcard.feed .tcard-add{color:var(--feed);}
+.tcard.sleep{border-color:var(--sleep-b);} .tcard.sleep .tcard-val{color:var(--sleep);} .tcard.sleep .tcard-add{color:var(--sleep);}
+.tcard.poop{border-color:var(--poop-b);} .tcard.poop .tcard-val{color:var(--poop);} .tcard.poop .tcard-add{color:var(--poop);}
+.tcard.pee{border-color:var(--pee-b);} .tcard.pee .tcard-val{color:var(--pee);} .tcard.pee .tcard-add{color:var(--pee);}
+.tcard.spit{border-color:var(--spit-b);} .tcard.spit .tcard-val{color:var(--spit);} .tcard.spit .tcard-add{color:var(--spit);}
+.tcard.med{border-color:var(--med-b);} .tcard.med .tcard-val{color:var(--med);} .tcard.med .tcard-add{color:var(--med);}
+.tcard.bath{border-color:var(--bath-b);} .tcard.bath .tcard-val{color:var(--bath);} .tcard.bath .tcard-add{color:var(--bath);}
+/* keep scard/slbl/sval/ssub for week tab compatibility */
 .sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:12px;}
 .scard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rsm);padding:12px 14px;}
 .scard.feed{border-color:var(--feed-b);} .scard.sleep{border-color:var(--sleep-b);}
-.scard.poop{border-color:var(--poop-b);} .scard.pee{border-color:var(--pee-b);}  .scard.spit{border-color:var(--spit-b);} .scard.med{border-color:var(--med-b);} .scard.bath{border-color:var(--bath-b);}
+.scard.poop{border-color:var(--poop-b);} .scard.pee{border-color:var(--pee-b);}  .scard.spit{border-color:var(--spit-b);} .scard.med{border-color:var(--med-b);}
 .slbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:4px;}
 .sval{font-size:24px;font-weight:900;line-height:1;}
 .ssub{font-size:11px;color:var(--text2);margin-top:4px;}
@@ -253,9 +262,9 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);heigh
 
 @media(max-width:430px){
   .sgrid{grid-template-columns:1fr 1fr;}
-  .qbtn{min-width:58px;padding:9px 3px;}
-  .qbtn .qi{font-size:20px;}
-  .qbtn .ql{font-size:11px;}
+  .tgrid{grid-template-columns:repeat(2,1fr);gap:7px;}
+  .tcard{padding:11px 12px;}
+  .tcard-val{font-size:24px;}
   .hdr h1{font-size:16px;}
   .hdr p{font-size:11px;}
   .tab{padding:12px 13px;font-size:12px;}
@@ -711,24 +720,42 @@ function renderDay(){
     <button class="today-btn" onclick="goToday()">היום</button>
   </div>
 
-  <div class="qadd">
-    <button class="qbtn feed"  onclick="openAdd('feed')"><span class="qi">🍼</span><span class="ql">האכלה</span></button>
-    <button class="qbtn sleep" onclick="openAdd('sleep')"><span class="qi">😴</span><span class="ql">שינה</span></button>
-    <button class="qbtn poop"  onclick="openAdd('poop')"><span class="qi">💩</span><span class="ql">קקי</span></button>
-    <button class="qbtn pee"   onclick="openAdd('pee')"><span class="qi">💧</span><span class="ql">פיפי</span></button>
-    <button class="qbtn spit"  onclick="openAdd('spit')"><span class="qi">🤮</span><span class="ql">פליטה</span></button>
-    <button class="qbtn med"   onclick="openAdd('med')"><span class="qi">💊</span><span class="ql">תרופה</span></button>
-    <button class="qbtn bath"  onclick="openAdd('bath')"><span class="qi">🛁</span><span class="ql">מקלחת</span></button>
-  </div>
-
-  <div class="sgrid">
-    <div class="scard feed"><div class="slbl">האכלות</div><div class="sval" style="color:var(--feed)">${feeds.length}</div><div class="ssub">${totMl?totMl+' מ"ל':'ללא כמות'}</div></div>
-    <div class="scard sleep"><div class="slbl">שינה</div><div class="sval" style="color:var(--sleep)">${sleeps.length}</div><div class="ssub">${totSlp?minStr(totSlp):'ללא נתון'}</div></div>
-    <div class="scard poop"><div class="slbl">קקי</div><div class="sval" style="color:var(--poop)">${poops.length}</div><div class="ssub">${poops.length===0?'עוד לא':poops.length+'×'}</div></div>
-    <div class="scard pee"><div class="slbl">פיפי</div><div class="sval" style="color:var(--pee)">${pees.length}</div><div class="ssub">${pees.length>=6?'✓ תקין':pees.length>0?'⚠️ מעט':'—'}</div></div>
-    <div class="scard spit"><div class="slbl">פליטות</div><div class="sval" style="color:var(--spit)">${spits.length}</div><div class="ssub">${spits.length>3?'⚠️ הרבה':spits.length?'נרשמו':'—'}</div></div>
-    <div class="scard med"><div class="slbl">תרופות</div><div class="sval" style="color:var(--med)">${meds.length}</div><div class="ssub">${meds.map(e=>e.medName||'תרופה').filter((v,i,a)=>a.indexOf(v)===i).join(', ')||'—'}</div></div>
-    <div class="scard bath"><div class="slbl">מקלחות</div><div class="sval" style="color:var(--bath)">${baths.length}</div><div class="ssub">${baths.length?'נרשמו':'—'}</div></div>
+  <div class="tgrid">
+    <div class="tcard feed" onclick="openAdd('feed')">
+      <div class="tcard-top"><span class="tcard-icon">🍼</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('feed')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו האכלה</span></button></div>
+      <div class="tcard-count"><div class="tcard-val">${feeds.length}</div><div class="tcard-lbl">${feeds.length===1?'האכלה תועדה היום':'האכלות תועדו היום'}</div></div>
+      <div class="tcard-sub">${totMl ? totMl+' מ"ל' : feeds.length ? 'ללא כמות' : 'טפח להוספה'}</div>
+    </div>
+    <div class="tcard sleep" onclick="openAdd('sleep')">
+      <div class="tcard-top"><span class="tcard-icon">😴</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('sleep')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו שינה</span></button></div>
+      <div class="tcard-count"><div class="tcard-val">${sleeps.length}</div><div class="tcard-lbl">${sleeps.length===1?'שינה תועדה היום':'שינות תועדו היום'}</div></div>
+      <div class="tcard-sub">${totSlp ? minStr(totSlp) : sleeps.length ? '—' : 'טפח להוספה'}</div>
+    </div>
+    <div class="tcard poop" onclick="openAdd('poop')">
+      <div class="tcard-top"><span class="tcard-icon">💩</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('poop')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו קקי</span></button></div>
+      <div class="tcard-count"><div class="tcard-val">${poops.length}</div><div class="tcard-lbl">קקי היום</div></div>
+      <div class="tcard-sub">${poops.length ? poops.length+'× היום' : 'עדיין לא'}</div>
+    </div>
+    <div class="tcard pee" onclick="openAdd('pee')">
+      <div class="tcard-top"><span class="tcard-icon">💧</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('pee')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו פיפי</span></button></div>
+      <div class="tcard-count"><div class="tcard-val">${pees.length}</div><div class="tcard-lbl">פיפי היום</div></div>
+      <div class="tcard-sub">${pees.length>=6 ? '✓ תקין' : pees.length>0 ? '⚠️ מעט' : 'טפח להוספה'}</div>
+    </div>
+    <div class="tcard spit" onclick="openAdd('spit')">
+      <div class="tcard-top"><span class="tcard-icon">🤮</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('spit')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו פליטה</span></button></div>
+      <div class="tcard-count"><div class="tcard-val">${spits.length}</div><div class="tcard-lbl">${spits.length===1?'פליטה היום':'פליטות היום'}</div></div>
+      <div class="tcard-sub">${spits.length>3 ? '⚠️ הרבה' : spits.length ? 'נרשמו' : '—'}</div>
+    </div>
+    <div class="tcard med" onclick="openAdd('med')">
+      <div class="tcard-top"><span class="tcard-icon">💊</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('med')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו תרופה</span></button></div>
+      <div class="tcard-count"><div class="tcard-val">${meds.length}</div><div class="tcard-lbl">${meds.length===1?'מנת תרופה היום':'מנות תרופה היום'}</div></div>
+      <div class="tcard-sub">${meds.length ? meds.map(e=>e.medName||'תרופה').filter((v,i,a)=>a.indexOf(v)===i).slice(0,2).join(', ') : '—'}</div>
+    </div>
+    <div class="tcard bath" onclick="openAdd('bath')">
+      <div class="tcard-top"><span class="tcard-icon">🛁</span><button class="tcard-add-wrap" onclick="event.stopPropagation();openAdd('bath')"><span class="tcard-add">+</span><span class="tcard-add-lbl">הוסיפו מקלחת</span></button></div>
+      <div class="tcard-count"><div class="tcard-val">${baths.length}</div><div class="tcard-lbl">${baths.length===1?'מקלחת היום':'מקלחות היום'}</div></div>
+      <div class="tcard-sub">${baths.length ? baths[baths.length-1].startTime : '—'}</div>
+    </div>
   </div>
 
   <div class="sec-title">📋 ציר זמן</div>
@@ -883,6 +910,9 @@ function renderWeek(){
   const ws=all.filter(e=>e.type==='sleep');
   const wp=all.filter(e=>e.type==='poop');
   const wpe=all.filter(e=>e.type==='pee');
+  const wsp=all.filter(e=>e.type==='spit');
+  const wmd=all.filter(e=>e.type==='med');
+  const wbt=all.filter(e=>e.type==='bath');
   const totMl=wf.reduce((s,e)=>s+(parseFloat(e.amount)||0),0);
   const totSlp=ws.reduce((s,e)=>s+diffMin(e.startTime,e.endTime||''),0);
   const active=days.filter(ds=>forDate(ds).length>0).length||1;
@@ -892,6 +922,9 @@ function renderWeek(){
     <div class="scard sleep"><div class="slbl">שינה השבוע</div><div class="sval" style="color:var(--sleep)">${ws.length}</div><div class="ssub">${minStr(Math.round(totSlp/active))}/יום בממוצע</div></div>
     <div class="scard poop"><div class="slbl">קקי השבוע</div><div class="sval" style="color:var(--poop)">${wp.length}</div><div class="ssub">ממוצע ${(wp.length/active).toFixed(1)}/יום</div></div>
     <div class="scard pee"><div class="slbl">פיפי השבוע</div><div class="sval" style="color:var(--pee)">${wpe.length}</div><div class="ssub">ממוצע ${(wpe.length/active).toFixed(1)}/יום</div></div>
+    <div class="scard spit"><div class="slbl">פליטות השבוע</div><div class="sval" style="color:var(--spit)">${wsp.length}</div><div class="ssub">${wsp.filter(e=>e.amount==='הרבה').length} כבדות</div></div>
+    <div class="scard med"><div class="slbl">תרופות השבוע</div><div class="sval" style="color:var(--med)">${wmd.length}</div><div class="ssub">${wmd.length?[...new Set(wmd.map(e=>e.medName||'תרופה'))].slice(0,2).join(', '):'—'}</div></div>
+    <div class="scard" style="border-color:var(--bath-b)"><div class="slbl">מקלחות השבוע</div><div class="sval" style="color:var(--bath)">${wbt.length}</div><div class="ssub">${wbt.length>=3?'✓ תדירות טובה':wbt.length>0?'⚠️ מעט':'—'}</div></div>
   </div>`;
 
   // feed bar chart
