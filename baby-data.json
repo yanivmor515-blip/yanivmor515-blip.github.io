@@ -309,6 +309,14 @@
       "date": "2026-03-06",
       "startTime": "03:30",
       "notes": ""
+    },
+    {
+      "id": "mme9g9siusbp7dgeqpp",
+      "type": "sleep",
+      "date": "2026-03-06",
+      "startTime": "00:00",
+      "notes": "",
+      "endTime": "03:00"
     }
   ]
 }
