@@ -492,5 +492,13 @@
       "medName": "ויטמין d"
     }
   ],
-  "measurements": []
+  "measurements": [
+    {
+      "id": "mmf6oho89mqr5w7s26c",
+      "type": "weight",
+      "date": "2026-02-09",
+      "value": 2.32,
+      "notes": ""
+    }
+  ]
 }
