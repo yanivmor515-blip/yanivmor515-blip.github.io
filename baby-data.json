@@ -626,6 +626,14 @@
       "endTime": "12:05",
       "amount": "130",
       "feedType": "בקבוק"
+    },
+    {
+      "id": "mmg5sox7ndb9pmypa9",
+      "type": "spit",
+      "date": "2026-03-07",
+      "startTime": "11:45",
+      "notes": "פלטה בזמן גרפעס עלה לה ",
+      "amount": "בינוני"
     }
   ],
   "measurements": [
