@@ -518,6 +518,14 @@
       "date": "2026-03-06",
       "startTime": "23:30",
       "notes": ""
+    },
+    {
+      "id": "mmfomojmyt9pz88enic",
+      "type": "sleep",
+      "date": "2026-03-06",
+      "startTime": "00:17",
+      "notes": "",
+      "endTime": "03:20"
     }
   ],
   "measurements": [
