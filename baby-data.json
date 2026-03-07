@@ -749,6 +749,13 @@
       "endTime": "01:54",
       "amount": "120",
       "feedType": "בקבוק"
+    },
+    {
+      "id": "mmgzga8i17m8iz2bgnu",
+      "type": "poop",
+      "date": "2026-03-08",
+      "startTime": "01:20",
+      "notes": ""
     }
   ],
   "measurements": [
