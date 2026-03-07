@@ -608,6 +608,14 @@
       "date": "2026-03-07",
       "startTime": "11:17",
       "notes": ""
+    },
+    {
+      "id": "mmg40tpasd1hdiz91ct",
+      "type": "med",
+      "date": "2026-03-07",
+      "startTime": "11:17",
+      "notes": "",
+      "medName": "סימיקול "
     }
   ],
   "measurements": [
