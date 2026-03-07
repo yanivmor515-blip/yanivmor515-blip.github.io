@@ -722,6 +722,16 @@
       "startTime": "20:15",
       "notes": "",
       "medName": "סימיקול "
+    },
+    {
+      "id": "mmgoxpl5aa34jiluq28",
+      "type": "feed",
+      "date": "2026-03-07",
+      "startTime": "20:33",
+      "notes": "",
+      "endTime": "08:55",
+      "amount": "120",
+      "feedType": "בקבוק"
     }
   ],
   "measurements": [
