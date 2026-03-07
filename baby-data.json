@@ -492,7 +492,8 @@
       "type": "sleep",
       "date": "2026-03-06",
       "startTime": "20:00",
-      "notes": ""
+      "notes": "התעוררה באמצע ומשה הרדים שוב",
+      "endTime": "03:20"
     }
   ],
   "measurements": [
