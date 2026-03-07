@@ -690,7 +690,8 @@
       "type": "sleep",
       "date": "2026-03-07",
       "startTime": "17:00",
-      "notes": ""
+      "notes": "",
+      "endTime": "20:00"
     },
     {
       "id": "mmgingegoqc3oklos1",
