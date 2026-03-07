@@ -551,6 +551,13 @@
       "startTime": "03:45",
       "notes": "פלטה בזמן אוכל עלה לה ",
       "amount": "בינוני"
+    },
+    {
+      "id": "mmfoxeiagdlrdjhxfg",
+      "type": "sleep",
+      "date": "2026-03-07",
+      "startTime": "04:10",
+      "notes": ""
     }
   ],
   "measurements": [
