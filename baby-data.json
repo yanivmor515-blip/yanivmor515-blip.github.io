@@ -576,6 +576,14 @@
       "startTime": "08:00",
       "notes": "בזמן האוכל פלטה עלה לה ",
       "amount": "קצת"
+    },
+    {
+      "id": "mmfy4sk9ipx3ubecg9",
+      "type": "med",
+      "date": "2026-03-07",
+      "startTime": "08:00",
+      "notes": "",
+      "medName": "סימיקול "
     }
   ],
   "measurements": [
