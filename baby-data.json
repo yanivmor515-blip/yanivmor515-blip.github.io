@@ -732,6 +732,13 @@
       "endTime": "08:55",
       "amount": "120",
       "feedType": "בקבוק"
+    },
+    {
+      "id": "mmgoy0kf38tq2hvm963",
+      "type": "sleep",
+      "date": "2026-03-07",
+      "startTime": "21:02",
+      "notes": ""
     }
   ],
   "measurements": [
