@@ -494,6 +494,16 @@
       "startTime": "20:00",
       "notes": "התעוררה באמצע ומשה הרדים שוב",
       "endTime": "22:00"
+    },
+    {
+      "id": "mmfolc6hfmyb6krf7k",
+      "type": "feed",
+      "date": "2026-03-06",
+      "startTime": "23:30",
+      "notes": "",
+      "endTime": "00:17",
+      "amount": "140",
+      "feedType": "בקבוק"
     }
   ],
   "measurements": [
