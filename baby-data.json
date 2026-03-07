@@ -642,6 +642,16 @@
       "startTime": "12:09",
       "notes": "",
       "endTime": "15:00"
+    },
+    {
+      "id": "mmgf0edyu2bxqfjhouq",
+      "type": "feed",
+      "date": "2026-03-07",
+      "startTime": "15:00",
+      "notes": "",
+      "endTime": "15:25",
+      "amount": "85",
+      "feedType": "בקבוק"
     }
   ],
   "measurements": [
