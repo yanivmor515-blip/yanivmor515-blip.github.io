@@ -936,6 +936,15 @@
       "startTime": "21:00",
       "notes": "פלטה קצת באוכל ",
       "amount": "קצת"
+    },
+    {
+      "id": "mmi54v5qfz0evfhk3fq",
+      "type": "feed",
+      "date": "2026-03-08",
+      "startTime": "20:18",
+      "notes": "",
+      "endTime": "21:00",
+      "amount": "90"
     }
   ],
   "measurements": [
