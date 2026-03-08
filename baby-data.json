@@ -888,6 +888,16 @@
       "startTime": "11:59",
       "notes": "",
       "endTime": "12:30"
+    },
+    {
+      "id": "mmhxfl180w5nscf42xs",
+      "type": "feed",
+      "date": "2026-03-08",
+      "startTime": "17:25",
+      "notes": "",
+      "endTime": "14:47",
+      "amount": "60",
+      "feedType": "בקבוק"
     }
   ],
   "measurements": [
