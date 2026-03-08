@@ -787,6 +787,16 @@
       "startTime": "02:47",
       "notes": "שוב פלטה ",
       "amount": "בינוני"
+    },
+    {
+      "id": "mmhei1f989v1n3preja",
+      "type": "feed",
+      "date": "2026-03-08",
+      "startTime": "04:34",
+      "notes": "",
+      "endTime": "05:00",
+      "amount": "50",
+      "feedType": "בקבוק"
     }
   ],
   "measurements": [
