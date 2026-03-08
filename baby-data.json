@@ -831,6 +831,16 @@
       "endTime": "08:55",
       "amount": "105",
       "feedType": "בקבוק"
+    },
+    {
+      "id": "mmhkzf8c8hc9gzmiyen",
+      "type": "feed",
+      "date": "2026-03-08",
+      "startTime": "11:20",
+      "notes": "החלפתי לסימילאק",
+      "endTime": "11:59",
+      "amount": "60",
+      "feedType": "בקבוק"
     }
   ],
   "measurements": [
