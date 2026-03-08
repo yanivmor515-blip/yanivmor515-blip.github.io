@@ -841,6 +841,24 @@
       "endTime": "11:59",
       "amount": "60",
       "feedType": "בקבוק"
+    },
+    {
+      "id": "mmhqveef628jt5bzat7",
+      "type": "feed",
+      "date": "2026-03-08",
+      "startTime": "14:18",
+      "notes": "סימילאק",
+      "endTime": "14:40",
+      "amount": "60",
+      "feedType": "בקבוק"
+    },
+    {
+      "id": "mmhqvuyi6d1vi5tjzxn",
+      "type": "spit",
+      "date": "2026-03-08",
+      "startTime": "12:30",
+      "notes": "פלטה ",
+      "amount": "בינוני"
     }
   ],
   "measurements": [
