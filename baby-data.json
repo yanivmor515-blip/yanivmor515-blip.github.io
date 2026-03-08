@@ -804,6 +804,14 @@
       "date": "2026-03-08",
       "startTime": "08:00",
       "notes": ""
+    },
+    {
+      "id": "mmhein7fda23das4n96",
+      "type": "spit",
+      "date": "2026-03-08",
+      "startTime": "08:15",
+      "notes": "פלטה באוכל ",
+      "amount": "בינוני"
     }
   ],
   "measurements": [
