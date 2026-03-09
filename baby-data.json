@@ -1022,6 +1022,15 @@
       "date": "2026-03-09",
       "startTime": "13:25",
       "notes": ""
+    },
+    {
+      "id": "mmj4niywis6y5f4i4x",
+      "type": "feed",
+      "date": "2026-03-09",
+      "startTime": "11:35",
+      "notes": "סימילאק",
+      "endTime": "11:57",
+      "amount": "80"
     }
   ],
   "measurements": [
