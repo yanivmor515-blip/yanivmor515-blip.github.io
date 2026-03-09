@@ -967,6 +967,15 @@
       "startTime": "21:30",
       "notes": "",
       "endTime": "02:30"
+    },
+    {
+      "id": "mmik0veyw3crgmg3pwd",
+      "type": "feed",
+      "date": "2026-03-09",
+      "startTime": "02:40",
+      "notes": "סימילאק",
+      "endTime": "03:30",
+      "amount": "120"
     }
   ],
   "measurements": [
