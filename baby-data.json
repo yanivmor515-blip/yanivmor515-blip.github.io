@@ -1063,6 +1063,13 @@
       "notes": "סימילאק",
       "endTime": "15:30",
       "amount": "90"
+    },
+    {
+      "id": "mmj8boupzl078twbx8g",
+      "type": "poop",
+      "date": "2026-03-09",
+      "startTime": "15:00",
+      "notes": ""
     }
   ],
   "measurements": [
