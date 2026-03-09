@@ -1116,6 +1116,15 @@
       "startTime": "18:40",
       "notes": "",
       "endTime": "19:30"
+    },
+    {
+      "id": "mmjjclwl440onnt19tv",
+      "type": "feed",
+      "date": "2026-03-09",
+      "startTime": "19:45",
+      "notes": "",
+      "endTime": "20:15",
+      "amount": "60"
     }
   ],
   "measurements": [
