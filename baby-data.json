@@ -1113,8 +1113,9 @@
       "id": "mmjex3jszxe1hfjc52c",
       "type": "sleep",
       "date": "2026-03-09",
-      "startTime": "19:30",
-      "notes": ""
+      "startTime": "18:40",
+      "notes": "",
+      "endTime": "19:30"
     }
   ],
   "measurements": [
