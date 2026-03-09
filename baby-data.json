@@ -998,6 +998,15 @@
       "date": "2026-03-09",
       "startTime": "03:00",
       "notes": "פלטה קצת בגרפעס עשינו לה עוד"
+    },
+    {
+      "id": "mmiz84zxrjqj3p7ipl",
+      "type": "feed",
+      "date": "2026-03-09",
+      "startTime": "08:00",
+      "notes": "סימילאק ",
+      "endTime": "08:30",
+      "amount": "90"
     }
   ],
   "measurements": [
