@@ -1015,6 +1015,13 @@
       "startTime": "11:00",
       "notes": "פלטה בשינה קצת ",
       "amount": "קצת"
+    },
+    {
+      "id": "mmj3gxz7ox9j6x7keaf",
+      "type": "sleep",
+      "date": "2026-03-09",
+      "startTime": "13:25",
+      "notes": ""
     }
   ],
   "measurements": [
