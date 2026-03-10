@@ -1303,6 +1303,13 @@
       "notes": "",
       "endTime": "17:15",
       "amount": "80"
+    },
+    {
+      "id": "mmkrbtkm1arasbyjtjl",
+      "type": "sleep",
+      "date": "2026-03-10",
+      "startTime": "17:15",
+      "notes": ""
     }
   ],
   "measurements": [
