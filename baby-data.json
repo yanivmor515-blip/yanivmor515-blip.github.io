@@ -1256,6 +1256,15 @@
       "startTime": "12:10",
       "notes": "",
       "endTime": "12:43"
+    },
+    {
+      "id": "mmkjil2vs0j6l2a9oh9",
+      "type": "feed",
+      "date": "2026-03-10",
+      "startTime": "12:54",
+      "notes": "",
+      "endTime": "13:41",
+      "amount": "110"
     }
   ],
   "measurements": [
