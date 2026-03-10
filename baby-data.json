@@ -1208,6 +1208,15 @@
       "date": "2026-03-10",
       "startTime": "06:00",
       "notes": ""
+    },
+    {
+      "id": "mmk37ywrlcxxc7uj4ib",
+      "type": "feed",
+      "date": "2026-03-10",
+      "startTime": "05:29",
+      "notes": "",
+      "endTime": "06:00",
+      "amount": "120"
     }
   ],
   "measurements": [
