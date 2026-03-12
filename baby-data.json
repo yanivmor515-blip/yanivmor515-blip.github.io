@@ -1414,6 +1414,14 @@
       "startTime": "15:00",
       "notes": "",
       "amount": "קצת"
+    },
+    {
+      "id": "mmnpcltvpbvzgfeg2hl",
+      "type": "sleep",
+      "date": "2026-03-12",
+      "startTime": "14:17",
+      "notes": "",
+      "endTime": "16:00"
     }
   ],
   "measurements": [
