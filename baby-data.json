@@ -1430,6 +1430,15 @@
       "startTime": "16:30",
       "notes": "",
       "endTime": "17:15"
+    },
+    {
+      "id": "mmnpov9f7ux23p14o9j",
+      "type": "feed",
+      "date": "2026-03-12",
+      "startTime": "17:22",
+      "notes": "",
+      "endTime": "17:49",
+      "amount": "90"
     }
   ],
   "measurements": [
