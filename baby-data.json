@@ -1422,6 +1422,14 @@
       "startTime": "14:17",
       "notes": "",
       "endTime": "16:00"
+    },
+    {
+      "id": "mmnpnx2t9a2io5qr1n4",
+      "type": "sleep",
+      "date": "2026-03-12",
+      "startTime": "16:30",
+      "notes": "",
+      "endTime": "17:15"
     }
   ],
   "measurements": [
