@@ -1501,6 +1501,14 @@
       "notes": "",
       "endTime": "22:45",
       "amount": "30"
+    },
+    {
+      "id": "mmoswnn06fmcen7s5ns",
+      "type": "sleep",
+      "date": "2026-03-12",
+      "startTime": "23:00",
+      "notes": "",
+      "endTime": "00:15"
     }
   ],
   "measurements": [
