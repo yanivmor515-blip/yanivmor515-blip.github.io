@@ -1636,6 +1636,14 @@
       "startTime": "13:00",
       "notes": "",
       "amount": "קצת"
+    },
+    {
+      "id": "mmozanl9wl0zutb8qdj",
+      "type": "sleep",
+      "date": "2026-03-13",
+      "startTime": "12:40",
+      "notes": "",
+      "endTime": "14:45"
     }
   ],
   "measurements": [
