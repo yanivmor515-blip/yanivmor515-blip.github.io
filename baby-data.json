@@ -1509,6 +1509,15 @@
       "startTime": "23:00",
       "notes": "",
       "endTime": "00:15"
+    },
+    {
+      "id": "mmosx0wb360oubqs658",
+      "type": "feed",
+      "date": "2026-03-13",
+      "startTime": "00:30",
+      "notes": "",
+      "endTime": "13:00",
+      "amount": "90"
     }
   ],
   "measurements": [
