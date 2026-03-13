@@ -1667,6 +1667,14 @@
       "date": "2026-03-13",
       "startTime": "14:45",
       "notes": ""
+    },
+    {
+      "id": "mmozbyzxx7we5p5wmjs",
+      "type": "med",
+      "date": "2026-03-13",
+      "startTime": "14:45",
+      "notes": "",
+      "medName": "סימיקול"
     }
   ],
   "measurements": [
