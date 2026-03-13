@@ -1545,6 +1545,13 @@
       "notes": "",
       "endTime": "12:30",
       "amount": "90"
+    },
+    {
+      "id": "mmot0slh5umrk9tnwof",
+      "type": "poop",
+      "date": "2026-03-13",
+      "startTime": "00:30",
+      "notes": ""
     }
   ],
   "measurements": [
