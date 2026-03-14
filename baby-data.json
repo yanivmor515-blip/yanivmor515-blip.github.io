@@ -1683,6 +1683,15 @@
       "startTime": "15:30",
       "notes": "",
       "endTime": "18:00"
+    },
+    {
+      "id": "mmptmjr5zafacufqok",
+      "type": "feed",
+      "date": "2026-03-13",
+      "startTime": "10:15",
+      "notes": "",
+      "endTime": "10:49",
+      "amount": "90"
     }
   ],
   "measurements": [
