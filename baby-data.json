@@ -1723,6 +1723,13 @@
       "startTime": "10:30",
       "notes": "",
       "amount": "קצת"
+    },
+    {
+      "id": "mmrm7zrqbssussu2wff",
+      "type": "sleep",
+      "date": "2026-03-15",
+      "startTime": "11:20",
+      "notes": ""
     }
   ],
   "measurements": [
