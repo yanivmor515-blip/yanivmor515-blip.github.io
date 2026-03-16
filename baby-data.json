@@ -1833,7 +1833,8 @@
       "date": "2026-03-16",
       "startTime": "10:00",
       "notes": "",
-      "endTime": "10:45"
+      "endTime": "10:45",
+      "amount": "120"
     }
   ],
   "measurements": [
