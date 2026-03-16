@@ -1835,6 +1835,14 @@
       "notes": "",
       "endTime": "10:45",
       "amount": "120"
+    },
+    {
+      "id": "mmt3e8879xfa5umty89",
+      "type": "spit",
+      "date": "2026-03-16",
+      "startTime": "10:15",
+      "notes": "פלטה בזמן האוכל ",
+      "amount": "בינוני"
     }
   ],
   "measurements": [
