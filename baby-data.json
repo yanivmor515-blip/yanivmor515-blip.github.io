@@ -1802,6 +1802,14 @@
       "date": "2026-03-16",
       "startTime": "01:00",
       "notes": ""
+    },
+    {
+      "id": "mmt3bzydua2lub82u",
+      "type": "sleep",
+      "date": "2026-03-16",
+      "startTime": "02:06",
+      "notes": "",
+      "endTime": "05:00"
     }
   ],
   "measurements": [
