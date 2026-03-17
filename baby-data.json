@@ -1904,6 +1904,14 @@
       "date": "2026-03-16",
       "startTime": "20:00",
       "notes": ""
+    },
+    {
+      "id": "mmup3vy0e9uw0i2yxv",
+      "type": "feed",
+      "date": "2026-03-17",
+      "startTime": "00:30",
+      "notes": "",
+      "amount": "120"
     }
   ],
   "measurements": [
