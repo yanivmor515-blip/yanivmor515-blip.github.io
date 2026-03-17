@@ -1978,6 +1978,14 @@
       "date": "2026-03-17",
       "startTime": "13:30",
       "notes": ""
+    },
+    {
+      "id": "mmup6hbxgr8tld5qe1t",
+      "type": "sleep",
+      "date": "2026-03-17",
+      "startTime": "01:00",
+      "notes": "",
+      "endTime": "04:30"
     }
   ],
   "measurements": [
