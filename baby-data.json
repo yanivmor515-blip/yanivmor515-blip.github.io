@@ -1875,6 +1875,14 @@
       "notes": "",
       "endTime": "16:00",
       "amount": "120"
+    },
+    {
+      "id": "mmup2zofdkxrcw1xktn",
+      "type": "feed",
+      "date": "2026-03-16",
+      "startTime": "20:30",
+      "notes": "",
+      "amount": "130"
     }
   ],
   "measurements": [
