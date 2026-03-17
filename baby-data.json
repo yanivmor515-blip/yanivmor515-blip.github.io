@@ -1986,6 +1986,14 @@
       "startTime": "01:00",
       "notes": "",
       "endTime": "04:30"
+    },
+    {
+      "id": "mmup74sd00rmeohnsa39",
+      "type": "sleep",
+      "date": "2026-03-17",
+      "startTime": "06:06",
+      "notes": "",
+      "endTime": "09:15"
     }
   ],
   "measurements": [
