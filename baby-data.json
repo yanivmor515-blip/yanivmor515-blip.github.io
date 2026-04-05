@@ -2089,6 +2089,14 @@
       "date": "2026-04-05",
       "startTime": "20:00",
       "notes": ""
+    },
+    {
+      "id": "mnm5g2ysef1wvkbw16b",
+      "type": "sleep",
+      "date": "2026-04-05",
+      "startTime": "01:00",
+      "notes": "",
+      "endTime": "06:30"
     }
   ],
   "measurements": [
