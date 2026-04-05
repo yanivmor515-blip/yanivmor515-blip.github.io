@@ -2027,6 +2027,13 @@
       "notes": "",
       "endTime": "07:30",
       "amount": "150"
+    },
+    {
+      "id": "mnlp6xqiw78n7yz01s",
+      "type": "poop",
+      "date": "2026-04-05",
+      "startTime": "11:30",
+      "notes": ""
     }
   ],
   "measurements": [
