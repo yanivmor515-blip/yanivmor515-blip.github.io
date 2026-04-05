@@ -2081,7 +2081,8 @@
       "type": "sleep",
       "date": "2026-04-05",
       "startTime": "20:20",
-      "notes": ""
+      "notes": "",
+      "endTime": "23:00"
     },
     {
       "id": "mnm5czwexuo2eleeov",
