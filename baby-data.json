@@ -2018,6 +2018,15 @@
       "notes": "",
       "endTime": "12:30",
       "amount": "150"
+    },
+    {
+      "id": "mnlp65qgulhhy35961e",
+      "type": "feed",
+      "date": "2026-04-05",
+      "startTime": "07:00",
+      "notes": "",
+      "endTime": "07:30",
+      "amount": "150"
     }
   ],
   "measurements": [
