@@ -2009,6 +2009,15 @@
       "startTime": "16:47",
       "notes": "",
       "amount": "140"
+    },
+    {
+      "id": "mnlp5qwbsmfgk2sxt3",
+      "type": "feed",
+      "date": "2026-04-05",
+      "startTime": "11:30",
+      "notes": "",
+      "endTime": "12:30",
+      "amount": "150"
     }
   ],
   "measurements": [
