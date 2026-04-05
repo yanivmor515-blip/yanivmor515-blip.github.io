@@ -2049,6 +2049,15 @@
       "date": "2026-04-05",
       "startTime": "14:05",
       "notes": ""
+    },
+    {
+      "id": "mnly5nndbvbpsf5zsrk",
+      "type": "feed",
+      "date": "2026-04-05",
+      "startTime": "15:30",
+      "notes": "",
+      "endTime": "16:00",
+      "amount": "140"
     }
   ],
   "measurements": [
