@@ -2058,6 +2058,14 @@
       "notes": "",
       "endTime": "16:00",
       "amount": "140"
+    },
+    {
+      "id": "mnly63cy0at03ekmpmr",
+      "type": "sleep",
+      "date": "2026-04-05",
+      "startTime": "16:15",
+      "notes": "",
+      "endTime": "17:00"
     }
   ],
   "measurements": [
