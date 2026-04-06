@@ -2158,6 +2158,13 @@
       "notes": "",
       "endTime": "15:12",
       "amount": "120"
+    },
+    {
+      "id": "mnn5naw8ck6zuasvixn",
+      "type": "sleep",
+      "date": "2026-04-06",
+      "startTime": "15:16",
+      "notes": ""
     }
   ],
   "measurements": [
