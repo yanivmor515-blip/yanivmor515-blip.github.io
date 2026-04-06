@@ -2164,7 +2164,8 @@
       "type": "sleep",
       "date": "2026-04-06",
       "startTime": "15:16",
-      "notes": ""
+      "notes": "",
+      "endTime": "16:30"
     }
   ],
   "measurements": [
