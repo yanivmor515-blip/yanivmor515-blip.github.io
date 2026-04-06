@@ -2141,6 +2141,13 @@
       "notes": "",
       "endTime": "12:00",
       "amount": "90"
+    },
+    {
+      "id": "mnn0c36kqx1527lkd6",
+      "type": "sleep",
+      "date": "2026-04-06",
+      "startTime": "12:40",
+      "notes": ""
     }
   ],
   "measurements": [
