@@ -2149,6 +2149,15 @@
       "startTime": "12:40",
       "notes": "",
       "endTime": "14:30"
+    },
+    {
+      "id": "mnn5lza3vom9btazuo",
+      "type": "feed",
+      "date": "2026-04-06",
+      "startTime": "14:57",
+      "notes": "",
+      "endTime": "15:12",
+      "amount": "120"
     }
   ],
   "measurements": [
