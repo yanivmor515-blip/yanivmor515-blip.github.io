@@ -2234,6 +2234,15 @@
       "notes": "",
       "endTime": "12:15",
       "amount": "140"
+    },
+    {
+      "id": "mnom4lt237wj723p85d",
+      "type": "feed",
+      "date": "2026-04-07",
+      "startTime": "15:00",
+      "notes": "",
+      "endTime": "15:30",
+      "amount": "80"
     }
   ],
   "measurements": [
