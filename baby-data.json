@@ -2266,6 +2266,13 @@
       "date": "2026-04-07",
       "startTime": "15:00",
       "notes": ""
+    },
+    {
+      "id": "mnormrzgn2h76c1ge2j",
+      "type": "sleep",
+      "date": "2026-04-07",
+      "startTime": "17:30",
+      "notes": ""
     }
   ],
   "measurements": [
