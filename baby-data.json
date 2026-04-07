@@ -2243,6 +2243,13 @@
       "notes": "",
       "endTime": "15:30",
       "amount": "80"
+    },
+    {
+      "id": "mnom4prdlqwsmfnxlq",
+      "type": "sleep",
+      "date": "2026-04-07",
+      "startTime": "15:30",
+      "notes": ""
     }
   ],
   "measurements": [
