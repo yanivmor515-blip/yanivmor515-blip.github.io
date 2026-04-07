@@ -2225,6 +2225,15 @@
       "date": "2026-04-07",
       "startTime": "07:30",
       "notes": ""
+    },
+    {
+      "id": "mnofdg1phvz1pblsipr",
+      "type": "feed",
+      "date": "2026-04-07",
+      "startTime": "11:47",
+      "notes": "",
+      "endTime": "12:15",
+      "amount": "140"
     }
   ],
   "measurements": [
