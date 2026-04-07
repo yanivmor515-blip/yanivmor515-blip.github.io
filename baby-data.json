@@ -2193,6 +2193,14 @@
       "notes": "",
       "endTime": "00:00",
       "amount": "130"
+    },
+    {
+      "id": "mno58unrea8ifrv42ew",
+      "type": "sleep",
+      "date": "2026-04-06",
+      "startTime": "21:20",
+      "notes": "",
+      "endTime": "22:30"
     }
   ],
   "measurements": [
