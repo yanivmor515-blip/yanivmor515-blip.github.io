@@ -2201,6 +2201,14 @@
       "startTime": "21:20",
       "notes": "",
       "endTime": "22:30"
+    },
+    {
+      "id": "mno59r841wyqj3g9w61",
+      "type": "sleep",
+      "date": "2026-04-07",
+      "startTime": "01:00",
+      "notes": "",
+      "endTime": "06:40"
     }
   ],
   "measurements": [
