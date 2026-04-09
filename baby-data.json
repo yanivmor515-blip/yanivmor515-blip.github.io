@@ -2321,6 +2321,14 @@
       "startTime": "19:30",
       "notes": "",
       "amount": "30"
+    },
+    {
+      "id": "mnrzwze1ri6otp2qh6",
+      "type": "feed",
+      "date": "2026-04-09",
+      "startTime": "21:00",
+      "notes": "",
+      "amount": "90"
     }
   ],
   "measurements": [
