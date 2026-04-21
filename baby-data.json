@@ -2345,6 +2345,14 @@
       "startTime": "05:00",
       "notes": "",
       "amount": "150"
+    },
+    {
+      "id": "mo8i1y5nezwz2hubk4j",
+      "type": "feed",
+      "date": "2026-04-21",
+      "startTime": "10:11",
+      "notes": "",
+      "amount": "140"
     }
   ],
   "measurements": [
